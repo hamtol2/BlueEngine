@@ -3,6 +3,7 @@
 // DirectX11 Çì´õ.
 #include <d3d11.h>
 #include <dxgi.h>
+#include <memory>
 
 #include "../Core/Type.h"
 
@@ -12,6 +13,9 @@ namespace Blue
 	// RHI - Render Hardware Interface.
 	class Renderer
 	{
+		// ¿£Áø Å¬·¡½º friend ¼±¾ð.
+		friend class Engine;
+
 	public:
 		Renderer(uint32 width, uint32 height, HWND window);
 		~Renderer();
@@ -39,11 +43,17 @@ namespace Blue
 		// ÀÎµ¦½º ¹öÆÛ (Á¤Á¡À» Á¶¸³ÇÒ ¶§ Á¤Á¡ÀÇ ¼ø¼­¸¦ Àü´Þ).
 		ID3D11Buffer* indexBuffer = nullptr;
 
-		// ÀÔ·Â ·¹ÀÌ¾Æ¿ô.
-		ID3D11InputLayout* inputlayout = nullptr;
-
 		// ½¦ÀÌ´õ °´Ã¼.
-		ID3D11VertexShader* vertexShader = nullptr;
-		ID3D11PixelShader* pixelShader = nullptr;
+		//std::unique_ptr<class Shader> shader;
+
+		// »ï°¢Çü ¸Þ½Ã °´Ã¼.
+		std::unique_ptr<class TriangleMesh> mesh;
+
+		//// ÀÔ·Â ·¹ÀÌ¾Æ¿ô.
+		//ID3D11InputLayout* inputlayout = nullptr;
+
+		//// ½¦ÀÌ´õ °´Ã¼.
+		//ID3D11VertexShader* vertexShader = nullptr;
+		//ID3D11PixelShader* pixelShader = nullptr;
 	};
 }
