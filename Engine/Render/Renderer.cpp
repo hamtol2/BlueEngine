@@ -4,7 +4,7 @@
 
 #include "../Math/Vector3.h"
 #include "TriangleMesh.h"
-#include "TriangleMesh.h"
+#include "QuadMesh.h"
 
 namespace Blue
 {
@@ -110,7 +110,8 @@ namespace Blue
 		// @임시/Test
 		if (mesh == nullptr)
 		{
-			mesh = std::make_unique<TriangleMesh>();
+			//mesh = std::make_unique<TriangleMesh>();
+			mesh = std::make_unique<QuadMesh>();
 		}
 
 		// 그리기 전 작업 (BeginScene).

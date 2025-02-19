@@ -57,6 +57,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -72,6 +73,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <AdditionalIncludeDirectories>$(ProjectDir)\;</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -90,6 +92,7 @@
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\QuadMesh.cpp" />
     <ClCompile Include="Render\Renderer.cpp" />
+    <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Render\TriangleMesh.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
   </ItemGroup>
@@ -97,11 +100,13 @@
     <ClInclude Include="Core\Engine.h" />
     <ClInclude Include="Core\Type.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="Library\stbi_image.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\QuadMesh.h" />
     <ClInclude Include="Render\Renderer.h" />
+    <ClInclude Include="Render\Texture.h" />
     <ClInclude Include="Render\TriangleMesh.h" />
     <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Shader\Shader.h" />
