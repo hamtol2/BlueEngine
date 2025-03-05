@@ -94,6 +94,46 @@ namespace Blue
 		context.IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
 	}
 
+	void MeshData::UpdateVertexBuffer(const std::vector<Vertex>& vertices)
+	{
+		// 파라미터 복사.
+		this->vertices.assign(vertices.begin(), vertices.end());
+		
+		// 정점 버퍼가 있으면, 해제 후 재생성.
+		if (vertexBuffer)
+		{
+			vertexBuffer->Release();
+			vertexBuffer = nullptr;
+		}
+
+		D3D11_BUFFER_DESC vertexbufferDesc = {};
+		vertexbufferDesc.ByteWidth = stride * (uint32)vertices.size();
+		vertexbufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
+
+		// 정점 데이터.
+		D3D11_SUBRESOURCE_DATA vertexData = {};
+		vertexData.pSysMem = vertices.data();
+
+		// 장치 얻어오기.
+		ID3D11Device& device = Engine::Get().Device();
+
+		// (정점)버퍼 생성
+		auto result = device.CreateBuffer(
+			&vertexbufferDesc, &vertexData, &vertexBuffer);
+
+		if (FAILED(result))
+		{
+			MessageBoxA(
+				nullptr,
+				"Failed to create vertex buffer",
+				"Error",
+				MB_OK
+			);
+
+			__debugbreak();
+		}
+	}
+
 	Mesh::Mesh()
 	{
 	}

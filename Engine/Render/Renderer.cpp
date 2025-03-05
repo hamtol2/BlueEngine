@@ -115,6 +115,9 @@ namespace Blue
 		float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
 		context->ClearRenderTargetView(renderTargetView, color);
 
+		// @Test.
+		mesh->Update(1.0f / 60.0f);
+
 		// µå·Î¿ì.
 		mesh->Draw();
 
