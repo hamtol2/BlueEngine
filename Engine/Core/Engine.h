@@ -43,6 +43,12 @@ namespace Blue
 		// ·»´õ·¯ °´Ã¼.
 		std::shared_ptr<class Renderer> renderer;
 
+		// ¼ÎÀÌ´õ ·Î´õ °´Ã¼.
+		std::unique_ptr<class ShaderLoader> shaderLoader;
+
+		// ÅØ½ºÃ³ ·Î´õ °´Ã¼.
+		std::unique_ptr<class TextureLoader> textureLoader;
+
 		// ½Ì±ÛÅæ °´Ã¼.
 		static Engine* instance;
 	};

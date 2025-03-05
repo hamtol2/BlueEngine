@@ -2,6 +2,7 @@
 #include "Vertex.h"
 #include "../Shader/Shader.h"
 #include "Shader/TextureMappingShader.h"
+#include "Resource/ShaderLoader.h"
 
 namespace Blue
 {
@@ -20,6 +21,11 @@ namespace Blue
 		std::vector<uint32> indices = { 0, 1, 3, 1, 2, 3 };
 
 		meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
-		shaders.emplace_back(std::make_shared<TextureMappingShader>("T_coord.png"));
+		//shaders.emplace_back(std::make_shared<TextureMappingShader>("T_coord.png"));
+		std::weak_ptr<TextureMappingShader> shader;
+		if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
+		{
+			shaders.emplace_back(shader);
+		}
 	}
 }

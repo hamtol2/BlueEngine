@@ -41,6 +41,7 @@ namespace Blue
 
 	protected:
 		std::vector<std::shared_ptr<MeshData>> meshes;
-		std::vector<std::shared_ptr<class Shader>> shaders;
+		//std::vector<std::shared_ptr<class Shader>> shaders;
+		std::vector<std::weak_ptr<class Shader>> shaders;
 	};
 }
