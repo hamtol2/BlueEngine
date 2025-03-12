@@ -139,12 +139,12 @@ namespace Blue
 			mesh2->transform.position.x = -0.5f;
 		}
 
-		if (mesh3 == nullptr)
-		{
-			mesh3 = std::make_unique<TriangleMesh>();
-			mesh3->transform.scale = Vector3::One * 0.5f;
-			mesh3->transform.position.y = 0.5f;
-		}
+		//if (mesh3 == nullptr)
+		//{
+		//	mesh3 = std::make_unique<TriangleMesh>();
+		//	mesh3->transform.scale = Vector3::One * 0.5f;
+		//	mesh3->transform.position.y = 0.5f;
+		//}
 
 		// 그리기 전 작업 (BeginScene).
 		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
@@ -160,7 +160,7 @@ namespace Blue
 		// 드로우.
 		mesh->Draw();
 		mesh2->Draw();
-		mesh3->Draw();
+		//mesh3->Draw();
 
 		// 버퍼 교환. (EndScene/Present).
 		swapChain->Present(1u, 0u);

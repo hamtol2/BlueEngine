@@ -66,6 +66,9 @@
     <ClCompile Include="Math\Transform.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Resource\ModelLoader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Window.h">
@@ -126,6 +129,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Math\Transform.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Resource\ModelLoader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
