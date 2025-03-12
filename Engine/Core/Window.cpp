@@ -47,7 +47,6 @@ namespace Blue
         // 창 크기 조정.
         RECT rect = { 0, 0, (long)width, (long)height };
         AdjustWindowRect(&rect, WS_OVERLAPPEDWINDOW, FALSE);
-        //GetClientRect
 
         // 창 크기 재설정.
         unsigned int windowWidth = rect.right - rect.left;

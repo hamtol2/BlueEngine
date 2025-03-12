@@ -41,8 +41,11 @@ namespace Blue
 	void QuadMesh::Update(float deltaTime)
 	{
 		// 회전 처리.
-		static float angle = 0.0f;
-		angle += 60.0f * deltaTime;
+		//static float angle = 0.0f;
+		//angle += 90.0f * deltaTime;
+
+		// 회전 적용.
+		//transform.rotation.z = angle;
 
 		//Rotate(angle);
 	}

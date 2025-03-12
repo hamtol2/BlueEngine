@@ -35,7 +35,6 @@ void TestClass()
 int main()
 {
 	//TestClass<Engine>();
-
 	//ThrowIfFailed(E_FAIL, TEXT("Test"));
 	
 	Engine engine(1280, 800, TEXT("Engine Demo"), GetModuleHandle(nullptr));
