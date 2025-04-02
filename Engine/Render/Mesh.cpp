@@ -138,32 +138,48 @@ namespace Blue
 	{
 	}
 
-	void Mesh::Draw()
+	uint32 Mesh::SubMeshCount() const
 	{
-		// 컨텍스트 얻어오기.
-		static ID3D11DeviceContext& context = Engine::Get().Context();
-
-		// 트랜스폼 바인딩.
-		transform.Bind();
-
-		// 루프 순회하면서 바인딩 & 드로우.
-		for (int ix = 0; ix < (int32)meshes.size(); ++ix)
-		{
-			// 원래 리소스 가져오기.
-			auto mesh = meshes[ix].lock();
-			auto shader = shaders[ix].lock();
-
-			// 리소스에 문제가 없으면 그리기.
-			if (mesh && shader)
-			{
-				mesh->Bind();
-				shader->Bind();
-				context.DrawIndexed(mesh->IndexCount(), 0, 0);
-			}
-
-			//meshes[ix]->Bind();
-			//shaders[ix].lock()->Bind();
-			//context.DrawIndexed(meshes[ix]->IndexCount(), 0, 0);
-		}
+		return (uint32)meshes.size();
 	}
+
+	std::weak_ptr<MeshData> Mesh::GetSubMesh(int index) const
+	{
+		// 예외 처리.
+		if (index < 0 || index >= (int)meshes.size())
+		{
+			return std::weak_ptr<MeshData>();
+		}
+
+		return meshes[index];
+	}
+
+	//void Mesh::Draw()
+	//{
+	//	// 컨텍스트 얻어오기.
+	//	static ID3D11DeviceContext& context = Engine::Get().Context();
+
+	//	// 트랜스폼 바인딩.
+	//	transform.Bind();
+
+	//	// 루프 순회하면서 바인딩 & 드로우.
+	//	for (int ix = 0; ix < (int32)meshes.size(); ++ix)
+	//	{
+	//		// 원래 리소스 가져오기.
+	//		auto mesh = meshes[ix].lock();
+	//		auto shader = shaders[ix].lock();
+
+	//		// 리소스에 문제가 없으면 그리기.
+	//		if (mesh && shader)
+	//		{
+	//			mesh->Bind();
+	//			shader->Bind();
+	//			context.DrawIndexed(mesh->IndexCount(), 0, 0);
+	//		}
+
+	//		//meshes[ix]->Bind();
+	//		//shaders[ix].lock()->Bind();
+	//		//context.DrawIndexed(meshes[ix]->IndexCount(), 0, 0);
+	//	}
+	//}
 }

@@ -41,16 +41,22 @@ namespace Blue
 		Mesh();
 		virtual ~Mesh() = default;
 
-		virtual void Draw();
+		//virtual void Draw();
 
 		// @Temp: 임시 트랜스폼.
-		Transform transform;
+		//Transform transform;
+
+		// 서브 메시 개수 반환 Getter.
+		uint32 SubMeshCount() const;
+		
+		// 서브 메시 반환 Getter.
+		std::weak_ptr<MeshData> GetSubMesh(int index) const;
 
 	protected:
 		//std::vector<std::shared_ptr<MeshData>> meshes;
 		std::vector<std::weak_ptr<MeshData>> meshes;
 
 		//std::vector<std::shared_ptr<class Shader>> shaders;
-		std::vector<std::weak_ptr<class Shader>> shaders;
+		//std::vector<std::weak_ptr<class Shader>> shaders;
 	};
 }

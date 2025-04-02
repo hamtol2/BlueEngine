@@ -6,6 +6,10 @@
 #include "Resource/TextureLoader.h"
 #include "Resource/ModelLoader.h"
 
+#include "Level/Level.h"
+
+#include <iostream>
+
 namespace Blue
 {
 	// 싱글톤 객체 설정.
@@ -46,6 +50,23 @@ namespace Blue
 
 	void Engine::Run()
 	{
+		// 타이머 (틱/델타타임).
+		LARGE_INTEGER currentTime;
+		LARGE_INTEGER previousTime;
+		LARGE_INTEGER frequency;
+
+		// 하드웨어 타이머의 해상도 값(기준 단위).
+		QueryPerformanceFrequency(&frequency);
+
+		// 현재 시간.
+		QueryPerformanceCounter(&currentTime);
+		previousTime = currentTime;
+
+		// 프레임 계산에 사용할 변수.
+		float targetFrameRate = 120.0f;
+		// 고정 프레임 속도를 사용하기 위한 변수.
+		float oneFrameTime = 1.0f / targetFrameRate;
+
 		// 메시지 처리 루프.
 		MSG msg = {};
 		while (msg.message != WM_QUIT)
@@ -63,10 +84,41 @@ namespace Blue
 			// 창에 메시지가 없을 때 다른 작업 처리.
 			else
 			{
-				// 엔진 루프.
-				renderer->Draw();
+				// 현재 시간 가져오기.
+				QueryPerformanceCounter(&currentTime);
+
+				// 프레임 시간 계산.
+				float deltaTime = (float)(currentTime.QuadPart - previousTime.QuadPart)
+					/ (float)frequency.QuadPart;
+
+				// 프레임 제한.
+				if (deltaTime >= oneFrameTime)
+				{
+					// 출력.
+					std::cout << "DeltaTime: " << deltaTime 
+						<< " | OneFrameTime: " << oneFrameTime 
+						<< " | FPS: " << (int)ceil(1.0f / deltaTime) << "\n";
+
+					// 엔진 루프.
+					// 레벨 처리.
+					if (mainLevel)
+					{
+						mainLevel->BeginPlay();
+						mainLevel->Tick(deltaTime);
+						renderer->Draw(mainLevel);
+					}
+
+					// 프레임 시간 업데이트.
+					previousTime = currentTime;
+				}
 			}
 		}
+	}
+
+	void Engine::SetLevel(std::shared_ptr<Level> newLevel)
+	{
+		// 메인 레벨 설정.
+		mainLevel = newLevel;
 	}
 
 	LRESULT Engine::WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam)

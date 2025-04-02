@@ -7,6 +7,8 @@
 #include "QuadMesh.h"
 #include "Core/Common.h"
 
+#include "Level/Level.h"
+
 namespace Blue
 {
 	Renderer::Renderer(uint32 width, uint32 height, HWND window)
@@ -121,7 +123,8 @@ namespace Blue
 	{
 	}
 
-	void Renderer::Draw()
+	// Ctrl K / Ctrl O.
+	void Renderer::Draw(std::shared_ptr<Level> level)
 	{
 		// @юс╫ц/Test
 		if (mesh == nullptr)
