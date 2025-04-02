@@ -15,6 +15,8 @@ namespace Blue
 
 	void StaticMeshComponent::Draw()
 	{
+		//Component::Draw();
+
 		// 서브 메시를 순회하면서 DrawCall.
 		uint32 meshCount = mesh->SubMeshCount();
 
@@ -30,13 +32,13 @@ namespace Blue
 			auto subMesh = mesh->GetSubMesh(ix);
 
 			// 메시가 유효하면 Draw.
-			if (subMesh.lock())
+			if (subMesh.lock() && shaders[ix].lock())
 			{
 				// 서브 메시 바인딩.
 				subMesh.lock()->Bind();
 
 				// 셰이더 바인딩.
-				shaders[ix]->Bind();
+				shaders[ix].lock()->Bind();
 
 				// DrawCall.
 				static ID3D11DeviceContext& context = Engine::Get().Context();
@@ -50,7 +52,7 @@ namespace Blue
 		mesh = newMesh;
 	}
 
-	void StaticMeshComponent::AddShader(std::shared_ptr<Shader> newShader)
+	void StaticMeshComponent::AddShader(std::weak_ptr<Shader> newShader)
 	{
 		shaders.emplace_back(newShader);
 	}

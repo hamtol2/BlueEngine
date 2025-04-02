@@ -35,31 +35,5 @@ namespace Blue
 
 		// 뷰포트.
 		D3D11_VIEWPORT viewport;
-
-		// @Temp: 임시.
-		// 정점 버퍼 (정점 정보를 전달하는 데 사용함).
-		ID3D11Buffer* vertexBuffer = nullptr;
-		
-		// 인덱스 버퍼 (정점을 조립할 때 정점의 순서를 전달).
-		ID3D11Buffer* indexBuffer = nullptr;
-
-		// 쉐이더 객체.
-		//std::unique_ptr<class Shader> shader;
-
-		// 메시 객체1.
-		std::unique_ptr<class QuadMesh> mesh;
-
-		// 메시 객체2.
-		std::unique_ptr<class QuadMesh> mesh2;
-
-		// 메시 객체3.
-		std::unique_ptr<class TriangleMesh> mesh3;
-
-		//// 입력 레이아웃.
-		//ID3D11InputLayout* inputlayout = nullptr;
-
-		//// 쉐이더 객체.
-		//ID3D11VertexShader* vertexShader = nullptr;
-		//ID3D11PixelShader* pixelShader = nullptr;
 	};
 }

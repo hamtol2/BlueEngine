@@ -8,6 +8,7 @@
 #include "Core/Common.h"
 
 #include "Level/Level.h"
+#include "Actor/Actor.h"
 
 namespace Blue
 {
@@ -126,29 +127,6 @@ namespace Blue
 	// Ctrl K / Ctrl O.
 	void Renderer::Draw(std::shared_ptr<Level> level)
 	{
-		// @임시/Test
-		if (mesh == nullptr)
-		{
-			//mesh = std::make_unique<TriangleMesh>();
-			mesh = std::make_unique<QuadMesh>();
-			mesh->transform.scale = Vector3::One * 0.5f;
-			mesh->transform.position.x = 0.5f;
-		}
-
-		if (mesh2 == nullptr)
-		{
-			mesh2 = std::make_unique<QuadMesh>();
-			mesh2->transform.scale = Vector3::One * 0.5f;
-			mesh2->transform.position.x = -0.5f;
-		}
-
-		//if (mesh3 == nullptr)
-		//{
-		//	mesh3 = std::make_unique<TriangleMesh>();
-		//	mesh3->transform.scale = Vector3::One * 0.5f;
-		//	mesh3->transform.position.y = 0.5f;
-		//}
-
 		// 그리기 전 작업 (BeginScene).
 		context->OMSetRenderTargets(1, &renderTargetView, nullptr);
 
@@ -156,14 +134,23 @@ namespace Blue
 		float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
 		context->ClearRenderTargetView(renderTargetView, color);
 
-		// @Test.
-		mesh->Update(1.0f / 60.0f);
-		mesh2->Update(1.0f / 60.0f);
+		// Draw.
+		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
+		{
+			// 액터 가져오기.
+			auto actor = level->GetActor(ix);
 
-		// 드로우.
-		mesh->Draw();
-		mesh2->Draw();
-		//mesh3->Draw();
+			// Draw.
+			if (actor->IsActive())
+			{
+				//for (const auto& component : actor->components)
+				//{
+				//	// Check if component is drawable.
+				//}
+
+				actor->Draw();
+			}
+		}
 
 		// 버퍼 교환. (EndScene/Present).
 		swapChain->Present(1u, 0u);

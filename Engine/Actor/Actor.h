@@ -38,7 +38,7 @@ namespace Blue
 		// 액터의 초기화 여부.
 		bool hasInitialized = false;
 		// 액터의 활성화 여부.
-		bool isActive = false;
+		bool isActive = true;
 		// 삭제 여부.
 		bool hasDestroyed = false;
 
