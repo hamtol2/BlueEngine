@@ -23,7 +23,12 @@ namespace Blue
 		std::shared_ptr<Actor> GetActor(int index) const;
 		const uint32 ActorCount() const;
 
+		std::shared_ptr<Actor> GetCamera() const;
+
 	protected:
 		std::vector<std::shared_ptr<Actor>> actors;
+
+		// 메인 카메라 액터.
+		std::shared_ptr<Actor> cameraActor;
 	};
 }

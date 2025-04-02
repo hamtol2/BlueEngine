@@ -37,6 +37,9 @@ namespace Blue
 			return;
 		}
 
+		// 트랜스폼 업데이트.
+		transform.Tick();
+
 		// 컴포넌트 함수 호출.
 		for (const auto& component : components)
 		{

@@ -15,6 +15,7 @@
 #include "Shader/TextureMappingShader.h"
 
 #include "Component/StaticMeshComponent.h"
+#include "Component/CameraComponent.h"
 
 namespace Blue
 {
@@ -25,10 +26,18 @@ namespace Blue
 		// 액터 생성.
 		std::shared_ptr<QuadActor> actor = std::make_shared<QuadActor>();
 		actor->transform.scale = Vector3::One * 0.5f;
-		actor->transform.position.x = 0.5f;
+		//actor->transform.position.x = 0.5f;
+
+		// 카메라 액터 생성.
+		std::shared_ptr<Actor> cameraActor = std::make_shared<Actor>();
+		cameraActor->transform.position.y = 0.5f;
+		cameraActor->AddComponent(std::make_shared<CameraComponent>());
+
+		//this->cameraActor = cameraActor;
 
 		// 액터를 레벨에 추가.
 		AddActor(actor);
+		AddActor(cameraActor);
 	}
 
 	DemoLevel::~DemoLevel()

@@ -11,6 +11,7 @@ namespace Blue
 	class Actor
 	{
 		friend class Renderer;
+		friend class Level;
 
 	public:
 		Actor();
