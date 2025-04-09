@@ -140,6 +140,42 @@ namespace Blue
 		return m;
 	}
 
+	Matrix4 Matrix4::Perspective(
+		float fieldOfView, 
+		float width, 
+		float height, 
+		float nearDistance, 
+		float farDistance)
+	{
+		//XMMatrixPerspectiveFovLH
+
+		// 종횡비 (화면의 가로/세로 비율).
+		float aspect = width / height;
+
+		// 시야각 변환.
+		float fov = fieldOfView / 2.0f * degreeToRadian;
+
+		// 초점거리 (d).
+		float h = 1.0f / std::tanf(fov);
+		
+		float w = h / aspect;
+
+		float a = (nearDistance + farDistance) / (farDistance - nearDistance);
+		
+		float b = (-2.0f * nearDistance * farDistance) / (farDistance - nearDistance);
+
+		// 투영 행렬 조립.
+		Matrix4 m;
+
+		// 행렬.
+		m.m00 = w;		m.m01 = 0.0f;	m.m02 = 0.0f;	m.m03 = 0.0f;
+		m.m10 = 0.0f;	m.m11 = h;		m.m12 = 0.0f;	m.m13 = 0.0f;
+		m.m20 = 0.0f;	m.m21 = 0.0f;	m.m22 = a;		m.m23 = 1.0f;
+		m.m30 = 0.0f;	m.m31 = 0.0f;	m.m32 = b;		m.m33 = 0.0f;
+
+		return m;
+	}
+
 	Matrix4& Matrix4::operator=(const Matrix4& other)
 	{
 		memcpy(elements, other.elements, sizeof(float) * 16);

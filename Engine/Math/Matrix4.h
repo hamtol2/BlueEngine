@@ -34,6 +34,15 @@ namespace Blue
 		// 전치 행렬.
 		static Matrix4 Transpose(const Matrix4& target);
 
+		// 원근투영(Perspective).
+		static Matrix4 Perspective(
+			float fieldOfView,		// 시야각.
+			float width,			// 종횡비를 구하기 위한 화면의 너비.
+			float height,			// 종횡비를 구하기 위한 화면의 높이.
+			float nearDistance,		// 화면에 그려질 수 있는 가장 가까운 거리.
+			float farDistance		// 화면에 그려질 수 있는 가장 먼 거리.
+		);
+
 		// operator overloading.
 		Matrix4& operator=(const Matrix4& other);
 		Matrix4 operator*(const Matrix4& other);
