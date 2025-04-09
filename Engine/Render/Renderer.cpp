@@ -105,6 +105,10 @@ namespace Blue
 			backbuffer, nullptr, &renderTargetView
 		), TEXT("Failed to create render target view"));
 
+		// 사용한 리소스 해제.
+		backbuffer->Release();
+		backbuffer = nullptr;
+
 		// 렌더 타겟 뷰 바인딩(연결).
 		//context->OMSetRenderTargets(1, &renderTargetView, nullptr);
 
@@ -122,6 +126,29 @@ namespace Blue
 
 	Renderer::~Renderer()
 	{
+		// DX 리소스 해제.
+		if (context)
+		{
+			context->Release();
+			context = nullptr;
+		}
+		if (swapChain)
+		{
+			swapChain->Release();
+			swapChain = nullptr;
+		}
+
+		if (renderTargetView)
+		{
+			renderTargetView->Release();
+			renderTargetView = nullptr;
+		}
+
+		if (device)
+		{
+			device->Release();
+			device = nullptr;
+		}
 	}
 
 	// Ctrl K / Ctrl O.
