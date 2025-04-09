@@ -23,7 +23,14 @@ namespace Blue
 		// 그리기 함수.
 		void Draw(std::shared_ptr<class Level> level);
 
+		// 크기 변경 함수.
+		void OnResize(uint32 width, uint32 height);
+
 	private:
+
+		// 크기 변경 여부 확인 변수.
+		bool isResizing = false;
+
 		// 리소스.
 		// 장치류.
 		ID3D11Device* device = nullptr;

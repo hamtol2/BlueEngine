@@ -34,6 +34,9 @@ namespace Blue
 		// 싱글톤 접근 함수.
 		static Engine& Get();
 
+		// 화면 크기 변경 이벤트 대응 함수.
+		void OnResize(uint32 width, uint32 height);
+
 		// 엔진 종료 함수.
 		void Quit();
 

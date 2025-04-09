@@ -26,6 +26,9 @@ namespace Blue
 		// 싱글톤 객체 값 설정.
 		instance = this;
 
+		// 입력 관리자 객체 생성.
+		inputController = std::make_unique<InputController>();
+
 		// 창 객체 생성.
 		window = std::make_shared<Window>(
 			width, height, title, hInstance, WindowProc
@@ -39,9 +42,6 @@ namespace Blue
 
 		// 모델 로더 객체 생성.
 		modelLoader = std::make_unique<ModelLoader>();
-
-		// 입력 관리자 객체 생성.
-		inputController = std::make_unique<InputController>();
 
 		// 렌더러 생성.
 		renderer = std::make_shared<Renderer>(
@@ -145,6 +145,12 @@ namespace Blue
 
 	LRESULT Engine::WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam)
 	{
+		// 입력 관리자가 준비 안됐으면 종료.
+		if (!InputController::IsValid())
+		{
+			return DefWindowProc(handle, message, wparam, lparam);
+		}
+
 		// 메시지 처리.
 		switch (message)
 		{
@@ -212,7 +218,7 @@ namespace Blue
 			uint32 height = static_cast<uint32>(HIWORD(lparam));
 
 			// 가로 / 세로 크기 값 전달.
-			//Engine::Get().OnResize(width, height);
+			Engine::Get().OnResize(width, height);
 		}
 		break;
 
@@ -245,6 +251,33 @@ namespace Blue
 	Engine& Engine::Get()
 	{
 		return *instance;
+	}
+
+	void Engine::OnResize(uint32 width, uint32 height)
+	{
+		// 예외처리.
+		if (!window)
+		{
+			return;
+		}
+
+		if (!renderer)
+		{
+			return;
+		}
+
+		// 윈도우 클래스의 크기 조정.
+		window->SetWidthHeight(width, height);
+
+		// 전체 창 크기에서 실제로 그려지는 영역의 크기(ClientRect)를 구하기.
+		RECT rect;
+		GetClientRect(window->Handle(), &rect);
+
+		uint32 w = (uint32)(rect.right - rect.left);
+		uint32 h = (uint32)(rect.bottom - rect.top);
+
+		// 렌더러의 크기 조정 함수 호출.
+		renderer->OnResize(w, h);
 	}
 
 	void Engine::Quit()

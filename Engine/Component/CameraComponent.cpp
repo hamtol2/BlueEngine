@@ -6,6 +6,8 @@
 #include "Math/Transform.h"
 #include "Actor/Actor.h"
 
+#include "Core/InputController.h"
+
 namespace Blue
 {
 	CameraComponent::CameraComponent()
@@ -36,6 +38,53 @@ namespace Blue
 			TEXT("Failed to create camera buffer."));
 	}
 	
+	void CameraComponent::Tick(float deltaTime)
+	{
+		Component::Tick(deltaTime);
+
+		// 입력 관리자 포인터 저장.
+		static InputController& input = InputController::Get();
+
+		// @Test: 입력 테스트. ('A').
+		if (input.IsKeyDown(VK_ESCAPE))
+		{
+			// 팝업 창 띄우기.
+			if (MessageBox(nullptr, 
+				TEXT("Want to Quit?"), 
+				TEXT("Quit Engine"), MB_YESNO) == IDYES)
+			{
+				Engine::Get().Quit();
+			}
+		}
+
+
+		// 카메라 이동 처리.
+		if (input.IsKey('A') || input.IsKey(VK_LEFT))
+		{
+			// 왼쪽 이동.
+			owner->transform.position.x -= 1.0f * deltaTime;
+		}
+
+		if (input.IsKey('D') || input.IsKey(VK_RIGHT))
+		{
+			// 오른쪽 이동.
+			owner->transform.position.x += 1.0f * deltaTime;
+		}
+
+		if (input.IsKey('W') || input.IsKey(VK_UP))
+		{
+			// 위쪽 이동.
+			owner->transform.position.y += 1.0f * deltaTime;
+		}
+
+		if (input.IsKey('S') || input.IsKey(VK_DOWN))
+		{
+			// 아래쪽 이동.
+			owner->transform.position.y -= 1.0f * deltaTime;
+		}
+
+	}
+
 	void CameraComponent::Draw()
 	{
 		Component::Draw();

@@ -18,7 +18,8 @@ namespace Blue
 	public:
 		CameraComponent();
 		~CameraComponent() = default;
-
+		
+		virtual void Tick(float deltaTime) override;
 		virtual void Draw() override;
 
 	private:
