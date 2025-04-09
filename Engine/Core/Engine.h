@@ -34,11 +34,17 @@ namespace Blue
 		// 싱글톤 접근 함수.
 		static Engine& Get();
 
+		// 엔진 종료 함수.
+		void Quit();
+
 		// Getter.
 		ID3D11Device& Device() const;
 		ID3D11DeviceContext& Context() const;
 
 	protected:
+
+		// 엔진 종료 플래그.
+		bool isQuit = false;
 		
 		// 창 객체.
 		std::shared_ptr<class Window> window;
@@ -54,6 +60,9 @@ namespace Blue
 		
 		// 모델 로더 객체.
 		std::unique_ptr<class ModelLoader> modelLoader;
+
+		// 입력 관리자 객체.
+		std::unique_ptr<class InputController> inputController;
 
 		// 메인 레벨.
 		std::shared_ptr<class Level> mainLevel;

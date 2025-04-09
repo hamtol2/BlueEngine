@@ -7,57 +7,94 @@ namespace Blue
 
 	InputController::InputController()
 	{
+		// ½Ì±ÛÅæ º¯¼ö ¼³Á¤.
+		instance = this;
 	}
+
 	InputController::~InputController()
 	{
 	}
+
 	bool InputController::IsKeyDown(unsigned int keyCode)
 	{
-		return false;
+		return keyInputData[keyCode].isKeyDown;
 	}
+
 	bool InputController::IsKeyUp(unsigned int keyCode)
 	{
-		return false;
+		return keyInputData[keyCode].isKeyUp;
 	}
+	
 	bool InputController::IsKey(unsigned int keyCode)
 	{
-		return false;
+		return keyInputData[keyCode].isKey;
 	}
+
 	bool InputController::IsButtonDown(unsigned int button)
 	{
-		return false;
+		return mouseInputData[button].isButtonDown;
 	}
+
 	bool InputController::IsButtonUp(unsigned int button)
 	{
-		return false;
+		return mouseInputData[button].isButtonUp;
 	}
+	
 	bool InputController::IsButton(unsigned int button)
 	{
-		return false;
+		return mouseInputData[button].isButton;
 	}
+	
+	void InputController::ResetInputs()
+	{
+		for (KeyInputData& data : keyInputData)
+		{
+			data.isKeyUp = false;
+			data.isKeyDown = false;
+		}
+
+		for (MouseInputData& data : mouseInputData)
+		{
+			data.isButtonDown = false;
+			data.isButtonUp = false;
+		}
+
+		mousePreviousPosition = mousePosition;
+	}
+
 	Vector2 InputController::GetMousePosition()
 	{
-		return Vector2();
+		return mousePosition;
 	}
+
 	float InputController::GetMouseDeltaX()
 	{
-		return 0.0f;
+		return mousePosition.x - mousePreviousPosition.x;
 	}
+
 	float InputController::GetMouseDeltaY()
 	{
-		return 0.0f;
+		return mousePosition.y - mousePreviousPosition.y;
 	}
+
 	void InputController::SetKeyUpDown(unsigned int keyCode, bool isKeyUp, bool isKeyDown)
 	{
+		keyInputData[keyCode].SetKeyUpDown(isKeyUp, isKeyDown);
 	}
+
 	void InputController::SetButtonUpDown(unsigned int button, bool isButtonUp, bool isButtonDown)
 	{
+		mouseInputData[button].SetButtonUpDown(isButtonUp, isButtonDown);
 	}
+
 	void InputController::SetMousePosition(int x, int y)
 	{
+		mousePreviousPosition = mousePosition;
+		mousePosition = Vector2((float)x, (float)y);
 	}
+	
 	InputController& InputController::Get()
 	{
-		// TODO: insert return statement here
+		return *instance;
 	}
 }

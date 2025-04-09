@@ -90,6 +90,7 @@
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
     <ClCompile Include="Core\Engine.cpp" />
+    <ClCompile Include="Core\InputController.cpp" />
     <ClCompile Include="Core\Window.cpp" />
     <ClCompile Include="Level\DemoLevel.cpp" />
     <ClCompile Include="Level\Level.cpp" />
@@ -118,6 +119,7 @@
     <ClInclude Include="Component\StaticMeshComponent.h" />
     <ClInclude Include="Core\Common.h" />
     <ClInclude Include="Core\Engine.h" />
+    <ClInclude Include="Core\InputController.h" />
     <ClInclude Include="Core\Type.h" />
     <ClInclude Include="Core\Window.h" />
     <ClInclude Include="Level\DemoLevel.h" />
