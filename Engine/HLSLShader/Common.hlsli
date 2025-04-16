@@ -35,3 +35,26 @@ float CalcPhong(
     
     return specular;
 }
+
+float CalcBlinnPhong(
+    float3 worldNormal,
+    float3 lightDirection,
+    float3 cameraDirection,
+    float shineness = 32.0f)
+{
+    float NoL = CalcLambert(worldNormal, lightDirection);
+
+    float specular = 0;
+    if (NoL > 0)
+    {
+        // Half Vector.
+        float3 viewDirection = normalize(cameraDirection);
+        float3 halfVector = normalize((-lightDirection) + (-viewDirection));
+        
+        // nDoth.
+        float NoH = saturate(dot(worldNormal, halfVector));
+        specular = pow(NoH, shineness);
+    }
+    
+    return specular;
+}

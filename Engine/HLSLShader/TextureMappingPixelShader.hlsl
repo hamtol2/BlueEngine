@@ -36,20 +36,9 @@ float4 main(PixelInput input) : SV_TARGET
     //float specular = CalcPhong(worldNormal, lightDir, input.cameraDirection);
     
     // Blinn-Phong (specular).
-    float specular = 0;
-    if (nDotl)
-    {
-        // Half Vector.
-        float3 viewDirection = normalize(input.cameraDirection);
-        float3 halfVector = normalize((-lightDir) + (-viewDirection));
-        
-        // nDoth.
-        float nDoth = saturate(dot(worldNormal, halfVector));
-        float shineness = 32.0f;
-        specular = pow(nDoth, shineness);
-    }
+    float specular = CalcBlinnPhong(worldNormal, lightDir, input.cameraDirection);
     
-    finalColor += /*float4(0.4f, 0.6f, 0.8f, 1) * */specular;
+    finalColor += float4(0.4f, 0.6f, 0.8f, 1) * specular;
     //return float4(specular, specular, specular, 1);
     return finalColor;
 }
