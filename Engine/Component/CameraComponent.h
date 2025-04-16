@@ -14,6 +14,12 @@ namespace Blue
 
 		// 투영 변환 행렬.
 		Matrix4 projectionMatrix;
+
+		// 카메라 위치.
+		Vector3 cameraPosition;
+
+		// 패딩.
+		float padding;
 	};
 
 	class CameraComponent : public Component

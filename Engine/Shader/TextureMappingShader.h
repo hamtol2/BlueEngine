@@ -13,6 +13,9 @@ namespace Blue
 
 		virtual void Bind() override;
 
+		// 텍스처 설정 함수.
+		void SetTexture(const std::weak_ptr<class Texture>& newTexture);
+
 	private:
 		// 텍스처 리소스.
 		//std::unique_ptr<class Texture> texture;

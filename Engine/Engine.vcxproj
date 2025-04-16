@@ -85,6 +85,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Actor\Actor.cpp" />
+    <ClCompile Include="Actor\CameraActor.cpp" />
     <ClCompile Include="Actor\QuadActor.cpp" />
     <ClCompile Include="Component\CameraComponent.cpp" />
     <ClCompile Include="Component\Component.cpp" />
@@ -114,6 +115,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Actor\Actor.h" />
+    <ClInclude Include="Actor\CameraActor.h" />
     <ClInclude Include="Actor\QuadActor.h" />
     <ClInclude Include="Component\CameraComponent.h" />
     <ClInclude Include="Component\Component.h" />
@@ -179,6 +181,7 @@
     </FxCompile>
   </ItemGroup>
   <ItemGroup>
+    <None Include="HLSLShader\Common.hlsli" />
     <None Include="Resource\ShaderLoader.inl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
