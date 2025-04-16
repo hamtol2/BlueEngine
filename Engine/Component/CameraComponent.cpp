@@ -22,7 +22,7 @@ namespace Blue
 		
 		// 투영 행렬 설정.
 		data.projectionMatrix = Matrix4::Perspective(
-			90.0f,
+			60.0f,
 			(float)Engine::Get().Width(),
 			(float)Engine::Get().Height(),
 			0.1f,
@@ -118,7 +118,7 @@ namespace Blue
 
 		// 투영 행렬 설정.
 		data.projectionMatrix = Matrix4::Perspective(
-			90.0f,
+			60.0f,
 			(float)Engine::Get().Width(),
 			(float)Engine::Get().Height(),
 			0.1f,

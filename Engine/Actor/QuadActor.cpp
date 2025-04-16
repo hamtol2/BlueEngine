@@ -2,6 +2,8 @@
 
 #include "Component/StaticMeshComponent.h"
 #include "Render/QuadMesh.h"
+#include "Render/SphereMesh.h"
+
 #include "Shader/TextureMappingShader.h"
 #include "Resource/ShaderLoader.h"
 
@@ -17,9 +19,10 @@ namespace Blue
 		AddComponent(meshComponent);
 
 		// 리소스 로드 및 컴포넌트 설정.
-		meshComponent->SetMesh(std::make_shared<QuadMesh>());
+		//meshComponent->SetMesh(std::make_shared<QuadMesh>());
+		meshComponent->SetMesh(std::make_shared<SphereMesh>());
 		std::weak_ptr<TextureMappingShader> shader;
-		if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_coord.png"))
+		if (ShaderLoader::Get().Load<TextureMappingShader>(shader, "T_White.png"))
 		{
 			meshComponent->AddShader(shader);
 		}

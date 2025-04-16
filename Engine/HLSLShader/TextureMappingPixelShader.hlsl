@@ -22,11 +22,14 @@ float4 main(PixelInput input) : SV_TARGET
     // World Normal.
     float3 worldNormal = normalize(input.normal);
     
-    // Dot (Lambert).
-    float lightIntensity = saturate(dot(worldNormal, -lightDir));
+    // Dot (Lambert cosine law).
+    float nDotl = saturate(dot(worldNormal, -lightDir));
+    
+    // Half Lambert.
+    //nDotl = pow((nDotl * 0.7f) + (1.0 - 0.7f), 1);
     //float lightIntensity1 = max(0, dot(worldNormal, -lightDir));
     
-    float4 finalColor = texColor * lightIntensity;
+    float4 finalColor = texColor * nDotl;
 
 	//return float4(1.0f, 0.0f, 0.0f, 1.0f);
     //return float4(input.color, 1.0f);

@@ -40,6 +40,9 @@ namespace Blue
 		// 버퍼.
 		ID3D11RenderTargetView* renderTargetView = nullptr;
 
+		// 뎁스 버퍼.
+		ID3D11DepthStencilView* depthStencilView = nullptr;
+
 		// 뷰포트.
 		D3D11_VIEWPORT viewport;
 	};
