@@ -99,6 +99,9 @@
     <ClCompile Include="Actor\CameraActor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Shader\NormalMappingShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Window.h">
@@ -194,12 +197,17 @@
     <ClInclude Include="Actor\CameraActor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\NormalMappingShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="HLSLShader\DefaultVertexShader.hlsl" />
     <FxCompile Include="HLSLShader\DefaultPixelShader.hlsl" />
     <FxCompile Include="HLSLShader\TextureMappingPixelShader.hlsl" />
     <FxCompile Include="HLSLShader\TextureMappingVertexShader.hlsl" />
+    <FxCompile Include="HLSLShader\NormalMappingVertexShader.hlsl" />
+    <FxCompile Include="HLSLShader\NormalMappingPixelShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\ShaderLoader.inl">

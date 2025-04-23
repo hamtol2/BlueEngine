@@ -109,6 +109,7 @@
     <ClCompile Include="Resource\ModelLoader.cpp" />
     <ClCompile Include="Resource\TextureLoader.cpp" />
     <ClCompile Include="Shader\DefaultShader.cpp" />
+    <ClCompile Include="Shader\NormalMappingShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Resource\ShaderLoader.cpp" />
     <ClCompile Include="Shader\TextureMappingShader.cpp" />
@@ -143,6 +144,7 @@
     <ClInclude Include="Resource\ShaderLoader.h" />
     <ClInclude Include="Resource\TextureLoader.h" />
     <ClInclude Include="Shader\DefaultShader.h" />
+    <ClInclude Include="Shader\NormalMappingShader.h" />
     <ClInclude Include="Shader\Shader.h" />
     <ClInclude Include="Shader\TextureMappingShader.h" />
   </ItemGroup>
@@ -162,6 +164,18 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
       <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="HLSLShader\NormalMappingPixelShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSLShader\NormalMappingVertexShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
     </FxCompile>
     <FxCompile Include="HLSLShader\TextureMappingPixelShader.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>

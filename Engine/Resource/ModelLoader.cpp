@@ -147,6 +147,7 @@ namespace Blue
 		// 그람-슈미트 알고리즘 & 외적.
 		for (auto& vertex : vertices)
 		{
+			// 정사영 -> 직교 방향벡터 구하기.
 			vertex.tangent = (vertex.tangent - vertex.normal * Dot(vertex.normal, vertex.tangent)).Normalized();
 			vertex.tangent = vertex.tangent.Normalized();
 			vertex.bitangent = Cross(vertex.normal, vertex.tangent);

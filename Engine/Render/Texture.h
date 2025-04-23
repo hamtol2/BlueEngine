@@ -54,7 +54,7 @@ namespace Blue
 			uint32 index = 0u);
 		~Texture();
 
-		void Bind();
+		void Bind(uint32 index = 0);
 
 	private:
 		void LoadTexture(const std::string& name);
@@ -64,7 +64,7 @@ namespace Blue
 		std::string name;
 		
 		// 텍스처 순번.
-		uint32 index = 0u;
+		//uint32 index = 0u;
 		
 		// 바인딩 셰이더 타입.
 		BindType bindType = BindType::PixelShader;
