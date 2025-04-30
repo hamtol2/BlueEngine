@@ -14,15 +14,24 @@ namespace Blue
 		~TextureData()
 		{
 			// 원시 리소스 해제.
-			free(data);
-			data = nullptr;
+			if (data)
+			{
+				free(data);
+				data = nullptr;
+			}
 
 			// DX 리소스 해제.
-			shaderResourceView->Release();
-			shaderResourceView = nullptr;
+			if (shaderResourceView)
+			{
+				shaderResourceView->Release();
+				shaderResourceView = nullptr;
+			}
 
-			samplerState->Release();
-			samplerState = nullptr;
+			if (samplerState)
+			{
+				samplerState->Release();
+				samplerState = nullptr;
+			}
 		}
 
 		// 텍스처 원시 데이터.
@@ -56,10 +65,10 @@ namespace Blue
 
 		void Bind(uint32 index = 0);
 
-	private:
+	protected:
 		void LoadTexture(const std::string& name);
 
-	private:
+	protected:
 		// 이미지 이름.
 		std::string name;
 		

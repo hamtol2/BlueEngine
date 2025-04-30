@@ -4,6 +4,10 @@
 
 using namespace Blue;
 
+#define _CRTDBG_MAP_ALLOC
+#include <stdlib.h>
+#include <crtdbg.h>
+
 // 창 모드로 할 때 메인 함수(Entry Point).
 //int WINAPI WinMain(
 //    _In_ HINSTANCE hInstance,
@@ -49,6 +53,8 @@ using namespace Blue;
 
 int main()
 {
+	_CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+
 	Engine engine(1280, 800, TEXT("Engine Demo"), GetModuleHandle(nullptr));
 	engine.SetLevel(std::make_shared<DemoLevel>());
 	engine.Run();
