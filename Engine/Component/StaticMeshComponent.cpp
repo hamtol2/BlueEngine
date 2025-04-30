@@ -2,6 +2,7 @@
 #include "Render/Mesh.h"
 #include "Shader/Shader.h"
 #include "Core/Engine.h"
+#include "Core/Type.h"
 
 namespace Blue
 {
@@ -26,7 +27,7 @@ namespace Blue
 			return;
 		}
 
-		for (int ix = 0; ix < meshCount; ++ix)
+		for (uint32 ix = 0; ix < meshCount; ++ix)
 		{
 			// 서브 메시 가져오기.
 			auto subMesh = mesh->GetSubMesh(ix);

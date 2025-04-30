@@ -30,6 +30,10 @@ namespace Blue
 		// 셰이더에 바인딩된 RTV 및 SRV를 해제하는 함수.
 		void EmptyRTVsAndSRVs();
 
+		void Clear(ID3D11RenderTargetView** renderTargetView, float* clearColor, ID3D11DepthStencilView* depthStencilView);
+		void DrawToRenderTexturePass(std::shared_ptr<Level>& level);
+		void DrawFinalPass(std::shared_ptr<Level>& level);
+
 	private:
 
 		// 크기 변경 여부 확인 변수.

@@ -45,7 +45,7 @@ namespace Blue
 		// IDXGIFactory 리소스 생성.
 		IDXGIFactory* factory = nullptr;
 		//CreateDXGIFactory(__uuidof(factory), reinterpret_cast<void**>(&factory));
-		ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&factory)), 
+		ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&factory)),
 			TEXT("Failed to create dxgifactory."));
 
 		// 스왑 체인 정보 구조체.
@@ -95,7 +95,7 @@ namespace Blue
 		//);
 
 		ThrowIfFailed(swapChain->GetBuffer(
-			0, 
+			0,
 			IID_PPV_ARGS(&backbuffer)
 		), TEXT("Failed to get back buffer"));
 
@@ -195,100 +195,10 @@ namespace Blue
 		}
 
 		// Phase-1.
-		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix)
-		{
-			// 렌더 텍스처 가져오기.
-			auto renderTexture = TextureLoader::Get().renderTextures[ix];
-
-			EmptyRTVsAndSRVs();
-
-			// 렌더 타겟 설정.
-			context->OMSetRenderTargets(
-				1, 
-				renderTexture->GetRenderTargetAddress(), 
-				renderTexture->GetDepthStencilView()
-			);
-
-			// 지우기.
-			// 지우기(Clear).
-
-			float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
-			context->ClearRenderTargetView(renderTexture->GetRenderTarget(), color);
-			
-			context->ClearDepthStencilView(
-				renderTexture->GetDepthStencilView(),
-				D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
-				1.0f,
-				0
-			);
-
-			// 그리기.
-			// 카메라 바인딩.
-			if (level->GetCamera())
-			{
-				level->GetCamera()->Draw();
-			}
-
-			for (
-				uint32 actorIndex = 0; 
-				actorIndex < level->ActorCount(); 
-				++actorIndex
-				)
-			{
-				// 액터 가져오기.
-				auto actor = level->GetActor(actorIndex);
-
-				// 렌더 텍스처 사용 여부 확인.
-				auto meshComp = actor->GetComponent<StaticMeshComponent>();
-				if (meshComp && meshComp->UseRenderTexture())
-				{
-					continue;
-				}
-
-				// Draw.
-				if (actor->IsActive())
-				{
-					actor->Draw();
-				}
-			}
-		}
+		DrawToRenderTexturePass(level);
 
 		// Final-Phase.
-		// 그리기 전 작업 (BeginScene).
-
-		EmptyRTVsAndSRVs();
-
-		context->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
-
-		// 지우기(Clear).
-		float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
-		context->ClearRenderTargetView(renderTargetView, color);
-		context->ClearDepthStencilView(
-			depthStencilView,
-			D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
-			1.0f,
-			0
-		);
-
-		// Draw.
-
-		// 카메라 바인딩.
-		if (level->GetCamera())
-		{
-			level->GetCamera()->Draw();
-		}
-
-		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
-		{
-			// 액터 가져오기.
-			auto actor = level->GetActor(ix);
-
-			// Draw.
-			if (actor->IsActive())
-			{
-				actor->Draw();
-			}
-		}
+		DrawFinalPass(level);
 
 		// 버퍼 교환. (EndScene/Present).
 		swapChain->Present(1u, 0u);
@@ -397,5 +307,81 @@ namespace Blue
 
 		static ID3D11ShaderResourceView* nullSRVs = nullptr;
 		context->PSSetShaderResources(0, 1, &nullSRVs);
+	}
+
+	void Renderer::Clear(ID3D11RenderTargetView** renderTargetView, float* clearColor, ID3D11DepthStencilView* depthStencilView)
+	{
+		// RTV / SRV 비우기.
+		EmptyRTVsAndSRVs();
+
+		// 렌더 타겟 설정.
+		context->OMSetRenderTargets(1, renderTargetView, depthStencilView);
+
+		// 지우기(Clear).
+		context->ClearRenderTargetView(*renderTargetView, clearColor);
+		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
+	}
+
+	void Renderer::DrawToRenderTexturePass(std::shared_ptr<Level>& level)
+	{
+		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix)
+		{
+			// 렌더 텍스처 가져오기.
+			auto renderTexture = TextureLoader::Get().renderTextures[ix];
+
+			float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+			Clear(renderTexture->GetRenderTargetAddress(), color, renderTexture->GetDepthStencilView());
+
+			// 그리기.
+			// 카메라 바인딩.
+			if (level->GetCamera())
+			{
+				level->GetCamera()->Draw();
+			}
+
+			for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
+			{
+				// 액터 가져오기.
+				auto actor = level->GetActor(actorIndex);
+
+				// 렌더 텍스처 사용 여부 확인.
+				auto meshComp = actor->GetComponent<StaticMeshComponent>();
+				if (meshComp && meshComp->UseRenderTexture())
+				{
+					continue;
+				}
+
+				// Draw.
+				if (actor->IsActive())
+				{
+					actor->Draw();
+				}
+			}
+		}
+	}
+
+	void Renderer::DrawFinalPass(std::shared_ptr<Level>& level)
+	{
+		float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
+		Clear(&renderTargetView, color, depthStencilView);
+
+		// Draw.
+		// 카메라 바인딩.
+		if (level->GetCamera())
+		{
+			level->GetCamera()->Draw();
+		}
+
+		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
+		{
+			// 액터 가져오기.
+			auto actor = level->GetActor(ix);
+
+			// Draw.
+			if (actor->IsActive())
+			{
+				actor->Draw();
+			}
+		}
 	}
 }
