@@ -26,6 +26,23 @@ namespace Blue
 		// 컴포넌트 추가 함수.
 		void AddComponent(std::shared_ptr<class Component> newComponent);
 
+		// 컴포넌트 Get 함수.
+		template<typename T>
+		std::shared_ptr<T> GetComponent()
+		{
+			std::shared_ptr<T> targetComp;
+			for (auto& component : components)
+			{
+				targetComp = std::dynamic_pointer_cast<T>(component);
+				if (targetComp)
+				{
+					return targetComp;
+				}
+			}
+
+			return nullptr;
+		}
+
 		const bool IsActive() const;
 		const bool HasInitialized() const;
 

@@ -87,6 +87,7 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\CameraActor.cpp" />
     <ClCompile Include="Actor\QuadActor.cpp" />
+    <ClCompile Include="Actor\SphereActor.cpp" />
     <ClCompile Include="Component\CameraComponent.cpp" />
     <ClCompile Include="Component\Component.cpp" />
     <ClCompile Include="Component\StaticMeshComponent.cpp" />
@@ -119,6 +120,7 @@
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\CameraActor.h" />
     <ClInclude Include="Actor\QuadActor.h" />
+    <ClInclude Include="Actor\SphereActor.h" />
     <ClInclude Include="Component\CameraComponent.h" />
     <ClInclude Include="Component\Component.h" />
     <ClInclude Include="Component\StaticMeshComponent.h" />

@@ -105,6 +105,9 @@
     <ClCompile Include="Render\RenderTexture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\SphereActor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Window.h">
@@ -204,6 +207,9 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Render\RenderTexture.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\SphereActor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

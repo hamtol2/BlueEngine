@@ -11,6 +11,8 @@ namespace Blue
 	class RenderTexture;
 	class TextureLoader
 	{
+		friend class Renderer;
+
 	public:
 		TextureLoader();
 		~TextureLoader() = default;

@@ -25,7 +25,8 @@ namespace Blue
 		outTexture = newTexture;
 	}
 
-	void TextureLoader::GetNewRenderTexture(std::weak_ptr<RenderTexture>& outTexture, uint32 width, uint32 height)
+	void TextureLoader::GetNewRenderTexture(
+		std::weak_ptr<RenderTexture>& outTexture, uint32 width, uint32 height)
 	{
 		// 货肺款 咆胶贸 积己.
 		std::shared_ptr<RenderTexture> newTexture

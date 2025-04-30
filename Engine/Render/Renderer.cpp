@@ -1,14 +1,12 @@
 #include "Renderer.h"
-#include <vector>
-#include <d3dcompiler.h>
-
-#include "../Math/Vector3.h"
-#include "TriangleMesh.h"
-#include "QuadMesh.h"
 #include "Core/Common.h"
 
 #include "Level/Level.h"
 #include "Actor/Actor.h"
+
+#include "RenderTexture.h"
+#include "Resource/TextureLoader.h"
+#include "Component/StaticMeshComponent.h"
 
 namespace Blue
 {
@@ -196,6 +194,59 @@ namespace Blue
 			return;
 		}
 
+		// Phase-1.
+		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix)
+		{
+			// 렌더 텍스처 가져오기.
+			auto renderTexture = TextureLoader::Get().renderTextures[ix];
+
+			// 렌더 타겟 설정.
+			context->OMSetRenderTargets(
+				1, 
+				renderTexture->GetRenderTargetAddress(), 
+				renderTexture->GetDepthStencilView()
+			);
+
+			// 지우기.
+			// 지우기(Clear).
+			float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+			context->ClearRenderTargetView(renderTexture->GetRenderTarget(), color);
+			
+			context->ClearDepthStencilView(
+				renderTexture->GetDepthStencilView(),
+				D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL,
+				1.0f,
+				0
+			);
+
+			// 그리기.
+			// 카메라 바인딩.
+			if (level->GetCamera())
+			{
+				level->GetCamera()->Draw();
+			}
+
+			for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
+			{
+				// 액터 가져오기.
+				auto actor = level->GetActor(ix);
+
+				// 렌더 텍스처 사용 여부 확인.
+				auto meshComp = actor->GetComponent<StaticMeshComponent>();
+				if (meshComp && meshComp->UseRenderTexture())
+				{
+					continue;
+				}
+
+				// Draw.
+				if (actor->IsActive())
+				{
+					actor->Draw();
+				}
+			}
+		}
+
+		// Final-Phase.
 		// 그리기 전 작업 (BeginScene).
 		context->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 

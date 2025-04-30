@@ -14,6 +14,8 @@ namespace Blue
 		// GPU에 쉐이더 객체를 연결(바인딩)하는 함수.
 		virtual void Bind();
 
+		virtual bool UseRenderTexture() const { return useRenderTexture; }
+
 	protected:
 		// 쉐이더 이름.
 		std::wstring name;
@@ -26,5 +28,8 @@ namespace Blue
 
 		ID3D11PixelShader* pixelShader = nullptr;
 		ID3DBlob* pixelShaderBuffer = nullptr;
+
+		// 렌더 텍스처 사용 여부.
+		bool useRenderTexture = false;
 	};
 }

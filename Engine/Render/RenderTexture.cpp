@@ -96,7 +96,7 @@ namespace Blue
 
 		// 2차원 리소스 생성.
 		ThrowIfFailed(
-			device->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencilBuffer),
+			device.CreateTexture2D(&depthStencilDesc, nullptr, &depthStencilBuffer),
 			TEXT("Failed to create depth stencil buffer"));
 
 		D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
@@ -105,7 +105,7 @@ namespace Blue
 
 		// 뷰 생성.
 		ThrowIfFailed(
-			device->CreateDepthStencilView(
+			device.CreateDepthStencilView(
 				depthStencilBuffer,
 				&depthStencilViewDesc,
 				&depthStencilView),
