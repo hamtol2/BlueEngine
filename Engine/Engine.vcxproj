@@ -103,6 +103,7 @@
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\QuadMesh.cpp" />
     <ClCompile Include="Render\Renderer.cpp" />
+    <ClCompile Include="Render\RenderTexture.cpp" />
     <ClCompile Include="Render\SphereMesh.cpp" />
     <ClCompile Include="Render\Texture.cpp" />
     <ClCompile Include="Render\TriangleMesh.cpp" />
@@ -136,6 +137,7 @@
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\QuadMesh.h" />
     <ClInclude Include="Render\Renderer.h" />
+    <ClInclude Include="Render\RenderTexture.h" />
     <ClInclude Include="Render\SphereMesh.h" />
     <ClInclude Include="Render\Texture.h" />
     <ClInclude Include="Render\TriangleMesh.h" />

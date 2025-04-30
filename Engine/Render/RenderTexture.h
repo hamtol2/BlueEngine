@@ -12,6 +12,7 @@ namespace Blue
 		RenderTexture(uint32 width = 0, uint32 height = 0);
 		virtual ~RenderTexture();
 
+		// RenderTargetView Getter.
 		ID3D11RenderTargetView* GetRenderTarget() const 
 		{ 
 			return renderTargetView; 
@@ -20,6 +21,12 @@ namespace Blue
 		ID3D11RenderTargetView** GetRenderTargetAddress() 
 		{ 
 			return &renderTargetView; 
+		}
+
+		// DepthStencilView Getter.
+		ID3D11DepthStencilView* GetDepthStencilView()
+		{
+			return depthStencilView;
 		}
 
 	private:

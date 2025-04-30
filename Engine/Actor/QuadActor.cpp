@@ -54,6 +54,6 @@ namespace Blue
 		static const float rotationSpeed = 10.0f;
 
 		// È¸Àü.
-		transform.rotation.y += deltaTime * rotationSpeed;
+		//transform.rotation.y += deltaTime * rotationSpeed;
 	}
 }

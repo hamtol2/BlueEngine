@@ -28,6 +28,7 @@ namespace Blue
 		std::shared_ptr<QuadActor> actor = std::make_shared<QuadActor>();
 		//actor->transform.scale = Vector3::One * 0.5f;
 		actor->transform.position.x = -1.0f;
+		actor->transform.rotation.z = 90.0f;
 
 		std::shared_ptr<QuadActor> actor2 = std::make_shared<QuadActor>();
 		//actor2->transform.scale = Vector3::One * 0.5f;
