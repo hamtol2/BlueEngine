@@ -200,6 +200,8 @@ namespace Blue
 			// 렌더 텍스처 가져오기.
 			auto renderTexture = TextureLoader::Get().renderTextures[ix];
 
+			EmptyRTVsAndSRVs();
+
 			// 렌더 타겟 설정.
 			context->OMSetRenderTargets(
 				1, 
@@ -209,6 +211,7 @@ namespace Blue
 
 			// 지우기.
 			// 지우기(Clear).
+
 			float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 			context->ClearRenderTargetView(renderTexture->GetRenderTarget(), color);
 			
@@ -226,10 +229,14 @@ namespace Blue
 				level->GetCamera()->Draw();
 			}
 
-			for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
+			for (
+				uint32 actorIndex = 0; 
+				actorIndex < level->ActorCount(); 
+				++actorIndex
+				)
 			{
 				// 액터 가져오기.
-				auto actor = level->GetActor(ix);
+				auto actor = level->GetActor(actorIndex);
 
 				// 렌더 텍스처 사용 여부 확인.
 				auto meshComp = actor->GetComponent<StaticMeshComponent>();
@@ -248,6 +255,9 @@ namespace Blue
 
 		// Final-Phase.
 		// 그리기 전 작업 (BeginScene).
+
+		EmptyRTVsAndSRVs();
+
 		context->OMSetRenderTargets(1, &renderTargetView, depthStencilView);
 
 		// 지우기(Clear).
@@ -276,11 +286,6 @@ namespace Blue
 			// Draw.
 			if (actor->IsActive())
 			{
-				//for (const auto& component : actor->components)
-				//{
-				//	// Check if component is drawable.
-				//}
-
 				actor->Draw();
 			}
 		}
@@ -383,5 +388,14 @@ namespace Blue
 		context->RSSetViewports(1, &viewport);
 
 		isResizing = false;
+	}
+
+	void Renderer::EmptyRTVsAndSRVs()
+	{
+		static ID3D11RenderTargetView* nullRTV = nullptr;
+		context->OMSetRenderTargets(1, &nullRTV, nullptr);
+
+		static ID3D11ShaderResourceView* nullSRVs = nullptr;
+		context->PSSetShaderResources(0, 1, &nullSRVs);
 	}
 }
