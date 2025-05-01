@@ -7,7 +7,8 @@ namespace Blue
 	{
 		// ¸ðµ¨ ·Îµå.
 		std::weak_ptr<MeshData> mesh;
-		if (ModelLoader::Get().Load("sphere.obj", mesh))
+		//if (ModelLoader::Get().Load("sphere.obj", mesh))
+		if (ModelLoader::Get().Load("sphere.fbx", mesh))
 		{
 			meshes.emplace_back(mesh);
 		}
