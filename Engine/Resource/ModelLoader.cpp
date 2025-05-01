@@ -51,7 +51,7 @@ namespace Blue
 		else if (strcmp(extension, "fbx") == 0)
 		{
 			std::shared_ptr<MeshData> newMesh;
-			if (LoadFBX(name, newMesh, 0.01f))
+			if (LoadFBX(name, newMesh, 0.02f))
 			{
 				outData = newMesh;
 				return true;
