@@ -1,4 +1,21 @@
 
+// Ambient - Hemispheric ambient lighting.
+float3 CalcAmbient(float3 worldNormal)
+{
+    // Convert [-1,1] to [0,1]
+    float up = worldNormal.y * 0.5f + 0.5f;
+    
+    // Upper hemisphere ambient color.
+    float3 ambientUp = float3(0.2, 0.2, 0.2);
+    
+    // Down hemisphere ambient color.
+    float3 ambientDown = float3(0.1, 0.1, 0.1);
+    
+    // Calculate ambient value.
+    float3 ambient = ambientDown + up * ambientUp;
+    return ambient;
+}
+
 // Lambert cosine law.
 float CalcLambert(float3 worldNormal, float3 lightDirection)
 {
