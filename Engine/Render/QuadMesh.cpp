@@ -14,10 +14,14 @@ namespace Blue
 	QuadMesh::QuadMesh()
 	{
 		// ¸ðµ¨ ·Îµå.
-		std::weak_ptr<MeshData> mesh;
-		if (ModelLoader::Get().Load("quad.obj", mesh))
+		std::vector<std::weak_ptr<MeshData>> meshList;
+		if (ModelLoader::Get().Load("quad.obj", meshList))
 		{
-			meshes.emplace_back(mesh);
+			for (auto const& mesh : meshList)
+			{
+				meshes.emplace_back(mesh);
+			}
+			//meshes.emplace_back(mesh);
 		}
 	}
 

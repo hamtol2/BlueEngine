@@ -20,13 +20,17 @@ namespace Blue
 		instance = this;
 	}
 
-	bool ModelLoader::Load(const std::string& name, std::weak_ptr<MeshData>& outData)
+	bool ModelLoader::Load(const std::string& name, std::vector<std::weak_ptr<MeshData>>& outData)
 	{
 		// 이미 가지고 있는지 확인.
 		auto result = meshes.find(name);
 		if (result != meshes.end())
 		{
-			outData = result->second;
+			for (auto const& mesh : result->second)
+			{
+				outData.emplace_back(mesh);
+			}
+			//outData = result->second;
 			return true;
 		}
 
@@ -39,10 +43,15 @@ namespace Blue
 		// 확장자에 따른 모델링 로드 처리.
 		if (strcmp(extension, "obj") == 0)
 		{
-			std::shared_ptr<MeshData> newMesh;
+			std::vector<std::shared_ptr<MeshData>> newMesh;
 			if (LoadOBJ(name, newMesh))
 			{
-				outData = newMesh;
+				//outData = newMesh;
+
+				for (auto const& mesh : newMesh)
+				{
+					outData.emplace_back(mesh);
+				}
 				return true;
 			}
 
@@ -50,10 +59,15 @@ namespace Blue
 		}
 		else if (strcmp(extension, "fbx") == 0)
 		{
-			std::shared_ptr<MeshData> newMesh;
+			std::vector<std::shared_ptr<MeshData>> newMesh;
 			if (LoadFBX(name, newMesh, 0.02f))
 			{
-				outData = newMesh;
+				//outData = newMesh;
+
+				for (auto const& mesh : newMesh)
+				{
+					outData.emplace_back(mesh);
+				}
 				return true;
 			}
 
@@ -68,7 +82,7 @@ namespace Blue
 		return *instance;
 	}
 
-	bool ModelLoader::LoadOBJ(const std::string& name, std::shared_ptr<MeshData>& outData)
+	bool ModelLoader::LoadOBJ(const std::string& name, std::vector<std::shared_ptr<MeshData>>& outData)
 	{
 		// 파일로드.
 		char path[512] = {};
@@ -201,12 +215,14 @@ namespace Blue
 
 		// 메시 데이터 생성 및 리소스 등록.
 		std::shared_ptr<MeshData> newData = std::make_shared<MeshData>(vertices, indices);
-		meshes.insert(std::make_pair(name, newData));
-		outData = newData;
+		std::vector<std::shared_ptr<MeshData>> newMeshes{ newData };
+		//meshes.insert(std::make_pair(name, newData));
+		meshes.insert(std::make_pair(name, newMeshes));
+		outData = newMeshes;
 		return true;
 	}
 
-	bool ModelLoader::LoadFBX(const std::string& name, std::shared_ptr<MeshData>& outData, float baseScale)
+	bool ModelLoader::LoadFBX(const std::string& name, std::vector<std::shared_ptr<MeshData>>& outData, float baseScale)
 	{
 		// 파일로드.
 		char path[512] = {};
@@ -322,10 +338,10 @@ namespace Blue
 		aiReleaseImport(fbxScene);
 
 		// 해시 테이블에 메시 저장.
-		this->meshes.insert(std::make_pair(name, meshes[0]));
+		this->meshes.insert(std::make_pair(name, meshes));
 
 		// 출력.
-		outData = meshes[0];
+		outData = meshes;
 
 		// 성공 반환.
 		return true;
