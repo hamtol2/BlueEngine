@@ -112,6 +112,7 @@ namespace Blue
 			{
 				Vector2 texCoord;
 				sscanf_s(line, "vt %f %f", &texCoord.x, &texCoord.y);
+				texCoord.y = 1.0f - texCoord.y;
 				texCoords.emplace_back(texCoord);
 			}
 			else if (strcmp(header, "vn") == 0)
@@ -263,7 +264,7 @@ namespace Blue
 				if (mesh->HasTextureCoords(0))
 				{
 					texCoord.x = mesh->mTextureCoords[0][ix].x;
-					texCoord.y = mesh->mTextureCoords[0][ix].y;
+					texCoord.y = 1.0f - mesh->mTextureCoords[0][ix].y;
 				}
 
 				// 노멀 설정.

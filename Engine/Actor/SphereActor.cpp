@@ -43,6 +43,8 @@ namespace Blue
 			NormalMappingShader::ETextureBindType::NormalMap,
 			normalMap
 		);
+
+		transform.rotation.x = -90.0f;
 	}
 
 	void SphereActor::Tick(float deltaTime)
