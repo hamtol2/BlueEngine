@@ -129,10 +129,10 @@ namespace Blue
 			FLOAT MaxLOD;
 		*/
 		D3D11_SAMPLER_DESC sampleDesc = {};
-		sampleDesc.Filter = D3D11_FILTER_ANISOTROPIC;
-		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
-		sampleDesc.AddressV = D3D11_TEXTURE_ADDRESS_CLAMP;
-		sampleDesc.AddressW = D3D11_TEXTURE_ADDRESS_CLAMP;
+		sampleDesc.Filter = D3D11_FILTER_MIN_MAG_MIP_LINEAR;
+		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampleDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampleDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
 		sampleDesc.MaxLOD = FLT_MAX;
 		sampleDesc.MinLOD = -FLT_MAX;
 		sampleDesc.MaxAnisotropy = 3;

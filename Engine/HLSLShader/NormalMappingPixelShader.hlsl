@@ -37,7 +37,8 @@ float4 main(PixelInput input) : SV_TARGET
     lightDir = normalize(lightDir);
     
     // World Normal.
-    float3 worldNormal = normalize(mul(tangentNormal.xyz, tangentToWorld));
+    //float3 worldNormal = normalize(mul(tangentNormal.xyz, tangentToWorld));
+    float3 worldNormal = normalize(input.normal);
     
     // Dot (Lambert cosine law) - diffuse.
     float nDotl = CalcLambert(worldNormal, lightDir);
@@ -56,5 +57,7 @@ float4 main(PixelInput input) : SV_TARGET
     finalColor += float4(0.4f, 0.6f, 0.8f, 1) * specular;
     //return float4(specular, specular, specular, 1);
     //return ambient;
-    return finalColor;
+    //return finalColor;
+    return texColor;
+
 }

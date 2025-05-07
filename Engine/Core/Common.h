@@ -1,7 +1,5 @@
 #pragma once
 
-#define WIN_LEAN_AND_MEAN
-#define NOMINMAX
 #include <Windows.h>
 #include <comdef.h>
 

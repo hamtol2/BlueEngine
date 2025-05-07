@@ -6,10 +6,10 @@
 #include "Render/Vertex.h"
 #include "Render/Mesh.h"
 
-#include <Importer.hpp>
-#include <scene.h>
-#include <postprocess.h>
-#include <cimport.h>
+//#include <Importer.hpp>
+//#include <scene.h>
+//#include <postprocess.h>
+//#include <cimport.h>
 
 namespace Blue
 {
@@ -60,7 +60,7 @@ namespace Blue
 		else if (strcmp(extension, "fbx") == 0)
 		{
 			std::vector<std::shared_ptr<MeshData>> newMesh;
-			if (LoadFBX(name, newMesh, 0.02f))
+			if (LoadFBX(name, newMesh, 0.01f))
 			{
 				//outData = newMesh;
 
@@ -231,7 +231,9 @@ namespace Blue
 		// fbx scene 임포트.
 		const aiScene* fbxScene = aiImportFile(
 			path, 
-			aiProcess_Triangulate | aiProcess_ConvertToLeftHanded
+			aiProcess_Triangulate |
+			aiProcess_TransformUVCoords |
+			aiProcess_ConvertToLeftHanded
 		);
 
 		// 씬 임포트에 실패하거나 씬에 메시가 없는 경우 실패 처리.
@@ -244,41 +246,61 @@ namespace Blue
 		aiNode* rootNode = fbxScene->mRootNode;
 		
 		// 메시를 가진 노드 검색.
-		aiNode* meshNode = nullptr;
+		std::vector<std::shared_ptr<MeshData>> meshes;
 		for (uint32 ix = 0; ix < rootNode->mNumChildren; ++ix)
 		{
 			aiNode* currentNode = rootNode->mChildren[ix];
 			if (currentNode->mNumMeshes > 0)
 			{
-				meshNode = currentNode;
-				break;
+				ProcessMesh(currentNode, fbxScene, baseScale, meshes);
+				//meshNode = currentNode;
+				//break;
 			}
 		}
 
-		// 메시를 가진 노드가 없는 경우 실패.
-		if (!meshNode)
-		{
-			return false;
-		}
+		//// 메시를 가진 노드가 없는 경우 실패.
+		//if (!meshNode)
+		//{
+		//	return false;
+		//}
 
+		// 해시 테이블에 메시 저장.
+		this->meshes.insert(std::make_pair(name, meshes));
+
+		// 출력.
+		outData = meshes;
+
+		// fbx import 해제.
+		aiReleaseImport(fbxScene);
+
+		// 성공 반환.
+		return true;
+	}
+
+	void ModelLoader::ProcessMesh(
+		aiNode* meshNode, 
+		const aiScene* fbxScene, 
+		float baseScale, 
+		std::vector<std::shared_ptr<MeshData>>& meshes)
+	{
 		// 메시 처리.
-		std::vector<std::shared_ptr<MeshData>> meshes;
-		for (uint32 meshIndex = 0; meshIndex < meshNode->mNumMeshes; ++meshIndex)
+		for (uint32 meshIndex = 0; meshIndex < fbxScene->mNumMeshes; ++meshIndex)
 		{
 			// aiMesh 가져오기.
-			aiMesh* mesh = fbxScene->mMeshes[meshNode->mMeshes[meshIndex]];
+			aiMesh* mesh = fbxScene->mMeshes[meshIndex];
 
 			// 정점 처리.
 			std::vector<Vertex> vertices;
+			vertices.reserve((size_t)mesh->mNumVertices);
 			for (uint32 ix = 0; ix < mesh->mNumVertices; ++ix)
 			{
 				// 위치 설정.
 				Vector3 position(
-					mesh->mVertices[ix].x, 
-					mesh->mVertices[ix].y, 
+					mesh->mVertices[ix].x,
+					mesh->mVertices[ix].y,
 					mesh->mVertices[ix].z
 				);
-				
+
 				// 기본으로 설정된 스케일 적용 (FBX의 경우 너무 크게 적용되는 경우가 있음).
 				position *= baseScale;
 
@@ -287,7 +309,7 @@ namespace Blue
 				if (mesh->HasTextureCoords(0))
 				{
 					texCoord.x = mesh->mTextureCoords[0][ix].x;
-					texCoord.y = 1.0f - mesh->mTextureCoords[0][ix].y;
+					texCoord.y = mesh->mTextureCoords[0][ix].y;
 				}
 
 				// 노멀 설정.
@@ -331,26 +353,13 @@ namespace Blue
 				const aiFace& face = mesh->mFaces[ix];
 
 				// 인덱스 설정.
-				indices.emplace_back(mesh->mFaces[ix].mIndices[0]);
-				indices.emplace_back(mesh->mFaces[ix].mIndices[1]);
-				indices.emplace_back(mesh->mFaces[ix].mIndices[2]);
+				indices.emplace_back(face.mIndices[0]);
+				indices.emplace_back(face.mIndices[1]);
+				indices.emplace_back(face.mIndices[2]);
 			}
 
 			// MeshData 생성 및 배열에 추가.
-			std::shared_ptr<MeshData> meshData = std::make_shared<MeshData>(vertices, indices);
-			meshes.emplace_back(meshData);
+			meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
 		}
-
-		// fbx import 해제.
-		aiReleaseImport(fbxScene);
-
-		// 해시 테이블에 메시 저장.
-		this->meshes.insert(std::make_pair(name, meshes));
-
-		// 출력.
-		outData = meshes;
-
-		// 성공 반환.
-		return true;
 	}
 }

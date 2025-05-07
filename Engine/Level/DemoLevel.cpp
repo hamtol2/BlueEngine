@@ -4,6 +4,7 @@
 #include "Actor/QuadActor.h"
 #include "Actor/SphereActor.h"
 #include "Actor/CameraActor.h"
+#include "Actor/SoldierActor.h"
 
 #include "Math/Transform.h"
 #include "Math/Vector3.h"
@@ -38,13 +39,17 @@ namespace Blue
 		//cameraActor->transform.position.y = -0.5f;
 		//cameraActor->AddComponent(std::make_shared<CameraComponent>());
 		std::shared_ptr<CameraActor> cameraActor = std::make_shared<CameraActor>();
-		cameraActor->transform.position.z = -3.0f;
+		cameraActor->transform.position.z = -5.0f;
+
+		std::shared_ptr<SoldierActor> soldier = std::make_shared<SoldierActor>();
+		//soldier->transform.scale = Vector3::One * 0.01f;
 
 		//this->cameraActor = cameraActor;
 
 		// 액터를 레벨에 추가.
-		AddActor(actor);
-		AddActor(actor2);
+		//AddActor(actor);
+		//AddActor(actor2);
+		AddActor(soldier);
 		AddActor(cameraActor);
 	}
 
