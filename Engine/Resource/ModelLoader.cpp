@@ -229,7 +229,10 @@ namespace Blue
 		sprintf_s(path, 512, "../Assets/Meshes/%s", name.c_str());
 
 		// fbx scene 임포트.
-		const aiScene* fbxScene = aiImportFile(path, aiProcess_ConvertToLeftHanded);
+		const aiScene* fbxScene = aiImportFile(
+			path, 
+			aiProcess_Triangulate | aiProcess_ConvertToLeftHanded
+		);
 
 		// 씬 임포트에 실패하거나 씬에 메시가 없는 경우 실패 처리.
 		if (!fbxScene || !fbxScene->HasMeshes())
@@ -270,7 +273,11 @@ namespace Blue
 			for (uint32 ix = 0; ix < mesh->mNumVertices; ++ix)
 			{
 				// 위치 설정.
-				Vector3 position(mesh->mVertices[ix].x, mesh->mVertices[ix].y, mesh->mVertices[ix].z);
+				Vector3 position(
+					mesh->mVertices[ix].x, 
+					mesh->mVertices[ix].y, 
+					mesh->mVertices[ix].z
+				);
 				
 				// 기본으로 설정된 스케일 적용 (FBX의 경우 너무 크게 적용되는 경우가 있음).
 				position *= baseScale;
