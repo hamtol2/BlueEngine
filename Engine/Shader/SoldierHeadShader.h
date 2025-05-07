@@ -1,10 +1,10 @@
 #pragma once
 
-#include "NormalMappingShader.h"
+#include "NormalSpecularMappingShader.h"
 
 namespace Blue
 {
-	class SoldierHeadShader : public NormalMappingShader
+	class SoldierHeadShader : public NormalSpecularMappingShader
 	{
 	public:
 		SoldierHeadShader();
