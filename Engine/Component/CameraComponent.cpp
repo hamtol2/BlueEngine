@@ -26,7 +26,7 @@ namespace Blue
 			(float)Engine::Get().Width(),
 			(float)Engine::Get().Height(),
 			0.1f,
-			100.0f
+			10000.0f
 		);
 
 		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
@@ -71,7 +71,7 @@ namespace Blue
 			(float)Engine::Get().Width(),
 			(float)Engine::Get().Height(),
 			0.1f,
-			100.0f
+			10000.0f
 		);
 
 		// 카메라 위치 설정.

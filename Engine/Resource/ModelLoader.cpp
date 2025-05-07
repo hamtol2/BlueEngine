@@ -20,7 +20,7 @@ namespace Blue
 		instance = this;
 	}
 
-	bool ModelLoader::Load(const std::string& name, std::vector<std::weak_ptr<MeshData>>& outData)
+	bool ModelLoader::Load(const std::string& name, std::vector<std::weak_ptr<MeshData>>& outData, float baseScale)
 	{
 		// 이미 가지고 있는지 확인.
 		auto result = meshes.find(name);
@@ -40,14 +40,16 @@ namespace Blue
 		char* extension = nullptr;
 		char* nameOnly = strtok_s(nameBuffer, ".", &extension);
 
+#if _DEBUG
+		assert(extension);
+#endif
+
 		// 확장자에 따른 모델링 로드 처리.
 		if (strcmp(extension, "obj") == 0)
 		{
 			std::vector<std::shared_ptr<MeshData>> newMesh;
 			if (LoadOBJ(name, newMesh))
 			{
-				//outData = newMesh;
-
 				for (auto const& mesh : newMesh)
 				{
 					outData.emplace_back(mesh);
@@ -60,10 +62,8 @@ namespace Blue
 		else if (strcmp(extension, "fbx") == 0)
 		{
 			std::vector<std::shared_ptr<MeshData>> newMesh;
-			if (LoadFBX(name, newMesh, 0.01f))
+			if (LoadFBX(name, newMesh, baseScale))
 			{
-				//outData = newMesh;
-
 				for (auto const& mesh : newMesh)
 				{
 					outData.emplace_back(mesh);
@@ -126,7 +126,7 @@ namespace Blue
 			{
 				Vector2 texCoord;
 				sscanf_s(line, "vt %f %f", &texCoord.x, &texCoord.y);
-				texCoord.y = 1.0f - texCoord.y;
+				texCoord.y = texCoord.y;
 				texCoords.emplace_back(texCoord);
 			}
 			else if (strcmp(header, "vn") == 0)
@@ -216,7 +216,6 @@ namespace Blue
 		// 메시 데이터 생성 및 리소스 등록.
 		std::shared_ptr<MeshData> newData = std::make_shared<MeshData>(vertices, indices);
 		std::vector<std::shared_ptr<MeshData>> newMeshes{ newData };
-		//meshes.insert(std::make_pair(name, newData));
 		meshes.insert(std::make_pair(name, newMeshes));
 		outData = newMeshes;
 		return true;
@@ -230,9 +229,9 @@ namespace Blue
 
 		// fbx scene 임포트.
 		const aiScene* fbxScene = aiImportFile(
-			path, 
+			path,
 			aiProcess_Triangulate |
-			aiProcess_TransformUVCoords |
+			//aiProcess_TransformUVCoords |
 			aiProcess_ConvertToLeftHanded
 		);
 
@@ -242,27 +241,12 @@ namespace Blue
 			return false;
 		}
 
-		// fbxScene에서 루트 노드 가져오기.
-		aiNode* rootNode = fbxScene->mRootNode;
-		
-		// 메시를 가진 노드 검색.
+		// 서브 메시를 순회하면서 메시 처리.
 		std::vector<std::shared_ptr<MeshData>> meshes;
-		for (uint32 ix = 0; ix < rootNode->mNumChildren; ++ix)
+		for (uint32 ix = 0; ix < fbxScene->mNumMeshes; ++ix)
 		{
-			aiNode* currentNode = rootNode->mChildren[ix];
-			if (currentNode->mNumMeshes > 0)
-			{
-				ProcessMesh(currentNode, fbxScene, baseScale, meshes);
-				//meshNode = currentNode;
-				//break;
-			}
+			ProcessMesh(fbxScene->mMeshes[ix], baseScale, meshes);
 		}
-
-		//// 메시를 가진 노드가 없는 경우 실패.
-		//if (!meshNode)
-		//{
-		//	return false;
-		//}
 
 		// 해시 테이블에 메시 저장.
 		this->meshes.insert(std::make_pair(name, meshes));
@@ -278,88 +262,81 @@ namespace Blue
 	}
 
 	void ModelLoader::ProcessMesh(
-		aiNode* meshNode, 
-		const aiScene* fbxScene, 
-		float baseScale, 
+		aiMesh* mesh,
+		float baseScale,
 		std::vector<std::shared_ptr<MeshData>>& meshes)
 	{
 		// 메시 처리.
-		for (uint32 meshIndex = 0; meshIndex < fbxScene->mNumMeshes; ++meshIndex)
+		// 정점 처리.
+		std::vector<Vertex> vertices;
+		vertices.reserve((size_t)mesh->mNumVertices);
+		for (uint32 ix = 0; ix < mesh->mNumVertices; ++ix)
 		{
-			// aiMesh 가져오기.
-			aiMesh* mesh = fbxScene->mMeshes[meshIndex];
+			// 위치 설정.
+			Vector3 position(
+				mesh->mVertices[ix].x,
+				mesh->mVertices[ix].y,
+				mesh->mVertices[ix].z
+			);
 
-			// 정점 처리.
-			std::vector<Vertex> vertices;
-			vertices.reserve((size_t)mesh->mNumVertices);
-			for (uint32 ix = 0; ix < mesh->mNumVertices; ++ix)
+			// 기본으로 설정된 스케일 적용 (FBX의 경우 너무 크게 적용되는 경우가 있음).
+			//position *= baseScale;
+
+			// UV 설정.
+			Vector2 texCoord;
+			if (mesh->HasTextureCoords(0))
 			{
-				// 위치 설정.
-				Vector3 position(
-					mesh->mVertices[ix].x,
-					mesh->mVertices[ix].y,
-					mesh->mVertices[ix].z
-				);
-
-				// 기본으로 설정된 스케일 적용 (FBX의 경우 너무 크게 적용되는 경우가 있음).
-				position *= baseScale;
-
-				// UV 설정.
-				Vector2 texCoord;
-				if (mesh->HasTextureCoords(0))
-				{
-					texCoord.x = mesh->mTextureCoords[0][ix].x;
-					texCoord.y = mesh->mTextureCoords[0][ix].y;
-				}
-
-				// 노멀 설정.
-				Vector3 normal;
-				if (mesh->HasNormals())
-				{
-					normal.x = mesh->mNormals[ix].x;
-					normal.y = mesh->mNormals[ix].y;
-					normal.z = mesh->mNormals[ix].z;
-				}
-
-				// 탄젠트/바이탄젠트 설정.
-				Vector3 tangent;
-				Vector3 bitangent;
-				if (mesh->HasTangentsAndBitangents())
-				{
-					tangent.x = mesh->mTangents[ix].x;
-					tangent.y = mesh->mTangents[ix].y;
-					tangent.z = mesh->mTangents[ix].z;
-
-					bitangent.x = mesh->mBitangents[ix].x;
-					bitangent.y = mesh->mBitangents[ix].y;
-					bitangent.z = mesh->mBitangents[ix].z;
-				}
-
-				// 정점 생성.
-				Vertex vertex(position, Vector3::One, texCoord, normal);
-				vertex.tangent = tangent;
-				vertex.bitangent = bitangent;
-
-				// 정점 배열에 추가.
-				vertices.emplace_back(vertex);
+				texCoord.x = mesh->mTextureCoords[0][ix].x;
+				texCoord.y = mesh->mTextureCoords[0][ix].y;
 			}
 
-			// 인덱스 생성.
-			std::vector<uint32> indices;
-			indices.reserve(mesh->mNumFaces * 3);
-			for (uint32 ix = 0; ix < mesh->mNumFaces; ++ix)
+			// 노멀 설정.
+			Vector3 normal;
+			if (mesh->HasNormals())
 			{
-				// 면(Face) 가져오기.
-				const aiFace& face = mesh->mFaces[ix];
-
-				// 인덱스 설정.
-				indices.emplace_back(face.mIndices[0]);
-				indices.emplace_back(face.mIndices[1]);
-				indices.emplace_back(face.mIndices[2]);
+				normal.x = mesh->mNormals[ix].x;
+				normal.y = mesh->mNormals[ix].y;
+				normal.z = mesh->mNormals[ix].z;
 			}
 
-			// MeshData 생성 및 배열에 추가.
-			meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
+			// 탄젠트/바이탄젠트 설정.
+			Vector3 tangent;
+			Vector3 bitangent;
+			if (mesh->HasTangentsAndBitangents())
+			{
+				tangent.x = mesh->mTangents[ix].x;
+				tangent.y = mesh->mTangents[ix].y;
+				tangent.z = mesh->mTangents[ix].z;
+
+				bitangent.x = mesh->mBitangents[ix].x;
+				bitangent.y = mesh->mBitangents[ix].y;
+				bitangent.z = mesh->mBitangents[ix].z;
+			}
+
+			// 정점 생성.
+			Vertex vertex(position, Vector3::One, texCoord, normal);
+			vertex.tangent = tangent;
+			vertex.bitangent = bitangent;
+
+			// 정점 배열에 추가.
+			vertices.emplace_back(vertex);
 		}
+
+		// 인덱스 생성.
+		std::vector<uint32> indices;
+		indices.reserve(mesh->mNumFaces * 3);
+		for (uint32 ix = 0; ix < mesh->mNumFaces; ++ix)
+		{
+			// 면(Face) 가져오기.
+			const aiFace& face = mesh->mFaces[ix];
+
+			// 인덱스 설정.
+			indices.emplace_back(face.mIndices[0]);
+			indices.emplace_back(face.mIndices[1]);
+			indices.emplace_back(face.mIndices[2]);
+		}
+
+		// MeshData 생성 및 배열에 추가.
+		meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
 	}
 }

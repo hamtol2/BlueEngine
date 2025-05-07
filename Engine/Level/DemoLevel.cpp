@@ -27,28 +27,25 @@ namespace Blue
 		// 데모 씬(레벨) 구성.
 
 		// 액터 생성.
-		std::shared_ptr<SphereActor> actor = std::make_shared<SphereActor>();
-		//actor->transform.scale = Vector3::One * 0.5f;
-		actor->transform.position.x = -1.0f;
+		std::shared_ptr<SphereActor> sphere = std::make_shared<SphereActor>();
+		sphere->transform.position.x = -0.5f;
+		sphere->transform.scale = Vector3::One * 0.01f;
 
-		std::shared_ptr<QuadActor> actor2 = std::make_shared<QuadActor>();
-		actor2->transform.position.x = 1.0f;
+		std::shared_ptr<QuadActor> quad = std::make_shared<QuadActor>();
+		quad->transform.position.x = 1.0f;
 
 		// 카메라 액터 생성.
-		//std::shared_ptr<Actor> cameraActor = std::make_shared<Actor>();
-		//cameraActor->transform.position.y = -0.5f;
-		//cameraActor->AddComponent(std::make_shared<CameraComponent>());
 		std::shared_ptr<CameraActor> cameraActor = std::make_shared<CameraActor>();
-		cameraActor->transform.position.z = -5.0f;
+		cameraActor->transform.position.z = -3.0f;
 
 		std::shared_ptr<SoldierActor> soldier = std::make_shared<SoldierActor>();
-		//soldier->transform.scale = Vector3::One * 0.01f;
-
-		//this->cameraActor = cameraActor;
+		soldier->transform.position.x = -2.0f;
+		soldier->transform.position.y = -1.0f;
+		soldier->transform.scale = Vector3::One * 0.01f;
 
 		// 액터를 레벨에 추가.
-		//AddActor(actor);
-		//AddActor(actor2);
+		AddActor(sphere);
+		AddActor(quad);
 		AddActor(soldier);
 		AddActor(cameraActor);
 	}

@@ -20,7 +20,7 @@ namespace Blue
 		~ModelLoader() = default;
 
 		//bool Load(const std::string& name, std::weak_ptr<MeshData>& outData);
-		bool Load(const std::string& name, std::vector<std::weak_ptr<MeshData>>& outData);
+		bool Load(const std::string& name, std::vector<std::weak_ptr<MeshData>>& outData, float baseScale = 1.0f);
 
 		static ModelLoader& Get();
 
@@ -28,7 +28,7 @@ namespace Blue
 		bool LoadOBJ(const std::string& name, std::vector<std::shared_ptr<MeshData>>& outData);
 		bool LoadFBX(const std::string& name, std::vector<std::shared_ptr<MeshData>>& outData, float baseScale = 1.0f);
 
-		void ProcessMesh(aiNode* meshNode, const aiScene* fbxScene, float baseScale, std::vector<std::shared_ptr<MeshData>>& meshes);
+		void ProcessMesh(aiMesh* mesh, float baseScale, std::vector<std::shared_ptr<MeshData>>& meshes);
 
 	private:
 		static ModelLoader* instance;

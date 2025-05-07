@@ -9,7 +9,7 @@ float3 CalcAmbient(float3 worldNormal)
     float3 ambientUp = float3(0.2, 0.2, 0.2);
     
     // Down hemisphere ambient color.
-    float3 ambientDown = float3(0.1, 0.1, 0.1);
+    float3 ambientDown = float3(0.15, 0.15, 0.15);
     
     // Calculate ambient value.
     float3 ambient = ambientDown + up * ambientUp;
