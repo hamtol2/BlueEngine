@@ -19,7 +19,6 @@ namespace Blue
 		ModelLoader();
 		~ModelLoader() = default;
 
-		//bool Load(const std::string& name, std::weak_ptr<MeshData>& outData);
 		bool Load(const std::string& name, std::vector<std::weak_ptr<MeshData>>& outData, float baseScale = 1.0f);
 
 		static ModelLoader& Get();

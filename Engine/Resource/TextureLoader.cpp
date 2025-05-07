@@ -29,8 +29,7 @@ namespace Blue
 		std::weak_ptr<RenderTexture>& outTexture, uint32 width, uint32 height)
 	{
 		// 새로운 텍스처 생성.
-		std::shared_ptr<RenderTexture> newTexture
-			= std::make_shared<RenderTexture>(width, height);
+		std::shared_ptr<RenderTexture> newTexture = std::make_shared<RenderTexture>(width, height);
 
 		// 배열에 저장.
 		renderTextures.emplace_back(newTexture);

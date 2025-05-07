@@ -6,11 +6,6 @@
 #include "Render/Vertex.h"
 #include "Render/Mesh.h"
 
-//#include <Importer.hpp>
-//#include <scene.h>
-//#include <postprocess.h>
-//#include <cimport.h>
-
 namespace Blue
 {
 	ModelLoader* ModelLoader::instance = nullptr;
@@ -40,9 +35,10 @@ namespace Blue
 		char* extension = nullptr;
 		char* nameOnly = strtok_s(nameBuffer, ".", &extension);
 
-#if _DEBUG
-		assert(extension);
-#endif
+		if (extension == nullptr)
+		{
+			return false;
+		}
 
 		// 확장자에 따른 모델링 로드 처리.
 		if (strcmp(extension, "obj") == 0)
@@ -50,10 +46,7 @@ namespace Blue
 			std::vector<std::shared_ptr<MeshData>> newMesh;
 			if (LoadOBJ(name, newMesh))
 			{
-				for (auto const& mesh : newMesh)
-				{
-					outData.emplace_back(mesh);
-				}
+				outData.assign(newMesh.begin(), newMesh.end());
 				return true;
 			}
 
@@ -64,10 +57,7 @@ namespace Blue
 			std::vector<std::shared_ptr<MeshData>> newMesh;
 			if (LoadFBX(name, newMesh, baseScale))
 			{
-				for (auto const& mesh : newMesh)
-				{
-					outData.emplace_back(mesh);
-				}
+				outData.assign(newMesh.begin(), newMesh.end());
 				return true;
 			}
 
@@ -141,21 +131,11 @@ namespace Blue
 				int t1, t2, t3;
 				int n1, n2, n3;
 
-				sscanf_s(line, "f %d/%d/%d %d/%d/%d %d/%d/%d",
-					&v1, &t1, &n1, &v2, &t2, &n2, &v3, &t3, &n3);
+				sscanf_s(line, "f %d/%d/%d %d/%d/%d %d/%d/%d", &v1, &t1, &n1, &v2, &t2, &n2, &v3, &t3, &n3);
 
-				vertices.emplace_back(
-					positions[v1 - 1],
-					Vector3::One,
-					texCoords[t1 - 1],
-					normals[n1 - 1]);
-
-				vertices.emplace_back(
-					positions[v2 - 1], Vector3::One, texCoords[t2 - 1],
-					normals[n2 - 1]);
-				vertices.emplace_back(
-					positions[v3 - 1], Vector3::One, texCoords[t3 - 1],
-					normals[n3 - 1]);
+				vertices.emplace_back(positions[v1 - 1], Vector3::One, texCoords[t1 - 1], normals[n1 - 1]);
+				vertices.emplace_back(positions[v2 - 1], Vector3::One, texCoords[t2 - 1], normals[n2 - 1]);
+				vertices.emplace_back(positions[v3 - 1], Vector3::One, texCoords[t3 - 1], normals[n3 - 1]);
 			}
 		}
 
@@ -188,11 +168,11 @@ namespace Blue
 			Vector2 deltaUV2 = v2.texCoord - v0.texCoord;
 
 			// 스케일 구하기.
-			float denominator = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
+			float determinant = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
 
 			// 탄젠트.
-			Vector3 tangent = (edge1 * deltaUV2.y - edge2 * deltaUV1.y) * denominator;
-			Vector3 bitangent = (edge2 * deltaUV1.x - edge1 * deltaUV2.x) * denominator;
+			Vector3 tangent = (edge1 * deltaUV2.y - edge2 * deltaUV1.y) * determinant;
+			Vector3 bitangent = (edge2 * deltaUV1.x - edge1 * deltaUV2.x) * determinant;
 
 			v0.tangent += tangent;
 			v1.tangent += tangent;
@@ -214,8 +194,7 @@ namespace Blue
 		}
 
 		// 메시 데이터 생성 및 리소스 등록.
-		std::shared_ptr<MeshData> newData = std::make_shared<MeshData>(vertices, indices);
-		std::vector<std::shared_ptr<MeshData>> newMeshes{ newData };
+		std::vector<std::shared_ptr<MeshData>> newMeshes{ std::make_shared<MeshData>(vertices, indices) };
 		meshes.insert(std::make_pair(name, newMeshes));
 		outData = newMeshes;
 		return true;
@@ -273,11 +252,7 @@ namespace Blue
 		for (uint32 ix = 0; ix < mesh->mNumVertices; ++ix)
 		{
 			// 위치 설정.
-			Vector3 position(
-				mesh->mVertices[ix].x,
-				mesh->mVertices[ix].y,
-				mesh->mVertices[ix].z
-			);
+			Vector3 position(mesh->mVertices[ix].x, mesh->mVertices[ix].y, mesh->mVertices[ix].z);
 
 			// 기본으로 설정된 스케일 적용 (FBX의 경우 너무 크게 적용되는 경우가 있음).
 			//position *= baseScale;

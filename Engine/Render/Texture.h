@@ -57,10 +57,7 @@ namespace Blue
 
 	public:
 		Texture();
-		Texture(
-			const std::string& name,
-			BindType bindType = BindType::PixelShader,
-			uint32 index = 0u);
+		Texture(const std::string& name, BindType bindType = BindType::PixelShader, uint32 index = 0u);
 		virtual ~Texture();
 
 		void Bind(uint32 index = 0);
@@ -68,13 +65,14 @@ namespace Blue
 	protected:
 		void LoadTexture(const std::string& name);
 
+	private:
+		// 3채널 이미지를 4채널로 변환하는 함수.
+		void ConvertRGBToRGBA(std::unique_ptr<TextureData>& textureData);
+
 	protected:
 		// 이미지 이름.
 		std::string name;
-		
-		// 텍스처 순번.
-		//uint32 index = 0u;
-		
+
 		// 바인딩 셰이더 타입.
 		BindType bindType = BindType::PixelShader;
 
