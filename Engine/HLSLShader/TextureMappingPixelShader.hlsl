@@ -20,6 +20,7 @@ cbuffer LightData : register(b2)
 
 // Texture.
 Texture2D diffuseMap : register(t0);
+Texture2D shadowMap : register(t3);
 SamplerState diffuseSampler : register(s0);
 
 float4 main(PixelInput input) : SV_TARGET

@@ -245,7 +245,7 @@ namespace Blue
 	void Renderer::SetShadowmap(std::unique_ptr<class Shadowmap>&& shadowmap)
 	{
 		// 외부에서 생성한 섀도우 맵의 소유권을 Renderer로 이전.
-		this->shadowMap = std::move(shadowmap);
+		this->shadowmap = std::move(shadowmap);
 	}
 
 	void Renderer::OnResize(uint32 width, uint32 height)
@@ -378,7 +378,41 @@ namespace Blue
 
 	void Renderer::DrawToShadowMap(std::shared_ptr<Level>& level)
 	{
+		// 섀도우 맵 바인딩.
+		shadowmap->Clear();
 
+		// 뎁스 정보 그리기.
+		for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
+		{
+			// 액터 가져오기.
+			auto actor = level->GetActor(actorIndex);
+
+			// 렌더 텍스처 사용 여부 확인.
+			auto meshComp = actor->GetComponent<StaticMeshComponent>();
+			if (meshComp && meshComp->UseRenderTexture())
+			{
+				continue;
+			}
+
+			// Draw.
+			if (actor->IsActive())
+			{
+				// 스카이 박스는 건너뛰기.
+				if (actor->IsSkyBox())
+				{
+					continue;
+				}
+
+				// 뎁스 그리기.
+				actor->Draw();
+
+				// 다시 뒷면을 그리지 않도록 설정.
+				//CullOn();
+			}
+		}
+
+		ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
+		context->PSSetShaderResources(3, 1, &shadowmapSRV);
 	}
 
 	void Renderer::DrawToRenderTexturePass(std::shared_ptr<Level>& level)
