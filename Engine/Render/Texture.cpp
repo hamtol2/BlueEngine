@@ -51,15 +51,6 @@ namespace Blue
 		// 이미지 로드.
 		// 경로 설정.
 		char path[256] = {};
-		sprintf_s(path, 256, "%s", name.c_str());
-		char* extension = nullptr;
-		char* nameOnly = strtok_s(path, ".", &extension);
-		if (extension == nullptr || strcmp(extension, "png") != 0)
-		{
-			ThrowIfFailed(E_FAIL, TEXT("Failed to load texture. only png type is supported."));
-			return;
-		}
-
 		sprintf_s(path, 256, "../Assets/Textures/%s", name.c_str());
 
 		// 객체 생성.
@@ -166,8 +157,11 @@ namespace Blue
 
 		// 새로운 이미지 버퍼 생성.
 		byte* imageBuffer = new byte[size];
+		
+		// 모든 데이터를 0xffffffff로 설정.
+		memset(imageBuffer, 255, size);
 
-		// 원본 이미지 데이터.
+		// 원본 이미지 데이터 포인터.
 		byte* source = (byte*)(textureData->data);
 
 		// 새로운 이미지 데이터를 생성할 버퍼 포인터.
@@ -176,11 +170,15 @@ namespace Blue
 		// 기존 이미지 데이터 + 알파 채널 추가.
 		for (int ix = 0; ix < pixelCount; ++ix)
 		{
-			dest[0] = source[0];
-			dest[1] = source[1];
-			dest[2] = source[2];
-			dest[3] = 255;
-
+			// 기존 이미지 데이터를 새로운 버퍼에 복사.
+			memcpy(dest, source, sizeof(byte) * 3);
+			
+			//dest[0] = source[0];
+			//dest[1] = source[1];
+			//dest[2] = source[2];
+			//dest[3] = 255;
+			
+			// 다음 위치로 메모리 이동.
 			source += 3;
 			dest += 4;
 		}

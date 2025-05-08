@@ -108,19 +108,31 @@
     <ClCompile Include="Actor\SphereActor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Render\SoldierMesh.cpp">
+    <ClCompile Include="Render\Soldier\SoldierMesh.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Actor\SoldierActor.cpp">
+    <ClCompile Include="Actor\Soldier\SoldierActor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\SoldierHeadShader.cpp">
+    <ClCompile Include="Shader\Soldier\SoldierHeadShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Shader\SoldierBodyShader.cpp">
+    <ClCompile Include="Shader\Soldier\SoldierBodyShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Shader\NormalSpecularMappingShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\James\JamesActor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\James\JamesBodyShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\James\JamesShoesShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\James\JamesMesh.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -227,19 +239,31 @@
     <ClInclude Include="Actor\SphereActor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Render\SoldierMesh.h">
+    <ClInclude Include="Render\Soldier\SoldierMesh.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Actor\SoldierActor.h">
+    <ClInclude Include="Actor\Soldier\SoldierActor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\SoldierHeadShader.h">
+    <ClInclude Include="Shader\Soldier\SoldierHeadShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Shader\SoldierBodyShader.h">
+    <ClInclude Include="Shader\Soldier\SoldierBodyShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Shader\NormalSpecularMappingShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\James\JamesActor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\James\JamesBodyShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\James\JamesShoesShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\James\JamesMesh.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>
