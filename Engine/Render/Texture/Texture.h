@@ -13,12 +13,12 @@ namespace Blue
 		TextureData() = default;
 		~TextureData()
 		{
-			// 원시 리소스 해제.
-			if (data)
-			{
-				free(data);
-				data = nullptr;
-			}
+			//// 원시 리소스 해제.
+			//if (data)
+			//{
+			//	free(data);
+			//	data = nullptr;
+			//}
 
 			// DX 리소스 해제.
 			if (shaderResourceView)
@@ -57,15 +57,19 @@ namespace Blue
 
 	public:
 		Texture();
-		Texture(const std::string& name, BindType bindType = BindType::PixelShader, uint32 index = 0u);
+		Texture(const std::string& name, BindType bindType = BindType::PixelShader);
 		virtual ~Texture();
 
 		void Bind(uint32 index = 0);
 
 	protected:
-		void LoadTexture(const std::string& name);
 
-	private:
+		// 텍스처를 로드할 때 사용하는 함수.
+		virtual void LoadTexture(const std::string& name);
+
+		// 로드한 원시 텍스처 데이터를 사용해 DX 텍스처 리소스를 생성하는 함수.
+		virtual void CreateSRVAndSampler();
+
 		// 3채널 이미지를 4채널로 변환하는 함수.
 		void ConvertRGBToRGBA(std::unique_ptr<TextureData>& textureData);
 

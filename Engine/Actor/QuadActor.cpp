@@ -9,8 +9,8 @@
 
 #include "Resource/ShaderLoader.h"
 #include "Resource/TextureLoader.h"
-#include "Render/Texture.h"
-#include "Render/RenderTexture.h"
+#include "Render/Texture/Texture.h"
+#include "Render/Texture/RenderTexture.h"
 
 namespace Blue
 {

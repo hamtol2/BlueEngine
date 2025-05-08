@@ -96,6 +96,7 @@
     <ClCompile Include="Actor\CameraActor.cpp" />
     <ClCompile Include="Actor\James\JamesActor.cpp" />
     <ClCompile Include="Actor\QuadActor.cpp" />
+    <ClCompile Include="Actor\SkyboxActor.cpp" />
     <ClCompile Include="Actor\Soldier\SoldierActor.cpp" />
     <ClCompile Include="Actor\SphereActor.cpp" />
     <ClCompile Include="Component\CameraComponent.cpp" />
@@ -111,14 +112,16 @@
     <ClCompile Include="Math\Transform.cpp" />
     <ClCompile Include="Math\Vector2.cpp" />
     <ClCompile Include="Math\Vector3.cpp" />
+    <ClCompile Include="Render\CubeMesh.cpp" />
     <ClCompile Include="Render\James\JamesMesh.cpp" />
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\QuadMesh.cpp" />
     <ClCompile Include="Render\Renderer.cpp" />
-    <ClCompile Include="Render\RenderTexture.cpp" />
+    <ClCompile Include="Render\Texture\CubemapTexture.cpp" />
+    <ClCompile Include="Render\Texture\RenderTexture.cpp" />
     <ClCompile Include="Render\Soldier\SoldierMesh.cpp" />
     <ClCompile Include="Render\SphereMesh.cpp" />
-    <ClCompile Include="Render\Texture.cpp" />
+    <ClCompile Include="Render\Texture\Texture.cpp" />
     <ClCompile Include="Render\TriangleMesh.cpp" />
     <ClCompile Include="Resource\ModelLoader.cpp" />
     <ClCompile Include="Resource\TextureLoader.cpp" />
@@ -129,6 +132,7 @@
     <ClCompile Include="Shader\NormalSpecularMappingShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Resource\ShaderLoader.cpp" />
+    <ClCompile Include="Shader\SkyCubemapShader.cpp" />
     <ClCompile Include="Shader\Soldier\SoldierBodyShader.cpp" />
     <ClCompile Include="Shader\Soldier\SoldierHeadShader.cpp" />
     <ClCompile Include="Shader\TextureMappingShader.cpp" />
@@ -138,6 +142,7 @@
     <ClInclude Include="Actor\CameraActor.h" />
     <ClInclude Include="Actor\James\JamesActor.h" />
     <ClInclude Include="Actor\QuadActor.h" />
+    <ClInclude Include="Actor\SkyboxActor.h" />
     <ClInclude Include="Actor\Soldier\SoldierActor.h" />
     <ClInclude Include="Actor\SphereActor.h" />
     <ClInclude Include="Component\CameraComponent.h" />
@@ -155,14 +160,16 @@
     <ClInclude Include="Math\Transform.h" />
     <ClInclude Include="Math\Vector2.h" />
     <ClInclude Include="Math\Vector3.h" />
+    <ClInclude Include="Render\CubeMesh.h" />
     <ClInclude Include="Render\James\JamesMesh.h" />
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\QuadMesh.h" />
     <ClInclude Include="Render\Renderer.h" />
-    <ClInclude Include="Render\RenderTexture.h" />
+    <ClInclude Include="Render\Texture\CubemapTexture.h" />
+    <ClInclude Include="Render\Texture\RenderTexture.h" />
     <ClInclude Include="Render\Soldier\SoldierMesh.h" />
     <ClInclude Include="Render\SphereMesh.h" />
-    <ClInclude Include="Render\Texture.h" />
+    <ClInclude Include="Render\Texture\Texture.h" />
     <ClInclude Include="Render\TriangleMesh.h" />
     <ClInclude Include="Render\Vertex.h" />
     <ClInclude Include="Resource\ModelLoader.h" />
@@ -174,11 +181,24 @@
     <ClInclude Include="Shader\NormalMappingShader.h" />
     <ClInclude Include="Shader\NormalSpecularMappingShader.h" />
     <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="Shader\SkyCubemapShader.h" />
     <ClInclude Include="Shader\Soldier\SoldierBodyShader.h" />
     <ClInclude Include="Shader\Soldier\SoldierHeadShader.h" />
     <ClInclude Include="Shader\TextureMappingShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <FxCompile Include="HLSLShader\CubemapPixelShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSLShader\CubemapVertexShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
     <FxCompile Include="HLSLShader\DefaultPixelShader.hlsl">
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>

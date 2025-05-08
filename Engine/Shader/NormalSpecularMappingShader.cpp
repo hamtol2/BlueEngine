@@ -1,5 +1,5 @@
 #include "NormalSpecularMappingShader.h"
-#include "Render/Texture.h"
+#include "Render/Texture/Texture.h"
 
 namespace Blue
 {

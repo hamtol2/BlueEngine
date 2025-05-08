@@ -46,6 +46,8 @@ namespace Blue
 		const bool IsActive() const;
 		const bool HasInitialized() const;
 
+		const bool IsSkyBox() const { return isSkyBox; }
+
 	public:
 		// 액터의 TRS 정보를 관리하는 트랜스폼.
 		Transform transform;
@@ -59,6 +61,9 @@ namespace Blue
 		bool isActive = true;
 		// 삭제 여부.
 		bool hasDestroyed = false;
+
+		// 스카이박스 액터 여부.
+		bool isSkyBox = false;
 
 		// 컴포넌트 배열.
 		std::vector<std::shared_ptr<class Component>> components;

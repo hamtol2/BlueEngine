@@ -45,7 +45,7 @@
     <ClCompile Include="Render\QuadMesh.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Render\Texture.cpp">
+    <ClCompile Include="Render\Texture\Texture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Shader\TextureMappingShader.cpp">
@@ -102,7 +102,7 @@
     <ClCompile Include="Shader\NormalMappingShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
-    <ClCompile Include="Render\RenderTexture.cpp">
+    <ClCompile Include="Render\Texture\RenderTexture.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Actor\SphereActor.cpp">
@@ -133,6 +133,18 @@
       <Filter>소스 파일</Filter>
     </ClCompile>
     <ClCompile Include="Render\James\JamesMesh.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\Texture\CubemapTexture.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\SkyboxActor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Render\CubeMesh.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\SkyCubemapShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
   </ItemGroup>
@@ -173,7 +185,7 @@
     <ClInclude Include="Library\stbi_image.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Render\Texture.h">
+    <ClInclude Include="Render\Texture\Texture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Shader\TextureMappingShader.h">
@@ -233,7 +245,7 @@
     <ClInclude Include="Shader\NormalMappingShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
-    <ClInclude Include="Render\RenderTexture.h">
+    <ClInclude Include="Render\Texture\RenderTexture.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Actor\SphereActor.h">
@@ -266,6 +278,18 @@
     <ClInclude Include="Render\James\JamesMesh.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Render\Texture\CubemapTexture.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\SkyboxActor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\CubeMesh.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\SkyCubemapShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="HLSLShader\DefaultVertexShader.hlsl" />
@@ -276,6 +300,8 @@
     <FxCompile Include="HLSLShader\NormalMappingPixelShader.hlsl" />
     <FxCompile Include="HLSLShader\NormalSpecularMappingPixelShader.hlsl" />
     <FxCompile Include="HLSLShader\NormalSpecularMappingVertexShader.hlsl" />
+    <FxCompile Include="HLSLShader\CubemapPixelShader.hlsl" />
+    <FxCompile Include="HLSLShader\CubemapVertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\ShaderLoader.inl">

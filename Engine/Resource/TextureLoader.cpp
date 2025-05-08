@@ -1,6 +1,7 @@
 #include "TextureLoader.h"
-#include "Render/Texture.h"
-#include "Render/RenderTexture.h"
+#include "Render/Texture/Texture.h"
+#include "Render/Texture/RenderTexture.h"
+#include "Render/Texture/CubemapTexture.h"
 
 namespace Blue
 {
@@ -35,6 +36,21 @@ namespace Blue
 		renderTextures.emplace_back(newTexture);
 
 		// 요청한 변수에 할당(설정).
+		outTexture = newTexture;
+	}
+
+	void TextureLoader::LoadCubemap(const std::string& path, std::weak_ptr<CubemapTexture>& outTexture)
+	{
+		// 새로운 텍스처 생성.
+		auto find = cubemapTextures.find(path);
+		if (find != cubemapTextures.end())
+		{
+			outTexture = find->second;
+			return;
+		}
+
+		std::shared_ptr<CubemapTexture> newTexture = std::make_shared<CubemapTexture>(path);
+		cubemapTextures.insert(std::make_pair(path, newTexture));
 		outTexture = newTexture;
 	}
 

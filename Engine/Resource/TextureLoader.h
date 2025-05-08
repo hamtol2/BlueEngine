@@ -9,6 +9,7 @@ namespace Blue
 {
 	class Texture;
 	class RenderTexture;
+	class CubemapTexture;
 	class TextureLoader
 	{
 		friend class Renderer;
@@ -23,6 +24,8 @@ namespace Blue
 			uint32 width = 0, uint32 height = 0
 		);
 
+		void LoadCubemap(const std::string& path, std::weak_ptr<CubemapTexture>& outTexture);
+
 		static TextureLoader& Get();
 
 	private:
@@ -30,5 +33,6 @@ namespace Blue
 
 		std::unordered_map<std::string, std::shared_ptr<Texture>> textures;
 		std::vector<std::shared_ptr<RenderTexture>> renderTextures;
+		std::unordered_map<std::string, std::shared_ptr<CubemapTexture>> cubemapTextures;
 	};
 }

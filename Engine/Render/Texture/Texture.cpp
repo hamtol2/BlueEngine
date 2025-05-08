@@ -12,8 +12,8 @@ namespace Blue
 	{
 	}
 
-	Texture::Texture(const std::string& name, BindType bindType, uint32 index)
-		: name(name), bindType(bindType)/*, index(index)*/
+	Texture::Texture(const std::string& name, BindType bindType)
+		: name(name), bindType(bindType)
 	{
 		LoadTexture(name);
 	}
@@ -81,6 +81,19 @@ namespace Blue
 		}
 
 		// DX 府家胶 积己.
+		CreateSRVAndSampler();
+
+		// DX 府家胶 积己饶 盔矫 捞固瘤 单捞磐绰 秦力.
+		if (textureData->data)
+		{
+			free(textureData->data);
+			textureData->data = nullptr;
+		}
+	}
+
+	void Texture::CreateSRVAndSampler()
+	{
+		// DX 府家胶 积己.
 		// 厘摹.
 		static ID3D11Device& device = Engine::Get().Device();
 
@@ -116,18 +129,7 @@ namespace Blue
 			texture = nullptr;
 		}
 
-		/*
-		* D3D11_FILTER Filter;
-			D3D11_TEXTURE_ADDRESS_MODE AddressU;
-			D3D11_TEXTURE_ADDRESS_MODE AddressV;
-			D3D11_TEXTURE_ADDRESS_MODE AddressW;
-			FLOAT MipLODBias;
-			UINT MaxAnisotropy;
-			D3D11_COMPARISON_FUNC ComparisonFunc;
-			FLOAT BorderColor[ 4 ];
-			FLOAT MinLOD;
-			FLOAT MaxLOD;
-		*/
+		// 基敲矾 加己 汲沥.
 		D3D11_SAMPLER_DESC sampleDesc = {};
 		sampleDesc.Filter = D3D11_FILTER_ANISOTROPIC;
 		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;

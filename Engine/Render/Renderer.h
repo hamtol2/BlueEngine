@@ -26,6 +26,12 @@ namespace Blue
 		// 크기 변경 함수.
 		void OnResize(uint32 width, uint32 height);
 
+		// 메시의 뒷면을 안그리도록 설정하는 함수.
+		void CullOn();
+
+		// 메시의 뒷면을 그리도록 설정하는 함수.
+		void CullOff();
+
 	private:
 		// 셰이더에 바인딩된 RTV 및 SRV를 해제하는 함수.
 		void EmptyRTVsAndSRVs();
@@ -55,6 +61,10 @@ namespace Blue
 
 		// 뎁스 버퍼.
 		ID3D11DepthStencilView* depthStencilView = nullptr;
+
+		// 래스터라이저 스테이트.
+		ID3D11RasterizerState* cullFrontState = nullptr;
+		ID3D11RasterizerState* cullOnRSState = nullptr;
 
 		// 뷰포트.
 		D3D11_VIEWPORT viewport;

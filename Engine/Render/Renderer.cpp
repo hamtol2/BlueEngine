@@ -4,7 +4,7 @@
 #include "Level/Level.h"
 #include "Actor/Actor.h"
 
-#include "RenderTexture.h"
+#include "Texture/RenderTexture.h"
 #include "Resource/TextureLoader.h"
 #include "Component/StaticMeshComponent.h"
 
@@ -140,6 +140,25 @@ namespace Blue
 		depthStencilBuffer->Release();
 		depthStencilBuffer = nullptr;
 
+		// 래스터라이저 스테이트 생성.
+		D3D11_RASTERIZER_DESC rasterizerDesc = { };
+		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
+		rasterizerDesc.CullMode = D3D11_CULL_BACK;
+		rasterizerDesc.DepthClipEnable = true;
+
+		ThrowIfFailed(
+			device->CreateRasterizerState(&rasterizerDesc, &cullOnRSState),
+			TEXT("Failed to create cull on rasterizer state."));
+
+
+		rasterizerDesc.CullMode = D3D11_CULL_FRONT;
+
+		ThrowIfFailed(
+			device->CreateRasterizerState(&rasterizerDesc, &cullFrontState),
+			TEXT("Failed to create cull off rasterizer state."));
+
+		context->RSSetState(cullOnRSState);
+
 		// 뷰포트(화면).
 		viewport.TopLeftX = 0.0f;
 		viewport.TopLeftY = 0.0f;
@@ -176,6 +195,18 @@ namespace Blue
 		{
 			depthStencilView->Release();
 			depthStencilView = nullptr;
+		}
+
+		if (cullFrontState)
+		{
+			cullFrontState->Release();
+			cullFrontState = nullptr;
+		}
+
+		if (cullOnRSState)
+		{
+			cullOnRSState->Release();
+			cullOnRSState = nullptr;
 		}
 
 		if (device)
@@ -300,6 +331,16 @@ namespace Blue
 		isResizing = false;
 	}
 
+	void Renderer::CullOn()
+	{
+		context->RSSetState(cullOnRSState);
+	}
+
+	void Renderer::CullOff()
+	{
+		context->RSSetState(cullFrontState);
+	}
+
 	void Renderer::EmptyRTVsAndSRVs()
 	{
 		static ID3D11RenderTargetView* nullRTV = nullptr;
@@ -354,7 +395,14 @@ namespace Blue
 				// Draw.
 				if (actor->IsActive())
 				{
+					if (actor->IsSkyBox())
+					{
+						CullOff();
+					}
+
 					actor->Draw();
+
+					CullOn();
 				}
 			}
 		}
@@ -380,7 +428,14 @@ namespace Blue
 			// Draw.
 			if (actor->IsActive())
 			{
+				if (actor->IsSkyBox())
+				{
+					CullOff();
+				}
+
 				actor->Draw();
+
+				CullOn();
 			}
 		}
 	}

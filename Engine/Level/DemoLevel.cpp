@@ -6,6 +6,7 @@
 #include "Actor/CameraActor.h"
 #include "Actor/Soldier/SoldierActor.h"
 #include "Actor/James/JamesActor.h"
+#include "Actor/SkyboxActor.h"
 
 #include "Math/Transform.h"
 #include "Math/Vector3.h"
@@ -41,11 +42,16 @@ namespace Blue
 		james->transform.position.y = -1.0f;
 		james->transform.position.x = -3.5f;
 
+		// Skybox 액터 생성.
+		std::shared_ptr<SkyboxActor> skybox = std::make_shared<SkyboxActor>();
+		skybox->transform.scale = Vector3::One * 100.0f;
+
 		// 액터를 레벨에 추가.
 		AddActor(sphere);
 		AddActor(quad);
 		AddActor(soldier);
 		AddActor(james);
+		AddActor(skybox);
 		AddActor(cameraActor);
 	}
 
