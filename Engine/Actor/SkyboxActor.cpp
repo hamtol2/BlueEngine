@@ -32,7 +32,7 @@ namespace Blue
 		}
 
 		std::weak_ptr<CubemapTexture> cubeMap;
-		TextureLoader::Get().LoadCubemap("Sanfrancisco4", cubeMap);
+		TextureLoader::Get().LoadCubemap("Apocalypse", cubeMap);
 		cubemapShader.lock()->SetTexture(cubeMap);
 
 		meshComponent->AddShader(cubemapShader);

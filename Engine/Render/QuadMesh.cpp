@@ -21,7 +21,6 @@ namespace Blue
 			{
 				meshes.emplace_back(mesh);
 			}
-			//meshes.emplace_back(mesh);
 		}
 	}
 

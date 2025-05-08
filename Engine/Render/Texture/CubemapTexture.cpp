@@ -19,12 +19,12 @@ namespace Blue
 	{
 		std::vector<std::string> imageNames;
 		imageNames.reserve(6);
-		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/posx.jpg");
-		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/negx.jpg");
-		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/posy.jpg");
-		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/negy.jpg");
-		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/posz.jpg");
-		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/negz.jpg");
+		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/posx.png");
+		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/negx.png");
+		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/posy.png");
+		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/negy.png");
+		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/posz.png");
+		imageNames.emplace_back(std::string("../Assets/Textures/") + name + "/negz.png");
 
 		images.reserve(6);
 

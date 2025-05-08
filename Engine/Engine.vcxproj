@@ -105,6 +105,7 @@
     <ClCompile Include="Core\Engine.cpp" />
     <ClCompile Include="Core\InputController.cpp" />
     <ClCompile Include="Core\Window.cpp" />
+    <ClCompile Include="Actor\FloorActor.cpp" />
     <ClCompile Include="Level\DemoLevel.cpp" />
     <ClCompile Include="Level\Level.cpp" />
     <ClCompile Include="Main.cpp" />
@@ -126,6 +127,7 @@
     <ClCompile Include="Resource\ModelLoader.cpp" />
     <ClCompile Include="Resource\TextureLoader.cpp" />
     <ClCompile Include="Shader\DefaultShader.cpp" />
+    <ClCompile Include="Shader\FloorShader.cpp" />
     <ClCompile Include="Shader\James\JamesBodyShader.cpp" />
     <ClCompile Include="Shader\James\JamesShoesShader.cpp" />
     <ClCompile Include="Shader\NormalMappingShader.cpp" />
@@ -153,6 +155,7 @@
     <ClInclude Include="Core\InputController.h" />
     <ClInclude Include="Core\Type.h" />
     <ClInclude Include="Core\Window.h" />
+    <ClInclude Include="Actor\FloorActor.h" />
     <ClInclude Include="Level\DemoLevel.h" />
     <ClInclude Include="Level\Level.h" />
     <ClInclude Include="Library\stbi_image.h" />
@@ -176,6 +179,7 @@
     <ClInclude Include="Resource\ShaderLoader.h" />
     <ClInclude Include="Resource\TextureLoader.h" />
     <ClInclude Include="Shader\DefaultShader.h" />
+    <ClInclude Include="Shader\FloorShader.h" />
     <ClInclude Include="Shader\James\JamesBodyShader.h" />
     <ClInclude Include="Shader\James\JamesShoesShader.h" />
     <ClInclude Include="Shader\NormalMappingShader.h" />

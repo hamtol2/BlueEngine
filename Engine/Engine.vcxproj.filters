@@ -147,6 +147,12 @@
     <ClCompile Include="Shader\SkyCubemapShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Actor\FloorActor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader\FloorShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Window.h">
@@ -288,6 +294,12 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Shader\SkyCubemapShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\FloorActor.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader\FloorShader.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

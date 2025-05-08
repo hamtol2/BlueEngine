@@ -7,6 +7,7 @@
 #include "Actor/Soldier/SoldierActor.h"
 #include "Actor/James/JamesActor.h"
 #include "Actor/SkyboxActor.h"
+#include "Actor/FloorActor.h"
 
 #include "Math/Transform.h"
 #include "Math/Vector3.h"
@@ -24,7 +25,9 @@ namespace Blue
 
 		// RenderTexture를 보여주기 위한 Quad 액터 생성.
 		std::shared_ptr<QuadActor> quad = std::make_shared<QuadActor>();
-		quad->transform.position.x = 1.0f;
+		quad->transform.position.x = 1.5f;
+
+		std::shared_ptr<FloorActor> floor = std::make_shared<FloorActor>();
 
 		// 카메라 액터 생성.
 		std::shared_ptr<CameraActor> cameraActor = std::make_shared<CameraActor>();
@@ -49,6 +52,7 @@ namespace Blue
 		// 액터를 레벨에 추가.
 		AddActor(sphere);
 		AddActor(quad);
+		AddActor(floor);
 		AddActor(soldier);
 		AddActor(james);
 		AddActor(skybox);
