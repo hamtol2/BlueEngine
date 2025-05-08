@@ -95,6 +95,7 @@
     <ClCompile Include="Actor\Actor.cpp" />
     <ClCompile Include="Actor\CameraActor.cpp" />
     <ClCompile Include="Actor\James\JamesActor.cpp" />
+    <ClCompile Include="Actor\LightActor.cpp" />
     <ClCompile Include="Actor\QuadActor.cpp" />
     <ClCompile Include="Actor\SkyboxActor.cpp" />
     <ClCompile Include="Actor\Soldier\SoldierActor.cpp" />
@@ -108,6 +109,7 @@
     <ClCompile Include="Actor\FloorActor.cpp" />
     <ClCompile Include="Level\DemoLevel.cpp" />
     <ClCompile Include="Level\Level.cpp" />
+    <ClCompile Include="Component\LightComponent.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Math\Matrix4.cpp" />
     <ClCompile Include="Math\Transform.cpp" />
@@ -118,6 +120,7 @@
     <ClCompile Include="Render\Mesh.cpp" />
     <ClCompile Include="Render\QuadMesh.cpp" />
     <ClCompile Include="Render\Renderer.cpp" />
+    <ClCompile Include="Render\Texture\Shadowmap.cpp" />
     <ClCompile Include="Render\Texture\CubemapTexture.cpp" />
     <ClCompile Include="Render\Texture\RenderTexture.cpp" />
     <ClCompile Include="Render\Soldier\SoldierMesh.cpp" />
@@ -143,12 +146,14 @@
     <ClInclude Include="Actor\Actor.h" />
     <ClInclude Include="Actor\CameraActor.h" />
     <ClInclude Include="Actor\James\JamesActor.h" />
+    <ClInclude Include="Actor\LightActor.h" />
     <ClInclude Include="Actor\QuadActor.h" />
     <ClInclude Include="Actor\SkyboxActor.h" />
     <ClInclude Include="Actor\Soldier\SoldierActor.h" />
     <ClInclude Include="Actor\SphereActor.h" />
     <ClInclude Include="Component\CameraComponent.h" />
     <ClInclude Include="Component\Component.h" />
+    <ClInclude Include="Component\LightComponent.h" />
     <ClInclude Include="Component\StaticMeshComponent.h" />
     <ClInclude Include="Core\Common.h" />
     <ClInclude Include="Core\Engine.h" />
@@ -168,6 +173,7 @@
     <ClInclude Include="Render\Mesh.h" />
     <ClInclude Include="Render\QuadMesh.h" />
     <ClInclude Include="Render\Renderer.h" />
+    <ClInclude Include="Render\Texture\Shadowmap.h" />
     <ClInclude Include="Render\Texture\CubemapTexture.h" />
     <ClInclude Include="Render\Texture\RenderTexture.h" />
     <ClInclude Include="Render\Soldier\SoldierMesh.h" />

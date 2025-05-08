@@ -12,6 +12,11 @@
 namespace Blue
 {
 	SkyboxActor::SkyboxActor()
+		: SkyboxActor("Apocalypse")
+	{	
+	}
+
+	SkyboxActor::SkyboxActor(const std::string& path)
 	{
 		// 스카이 박스로 설정.
 		isSkyBox = true;
@@ -32,7 +37,7 @@ namespace Blue
 		}
 
 		std::weak_ptr<CubemapTexture> cubeMap;
-		TextureLoader::Get().LoadCubemap("Apocalypse", cubeMap);
+		TextureLoader::Get().LoadCubemap(path, cubeMap);
 		cubemapShader.lock()->SetTexture(cubeMap);
 
 		meshComponent->AddShader(cubemapShader);

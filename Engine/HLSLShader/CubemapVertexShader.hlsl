@@ -22,6 +22,15 @@ cbuffer Camera : register(b1)
     float padding;
 };
 
+// Light Buffer.
+cbuffer LightData : register(b2)
+{
+    float3 lightPosition;
+    float lightDataPadding;
+    matrix lightViewMatrix;
+    matrix lightProjectionMatrix;
+};
+
 struct VertexOutput
 {
     float4 position : SV_POSITION;

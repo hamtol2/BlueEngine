@@ -1,11 +1,10 @@
 #pragma once
 
-// DirectX11 헤더.
+#include "Core/Type.h"
+
 #include <d3d11.h>
 #include <dxgi.h>
 #include <memory>
-
-#include "../Core/Type.h"
 
 namespace Blue
 {
@@ -23,6 +22,9 @@ namespace Blue
 		// 그리기 함수.
 		void Draw(std::shared_ptr<class Level> level);
 
+		// 섀도우맵 설정 함수.
+		void SetShadowmap(std::unique_ptr<class Shadowmap>&& shadowmap);
+
 		// 크기 변경 함수.
 		void OnResize(uint32 width, uint32 height);
 
@@ -38,6 +40,9 @@ namespace Blue
 
 		// RenderTargetView/DepthStencilView를 Clear할 때 사용하는 함수.
 		void Clear(ID3D11RenderTargetView** renderTargetView, float* clearColor, ID3D11DepthStencilView* depthStencilView);
+
+		// Shadowmap Pass.
+		void DrawToShadowMap(std::shared_ptr<Level>& level);
 
 		// RenderTexture에 Draw하는 Pass.
 		void DrawToRenderTexturePass(std::shared_ptr<Level>& level);
@@ -68,5 +73,8 @@ namespace Blue
 
 		// 뷰포트.
 		D3D11_VIEWPORT viewport;
+
+		// 섀도우 맵.
+		std::unique_ptr<class Shadowmap> shadowMap;
 	};
 }

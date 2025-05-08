@@ -8,6 +8,8 @@
 #include "Resource/TextureLoader.h"
 #include "Component/StaticMeshComponent.h"
 
+#include "Texture/Shadowmap.h"
+
 namespace Blue
 {
 	Renderer::Renderer(uint32 width, uint32 height, HWND window)
@@ -225,6 +227,11 @@ namespace Blue
 			return;
 		}
 
+		
+		
+		// 뷰포트 설정.
+		context->RSSetViewports(1, &viewport);
+
 		// Phase-1.
 		DrawToRenderTexturePass(level);
 
@@ -233,6 +240,12 @@ namespace Blue
 
 		// 버퍼 교환. (EndScene/Present).
 		swapChain->Present(1u, 0u);
+	}
+
+	void Renderer::SetShadowmap(std::unique_ptr<class Shadowmap>&& shadowmap)
+	{
+		// 외부에서 생성한 섀도우 맵의 소유권을 Renderer로 이전.
+		this->shadowMap = std::move(shadowmap);
 	}
 
 	void Renderer::OnResize(uint32 width, uint32 height)
@@ -363,6 +376,11 @@ namespace Blue
 		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
 
+	void Renderer::DrawToShadowMap(std::shared_ptr<Level>& level)
+	{
+
+	}
+
 	void Renderer::DrawToRenderTexturePass(std::shared_ptr<Level>& level)
 	{
 		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix)
@@ -380,6 +398,12 @@ namespace Blue
 				level->GetCamera()->Draw();
 			}
 
+			// 라이트 바인딩.
+			if (level->GetLight())
+			{
+				level->GetLight()->Draw();
+			}
+
 			for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
 			{
 				// 액터 가져오기.
@@ -395,6 +419,7 @@ namespace Blue
 				// Draw.
 				if (actor->IsActive())
 				{
+					// 스카이 박스는 뒷면을 그리도록 설정.
 					if (actor->IsSkyBox())
 					{
 						CullOff();
@@ -402,6 +427,7 @@ namespace Blue
 
 					actor->Draw();
 
+					// 다시 뒷면을 그리지 않도록 설정.
 					CullOn();
 				}
 			}
@@ -420,6 +446,12 @@ namespace Blue
 			level->GetCamera()->Draw();
 		}
 
+		// 라이트 바인딩.
+		if (level->GetLight())
+		{
+			level->GetLight()->Draw();
+		}
+
 		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
 		{
 			// 액터 가져오기.
@@ -428,6 +460,7 @@ namespace Blue
 			// Draw.
 			if (actor->IsActive())
 			{
+				// 스카이 박스는 뒷면을 그리도록 설정.
 				if (actor->IsSkyBox())
 				{
 					CullOff();
@@ -435,6 +468,7 @@ namespace Blue
 
 				actor->Draw();
 
+				// 다시 뒷면을 그리지 않도록 설정.
 				CullOn();
 			}
 		}

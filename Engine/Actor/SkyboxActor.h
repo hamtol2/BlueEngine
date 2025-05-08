@@ -1,6 +1,7 @@
 #pragma once
 
 #include "Actor.h"
+#include <string>
 
 namespace Blue
 {
@@ -8,6 +9,7 @@ namespace Blue
 	{
 	public:
 		SkyboxActor();
+		SkyboxActor(const std::string& path);
 		~SkyboxActor() = default;
 	};
 }

@@ -1,6 +1,7 @@
 #include "Engine.h"
 #include "Window.h"
-#include "../Render/Renderer.h"
+#include "Render/Renderer.h"
+#include "Render/Texture/Shadowmap.h"
 
 #include "Resource/ShaderLoader.h"
 #include "Resource/TextureLoader.h"
@@ -17,11 +18,7 @@ namespace Blue
 	// ½Ì±ÛÅæ °´Ã¼ ¼³Á¤.
 	Engine* Engine::instance = nullptr;
 
-	Engine::Engine(
-		uint32 width,
-		uint32 height,
-		const std::wstring& title,
-		HINSTANCE hInstance)
+	Engine::Engine(uint32 width, uint32 height, const std::wstring& title, HINSTANCE hInstance)
 	{
 		// ½Ì±ÛÅæ °´Ã¼ °ª ¼³Á¤.
 		instance = this;
@@ -30,9 +27,7 @@ namespace Blue
 		inputController = std::make_unique<InputController>();
 
 		// Ã¢ °´Ã¼ »ý¼º.
-		window = std::make_shared<Window>(
-			width, height, title, hInstance, WindowProc
-		);
+		window = std::make_shared<Window>(width, height, title, hInstance, WindowProc);
 
 		// ¼ÎÀÌ´õ ·Î´õ °´Ã¼ »ý¼º.
 		shaderLoader = std::make_unique<ShaderLoader>();
@@ -44,9 +39,10 @@ namespace Blue
 		modelLoader = std::make_unique<ModelLoader>();
 
 		// ·»´õ·¯ »ý¼º.
-		renderer = std::make_shared<Renderer>(
-			width, height, window->Handle()
-		);
+		renderer = std::make_shared<Renderer>(width, height, window->Handle());
+
+		// ¼¨µµ¿ì¸Ê »ý¼º ¹× Àü´Þ.
+		renderer->SetShadowmap(std::make_unique<Shadowmap>(width * 4, height * 4));
 	}
 
 	Engine::~Engine()
@@ -294,12 +290,12 @@ namespace Blue
 	{
 		return *renderer->context;
 	}
-	
+
 	uint32 Engine::Width() const
 	{
 		return window->Width();
 	}
-	
+
 	uint32 Engine::Height() const
 	{
 		return window->Height();

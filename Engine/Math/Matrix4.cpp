@@ -176,6 +176,19 @@ namespace Blue
 		return m;
 	}
 
+	Matrix4 Matrix4::Orthographic(float width, float height, float nearDistance, float farDistance)
+	{
+		float range = 1.0f / (farDistance - nearDistance);
+		
+		Matrix4 m;
+		m.m00 = 2.0f / width;	m.m01 = 0.0f;			m.m02 = 0.0f;					m.m03 = 0.0f;
+		m.m10 = 0.0f;			m.m11 = 2.0f / height;	m.m12 = 0.0f;					m.m13 = 0.0f;
+		m.m20 = 0.0f;			m.m21 = 0.0f;			m.m22 = range;					m.m23 = 0.0f;
+		m.m30 = 0.0f;			m.m31 = 0.0f;			m.m32 = -range * nearDistance;	m.m33 = 1.0f;
+
+		return m;
+	}
+
 	Matrix4& Matrix4::operator=(const Matrix4& other)
 	{
 		memcpy(elements, other.elements, sizeof(float) * 16);

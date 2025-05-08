@@ -153,6 +153,15 @@
     <ClCompile Include="Shader\FloorShader.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Render\Texture\Shadowmap.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Component\LightComponent.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
+    <ClCompile Include="Actor\LightActor.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Window.h">
@@ -300,6 +309,15 @@
       <Filter>헤더 파일</Filter>
     </ClInclude>
     <ClInclude Include="Shader\FloorShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Render\Texture\Shadowmap.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Component\LightComponent.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
+    <ClInclude Include="Actor\LightActor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
   </ItemGroup>

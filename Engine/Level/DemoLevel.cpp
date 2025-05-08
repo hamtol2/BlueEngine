@@ -4,6 +4,7 @@
 #include "Actor/QuadActor.h"
 #include "Actor/SphereActor.h"
 #include "Actor/CameraActor.h"
+#include "Actor/LightActor.h"
 #include "Actor/Soldier/SoldierActor.h"
 #include "Actor/James/JamesActor.h"
 #include "Actor/SkyboxActor.h"
@@ -33,6 +34,10 @@ namespace Blue
 		std::shared_ptr<CameraActor> cameraActor = std::make_shared<CameraActor>();
 		cameraActor->transform.position.z = -3.0f;
 
+		// 라이트 액서 생성.
+		std::shared_ptr<LightActor> light = std::make_shared<LightActor>();
+		light->transform.position = Vector3(1.0f, 1.0f, -1.0f) * 30.0f;
+
 		// 군인 액터 생성.
 		std::shared_ptr<SoldierActor> soldier = std::make_shared<SoldierActor>();
 		soldier->transform.position.x = -2.0f;
@@ -46,7 +51,7 @@ namespace Blue
 		james->transform.position.x = -3.5f;
 
 		// Skybox 액터 생성.
-		std::shared_ptr<SkyboxActor> skybox = std::make_shared<SkyboxActor>();
+		std::shared_ptr<SkyboxActor> skybox = std::make_shared<SkyboxActor>("Apocalypse");
 		skybox->transform.scale = Vector3::One * 100.0f;
 
 		// 액터를 레벨에 추가.
@@ -57,6 +62,7 @@ namespace Blue
 		AddActor(james);
 		AddActor(skybox);
 		AddActor(cameraActor);
+		AddActor(light);
 	}
 
 	DemoLevel::~DemoLevel()

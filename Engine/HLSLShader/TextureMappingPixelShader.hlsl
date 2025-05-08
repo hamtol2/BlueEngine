@@ -9,6 +9,15 @@ struct PixelInput
     float3 cameraDirection : TEXCOORD1;
 };
 
+// Light Buffer.
+cbuffer LightData : register(b2)
+{
+    float3 lightPosition;
+    float lightDataPadding;
+    matrix lightViewMatrix;
+    matrix lightProjectionMatrix;
+};
+
 // Texture.
 Texture2D diffuseMap : register(t0);
 SamplerState diffuseSampler : register(s0);
@@ -19,8 +28,8 @@ float4 main(PixelInput input) : SV_TARGET
     float4 texColor = diffuseMap.Sample(diffuseSampler, input.texCoord);
     
     // Light Dir.
-    float3 lightDir = -float3(500.0f, 500.0f, -500.0f);
-    lightDir = normalize(lightDir);
+    //float3 lightDir = -float3(500.0f, 500.0f, -500.0f);
+    float3 lightDir = normalize(-lightPosition);
     
     // World Normal.
     float3 worldNormal = normalize(input.normal);

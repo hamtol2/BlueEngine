@@ -11,6 +11,15 @@ struct PixelInput
     float3 bitangent : BITANGENT;
 };
 
+// Light Buffer.
+cbuffer LightData : register(b2)
+{
+    float3 lightPosition;
+    float lightDataPadding;
+    matrix lightViewMatrix;
+    matrix lightProjectionMatrix;
+};
+
 // Texture.
 Texture2D diffuseMap : register(t0);
 Texture2D normalMap : register(t1);
@@ -33,8 +42,8 @@ float4 main(PixelInput input) : SV_TARGET
     );
     
     // Light Dir.
-    float3 lightDir = -float3(500.0f, 500.0f, -500.0f);
-    lightDir = normalize(lightDir);
+    //float3 lightDir = -float3(500.0f, 500.0f, -500.0f);
+    float3 lightDir = normalize(-lightPosition);
     
     // World Normal.
     float3 worldNormal = normalize(mul(tangentNormal.xyz, tangentToWorld));

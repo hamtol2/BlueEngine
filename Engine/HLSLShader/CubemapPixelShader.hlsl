@@ -4,6 +4,15 @@ struct PixelInput
     float3 texCoord : TEXCOORD;
 };
 
+// Light Buffer.
+cbuffer LightData : register(b2)
+{
+    float3 lightPosition;
+    float lightDataPadding;
+    matrix lightViewMatrix;
+    matrix lightProjectionMatrix;
+};
+
 TextureCube skyboxTexture : register(t0);
 SamplerState samplerState : register(s0);
 

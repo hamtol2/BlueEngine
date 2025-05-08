@@ -43,6 +43,9 @@ namespace Blue
 			float farDistance		// 화면에 그려질 수 있는 가장 먼 거리.
 		);
 
+		// 직교투영(Orthographic).
+		static Matrix4 Orthographic(float width, float height, float nearDistance, float farDistance);
+
 		// operator overloading.
 		Matrix4& operator=(const Matrix4& other);
 		Matrix4 operator*(const Matrix4& other);
