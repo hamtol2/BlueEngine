@@ -36,11 +36,10 @@ struct VertexOutput
 {
     float4 position : SV_POSITION;
     float3 color : COLOR;
-    float2 texCoord : TEXCOORD;
+    float2 texCoord : TEXCOORD0;
     float3 normal : NORMAL;
     float3 cameraDirection : TEXCOORD1;
-    float3 tangent : TANGENT;
-    float3 bitangent : BITANGENT;
+    float4 lightClipPosition : TEXCOORD2;
 };
 
 VertexOutput main(VertexInput input)
@@ -57,10 +56,11 @@ VertexOutput main(VertexInput input)
     output.texCoord = input.texCoord;
     
     output.normal = mul(input.normal, (float3x3)worldMatrix);
-    output.tangent = mul(input.tangent, (float3x3)worldMatrix);
-    output.bitangent = mul(input.bitangent, (float3x3)worldMatrix);
     
     output.cameraDirection = normalize(worldPosition - cameraPosition);
+    
+    output.lightClipPosition = mul(float4(worldPosition, 1), lightViewMatrix);
+    output.lightClipPosition = mul(output.lightClipPosition, lightProjectionMatrix);
     
     return output;
 }

@@ -41,6 +41,7 @@ struct VertexOutput
     float3 cameraDirection : TEXCOORD1;
     float3 tangent : TANGENT;
     float3 bitangent : BITANGENT;
+    float4 lightClipPosition : TEXCOORD2;
 };
 
 VertexOutput main(VertexInput input)
@@ -61,6 +62,9 @@ VertexOutput main(VertexInput input)
     output.bitangent = mul(input.bitangent, (float3x3) worldMatrix);
     
     output.cameraDirection = normalize(worldPosition - cameraPosition);
+    
+    output.lightClipPosition = mul(float4(worldPosition, 1), lightViewMatrix);
+    output.lightClipPosition = mul(output.lightClipPosition, lightProjectionMatrix);
     
     return output;
 }

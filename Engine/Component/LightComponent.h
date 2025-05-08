@@ -30,8 +30,8 @@ namespace Blue
 
 	private:
 		LightData data;
-		float lightWidth = 25.0f;
-		float lightHeight = 25.0f;
+		float lightWidth = 50.0f;
+		float lightHeight = 50.0f;
 		ID3D11Buffer* dataBuffer = nullptr;
 	};
 }

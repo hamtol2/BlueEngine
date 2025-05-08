@@ -225,10 +225,10 @@ namespace Blue
 		{
 			return;
 		}
-
+		
 		// Shadowmap Pass.
 		DrawToShadowMap(level);
-		
+
 		// ºäÆ÷Æ® ¼³Á¤.
 		context->RSSetViewports(1, &viewport);
 

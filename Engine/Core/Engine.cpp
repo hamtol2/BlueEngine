@@ -42,7 +42,8 @@ namespace Blue
 		renderer = std::make_shared<Renderer>(width, height, window->Handle());
 
 		// ¼¨µµ¿ì¸Ê »ý¼º ¹× Àü´Þ.
-		renderer->SetShadowmap(std::make_unique<Shadowmap>(width * 4, height * 4));
+		//renderer->SetShadowmap(std::make_unique<Shadowmap>(width * 4, height * 4));
+		renderer->SetShadowmap(std::make_unique<Shadowmap>());
 	}
 
 	Engine::~Engine()

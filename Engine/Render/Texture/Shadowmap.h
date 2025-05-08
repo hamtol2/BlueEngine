@@ -9,7 +9,7 @@ namespace Blue
     class Shadowmap : public Texture
     {
     public:
-        Shadowmap(uint32 width = 2048, uint32 height = 2048 * (800 / 1280));
+        Shadowmap(uint32 width = 4096, uint32 height = 4096);
         ~Shadowmap();
 
         void Clear();
@@ -18,10 +18,11 @@ namespace Blue
 
     private:
 
-        uint32 width = 2048;
-        uint32 height = 2048 * (800 / 1280);
+        uint32 width = 0;
+        uint32 height = 0;
 
         ID3D11Texture2D* shadowMapTexture = nullptr;
+        ID3D11RenderTargetView* renderTargetView = nullptr;
         ID3D11DepthStencilView* depthStencilView = nullptr;
         D3D11_VIEWPORT shadowmapViewport;
 

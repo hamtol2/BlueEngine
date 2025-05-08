@@ -77,7 +77,7 @@ float CalcBlinnPhong(
 }
 
 // Calculate a shadow factor.
-float CalculateShadowFactor(int shadowPCFOption, float shadowBias, float shadowBrightness, float4 lightClipPosition)
+float CalculateShadowFactor(Texture2D shadowMap, SamplerState samplerState, int shadowPCFOption, float shadowBias, float shadowBrightness, float4 lightClipPosition)
 {
     // Shadow.
     float currentDepth = lightClipPosition.z / lightClipPosition.w;
@@ -89,8 +89,9 @@ float CalculateShadowFactor(int shadowPCFOption, float shadowBias, float shadowB
     currentDepth -= shadowBias;
     float shadowFactor = 0.0f;
     
-    float shadowDepth = shadowMap.Sample(diffuseSampler, uv).x;
-    if (uv.x >= 0.0f && uv.x <= 1 && uv.y >= 0.0f && uv.y <= 1.0f && (currentDepth > shadowDepth))
+    float shadowDepth = shadowMap.Sample(samplerState, uv).x;
+    //if (uv.x >= 0.0f && uv.x <= 1 && uv.y >= 0.0f && uv.y <= 1.0f && (currentDepth > shadowDepth))
+    if (currentDepth > shadowDepth)
     {
         shadowFactor = shadowBrightness;
     }
@@ -102,7 +103,7 @@ float CalculateShadowFactor(int shadowPCFOption, float shadowBias, float shadowB
     // Shadow map without PCF.
     //if (shadowPCFOption == 0)
     //{
-    //    float shadowDepth = shadowMap.Sample(diffuseSampler, uv).x;
+    //    float shadowDepth = shadowMap.Sample(samplerState, uv).x;
     //    if (uv.x >= 0.0f && uv.x <= 1 && uv.y >= 0.0f && uv.y <= 1.0f && (currentDepth > shadowDepth))
     //    {
     //        shadowFactor = shadowBrightness;
@@ -143,5 +144,6 @@ float CalculateShadowFactor(int shadowPCFOption, float shadowBias, float shadowB
     //    shadowFactor = clamp(shadowFactor, shadowBrightness, 1.0f);
     //}
     
-    return shadowFactor;
+    //return shadowFactor;
+    return shadowDepth;
 }

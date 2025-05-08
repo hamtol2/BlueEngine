@@ -9,6 +9,7 @@ struct PixelInput
     float3 cameraDirection : TEXCOORD1;
     float3 tangent : TANGENT;
     float3 bitangent : BITANGENT;
+    float4 lightClipPosition : TEXCOORD2;
 };
 
 // Light Buffer.
@@ -52,10 +53,13 @@ float4 main(PixelInput input) : SV_TARGET
     // Dot (Lambert cosine law) - diffuse.
     float nDotl = CalcLambert(worldNormal, lightDir);
     
+    float shadowFactor = nDotl > 0 ? CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.000125f, 0.2f, input.lightClipPosition) : 1;
+    
     //float4 ambient = texColor * float4(0.2f, 0.2f, 0.2f, 1);
     //float4 ambient = texColor * float4(CalcAmbient(worldNormal), 1);
     float4 ambient = texColor * float4(CalcAmbient(worldNormal), 1);
     float4 diffuse = texColor * nDotl;
+    diffuse *= shadowFactor;
     float4 finalColor = ambient + diffuse;
     
     // Phong (specular).
