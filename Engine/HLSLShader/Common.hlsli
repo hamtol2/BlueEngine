@@ -75,3 +75,73 @@ float CalcBlinnPhong(
     
     return specular;
 }
+
+// Calculate a shadow factor.
+float CalculateShadowFactor(int shadowPCFOption, float shadowBias, float shadowBrightness, float4 lightClipPosition)
+{
+    // Shadow.
+    float currentDepth = lightClipPosition.z / lightClipPosition.w;
+    float2 uv = lightClipPosition.xy / lightClipPosition.w;
+    uv.x = (uv.x * 0.5f) + 0.5f;
+    //uv.y = (-uv.y * 0.5f) + 0.5f;
+    uv.y = (-uv.y * 0.5f) + 0.5f;
+    
+    currentDepth -= shadowBias;
+    float shadowFactor = 0.0f;
+    
+    float shadowDepth = shadowMap.Sample(diffuseSampler, uv).x;
+    if (uv.x >= 0.0f && uv.x <= 1 && uv.y >= 0.0f && uv.y <= 1.0f && (currentDepth > shadowDepth))
+    {
+        shadowFactor = shadowBrightness;
+    }
+    else
+    {
+        shadowFactor = 1.0f;
+    }
+    
+    // Shadow map without PCF.
+    //if (shadowPCFOption == 0)
+    //{
+    //    float shadowDepth = shadowMap.Sample(diffuseSampler, uv).x;
+    //    if (uv.x >= 0.0f && uv.x <= 1 && uv.y >= 0.0f && uv.y <= 1.0f && (currentDepth > shadowDepth))
+    //    {
+    //        shadowFactor = shadowBrightness;
+    //    }
+    //    else
+    //    {
+    //        shadowFactor = 1.0f;
+    //    }
+    //}
+    
+    //// PCF for single texel.
+    //// Hard shadow.
+    //else if (shadowPCFOption == 1)
+    //{
+    //    shadowFactor = shadowMap.SampleCmpLevelZero(compareSampler, uv, currentDepth).x;
+    //    shadowFactor = clamp(shadowFactor, shadowBrightness, 1.0f);
+    //}
+    
+    //// PCF for 4x4 texel.
+    //// Soft shadow.
+    //else if (shadowPCFOption == 2)
+    //{
+    //    const float dx = 1.0f / shadowMapSize.x;
+    //    const float2 offsets[9] =
+    //    {
+    //        float2(-dx, -dx), float2(0.0f, -dx), float2(dx, -dx),
+    //        float2(-dx, 0.0f), float2(0.0f, 0.0f), float2(dx, 0.0f),
+    //        float2(-dx, +dx), float2(0.0f, +dx), float2(dx, +dx)
+    //    };
+        
+    //    [unroll]
+    //    for (int ix = 0; ix < 9; ++ix)
+    //    {
+    //        shadowFactor += shadowMap.SampleCmpLevelZero(compareSampler, uv + offsets[ix], currentDepth).x;
+    //    }
+        
+    //    shadowFactor /= 9.0f;
+    //    shadowFactor = clamp(shadowFactor, shadowBrightness, 1.0f);
+    //}
+    
+    return shadowFactor;
+}

@@ -24,5 +24,8 @@ namespace Blue
         ID3D11Texture2D* shadowMapTexture = nullptr;
         ID3D11DepthStencilView* depthStencilView = nullptr;
         D3D11_VIEWPORT shadowmapViewport;
+
+        // º®µµøÏ ∏  ºŒ¿Ã¥ı.
+        std::unique_ptr<class ShadowmapShader> shadowmapShader;
     };
 }

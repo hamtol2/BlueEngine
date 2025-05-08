@@ -152,7 +152,6 @@ namespace Blue
 			device->CreateRasterizerState(&rasterizerDesc, &cullOnRSState),
 			TEXT("Failed to create cull on rasterizer state."));
 
-
 		rasterizerDesc.CullMode = D3D11_CULL_FRONT;
 
 		ThrowIfFailed(
@@ -227,7 +226,8 @@ namespace Blue
 			return;
 		}
 
-		
+		// Shadowmap Pass.
+		DrawToShadowMap(level);
 		
 		// 뷰포트 설정.
 		context->RSSetViewports(1, &viewport);
@@ -240,6 +240,9 @@ namespace Blue
 
 		// 버퍼 교환. (EndScene/Present).
 		swapChain->Present(1u, 0u);
+
+		static ID3D11ShaderResourceView* nullSRV = nullptr;
+		context->PSSetShaderResources(3, 1, &nullSRV);
 	}
 
 	void Renderer::SetShadowmap(std::unique_ptr<class Shadowmap>&& shadowmap)
@@ -410,9 +413,6 @@ namespace Blue
 				//CullOn();
 			}
 		}
-
-		ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
-		context->PSSetShaderResources(3, 1, &shadowmapSRV);
 	}
 
 	void Renderer::DrawToRenderTexturePass(std::shared_ptr<Level>& level)
@@ -424,6 +424,10 @@ namespace Blue
 
 			float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
 			Clear(renderTexture->GetRenderTargetAddress(), color, renderTexture->GetDepthStencilView());
+
+			// 섀도우 맵 텍스처 바인딩.
+			ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
+			context->PSSetShaderResources(3, 1, &shadowmapSRV);
 
 			// 그리기.
 			// 카메라 바인딩.
@@ -472,6 +476,10 @@ namespace Blue
 	{
 		float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
 		Clear(&renderTargetView, color, depthStencilView);
+
+		// 섀도우 맵 텍스처 바인딩.
+		ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
+		context->PSSetShaderResources(3, 1, &shadowmapSRV);
 
 		// Draw.
 		// 카메라 바인딩.

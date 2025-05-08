@@ -75,6 +75,6 @@ namespace Blue
 		D3D11_VIEWPORT viewport;
 
 		// ¼¨µµ¿ì ¸Ê.
-		std::unique_ptr<class Shadowmap> shadowMap;
+		std::unique_ptr<class Shadowmap> shadowmap;
 	};
 }

@@ -162,6 +162,9 @@
     <ClCompile Include="Actor\LightActor.cpp">
       <Filter>소스 파일</Filter>
     </ClCompile>
+    <ClCompile Include="Shader\ShadowmapShader.cpp">
+      <Filter>소스 파일</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Core\Window.h">
@@ -320,6 +323,9 @@
     <ClInclude Include="Actor\LightActor.h">
       <Filter>헤더 파일</Filter>
     </ClInclude>
+    <ClInclude Include="Shader\ShadowmapShader.h">
+      <Filter>헤더 파일</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <FxCompile Include="HLSLShader\DefaultVertexShader.hlsl" />
@@ -332,6 +338,8 @@
     <FxCompile Include="HLSLShader\NormalSpecularMappingVertexShader.hlsl" />
     <FxCompile Include="HLSLShader\CubemapPixelShader.hlsl" />
     <FxCompile Include="HLSLShader\CubemapVertexShader.hlsl" />
+    <FxCompile Include="HLSLShader\ShadowmapPixelShader.hlsl" />
+    <FxCompile Include="HLSLShader\ShadowmapVertexShader.hlsl" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resource\ShaderLoader.inl">

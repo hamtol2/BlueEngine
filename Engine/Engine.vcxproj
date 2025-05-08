@@ -137,6 +137,7 @@
     <ClCompile Include="Shader\NormalSpecularMappingShader.cpp" />
     <ClCompile Include="Shader\Shader.cpp" />
     <ClCompile Include="Resource\ShaderLoader.cpp" />
+    <ClCompile Include="Shader\ShadowmapShader.cpp" />
     <ClCompile Include="Shader\SkyCubemapShader.cpp" />
     <ClCompile Include="Shader\Soldier\SoldierBodyShader.cpp" />
     <ClCompile Include="Shader\Soldier\SoldierHeadShader.cpp" />
@@ -191,6 +192,7 @@
     <ClInclude Include="Shader\NormalMappingShader.h" />
     <ClInclude Include="Shader\NormalSpecularMappingShader.h" />
     <ClInclude Include="Shader\Shader.h" />
+    <ClInclude Include="Shader\ShadowmapShader.h" />
     <ClInclude Include="Shader\SkyCubemapShader.h" />
     <ClInclude Include="Shader\Soldier\SoldierBodyShader.h" />
     <ClInclude Include="Shader\Soldier\SoldierHeadShader.h" />
@@ -248,6 +250,22 @@
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
       <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+    </FxCompile>
+    <FxCompile Include="HLSLShader\ShadowmapPixelShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Pixel</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Pixel</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
+    </FxCompile>
+    <FxCompile Include="HLSLShader\ShadowmapVertexShader.hlsl">
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Release|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Vertex</ShaderType>
+      <ShaderType Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Vertex</ShaderType>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">5.0</ShaderModel>
+      <ShaderModel Condition="'$(Configuration)|$(Platform)'=='Release|x64'">5.0</ShaderModel>
     </FxCompile>
     <FxCompile Include="HLSLShader\TextureMappingPixelShader.hlsl">
       <ObjectFileOutput Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">..\CompiledShader\%(Filename).cso</ObjectFileOutput>

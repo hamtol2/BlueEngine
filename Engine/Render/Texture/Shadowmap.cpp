@@ -1,6 +1,7 @@
 #include "Shadowmap.h"
 #include "Core/Common.h"
 #include "Core/Engine.h"
+#include "Shader/ShadowmapShader.h"
 
 namespace Blue
 {
@@ -54,6 +55,9 @@ namespace Blue
 		shadowmapViewport.Height = static_cast<float>(height);
 		shadowmapViewport.MinDepth = 0.0f;
 		shadowmapViewport.MaxDepth = 1.0f;
+
+		// ¼¨µµ¿ì ¸Ê ¼ÎÀÌ´õ »ý¼º.
+		shadowmapShader = std::make_unique<ShadowmapShader>();
 	}
 
 	Shadowmap::~Shadowmap()
@@ -79,5 +83,7 @@ namespace Blue
 		static ID3D11RenderTargetView* nullRenderTargetView = nullptr;
 		context.OMSetRenderTargets(1, &nullRenderTargetView, depthStencilView);
 		context.ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+
+		shadowmapShader->Bind();
 	}
 }
