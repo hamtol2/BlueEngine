@@ -2,9 +2,9 @@
 
 struct PixelInput
 {
-    float4 position : SV_Position;
+    float4 position : SV_POSITION;
     float3 color : COLOR;
-    float2 texCoord : TEXCOORD;
+    float2 texCoord : TEXCOORD0;
     float3 normal : NORMAL;
     float3 cameraDirection : TEXCOORD1;
     float3 tangent : TANGENT;
@@ -57,7 +57,8 @@ float4 main(PixelInput input) : SV_TARGET
     // Dot (Lambert cosine law) - diffuse.
     float nDotl = CalcLambert(worldNormal, lightDir);
     
-    float shadowFactor = nDotl > 0 ? CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.005, 0.2, input.lightClipPosition) : 1;    
+    float shadowFactor = nDotl > 0 ? 
+    CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.0000125, 0.2f, input.lightClipPosition) : 1;    
     
     //float4 ambient = texColor * float4(0.2f, 0.2f, 0.2f, 1);
     //float4 ambient = texColor * float4(CalcAmbient(worldNormal), 1);

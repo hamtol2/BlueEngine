@@ -41,7 +41,8 @@ namespace Blue
 		D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc = {};
 		shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
 		shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
-		shaderResourceViewDesc.Texture2D.MipLevels = 1;
+		shaderResourceViewDesc.Texture2D.MipLevels = texDesc.MipLevels;
+		shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
 
 		textureData = std::make_unique<TextureData>();
 
@@ -110,9 +111,14 @@ namespace Blue
 		//context.OMSetRenderTargets(1, &nullRenderTargetView, depthStencilView);
 		static float color[] = { 0.0f, 0.0f, 0.0f, 1.0f };
 		context.OMSetRenderTargets(1, &renderTargetView, depthStencilView);
-		context.ClearRenderTargetView(renderTargetView, color);
+		//context.ClearRenderTargetView(renderTargetView, color);
 		context.ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
 		shadowmapShader->Bind();
+	}
+
+	void Shadowmap::Unbind()
+	{
+		shadowmapShader->Unbind();
 	}
 }

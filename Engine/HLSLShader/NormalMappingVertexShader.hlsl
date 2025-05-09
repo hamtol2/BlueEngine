@@ -36,7 +36,7 @@ struct VertexOutput
 {
     float4 position : SV_POSITION;
     float3 color : COLOR;
-    float2 texCoord : TEXCOORD;
+    float2 texCoord : TEXCOORD0;
     float3 normal : NORMAL;
     float3 cameraDirection : TEXCOORD1;
     float3 tangent : TANGENT;

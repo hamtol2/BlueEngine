@@ -19,7 +19,7 @@ namespace Blue
 	{
 	}
 	
-	void Component::Draw()
+	void Component::Draw(bool isShadowDraw)
 	{
 	}
 	

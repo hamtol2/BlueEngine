@@ -47,7 +47,7 @@ namespace Blue
 		}
 	}
 	
-	void Actor::Draw()
+	void Actor::Draw(bool isShadowDraw)
 	{
 		// 예외 처리.
 		if (!IsActive())
@@ -61,7 +61,7 @@ namespace Blue
 		// 컴포넌트 함수 호출.
 		for (const auto& component : components)
 		{
-			component->Draw();
+			component->Draw(isShadowDraw);
 		}
 	}
 

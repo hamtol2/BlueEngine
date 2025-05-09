@@ -13,6 +13,7 @@ namespace Blue
 
 		// GPU에 쉐이더 객체를 연결(바인딩)하는 함수.
 		virtual void Bind();
+		virtual void Unbind();
 
 		virtual bool UseRenderTexture() const { return useRenderTexture; }
 

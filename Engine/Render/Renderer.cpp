@@ -407,12 +407,15 @@ namespace Blue
 				}
 
 				// 뎁스 그리기.
-				actor->Draw();
+				actor->Draw(true);
 
 				// 다시 뒷면을 그리지 않도록 설정.
 				//CullOn();
 			}
 		}
+		
+		// 섀도우맵 셰이더 언바인딩.
+		shadowmap->Unbind();
 	}
 
 	void Renderer::DrawToRenderTexturePass(std::shared_ptr<Level>& level)
@@ -422,7 +425,7 @@ namespace Blue
 			// 렌더 텍스처 가져오기.
 			auto renderTexture = TextureLoader::Get().renderTextures[ix];
 
-			float color[] = { 1.0f, 1.0f, 1.0f, 1.0f };
+			float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			Clear(renderTexture->GetRenderTargetAddress(), color, renderTexture->GetDepthStencilView());
 
 			// 섀도우 맵 텍스처 바인딩.

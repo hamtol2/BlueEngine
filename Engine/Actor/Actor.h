@@ -19,7 +19,7 @@ namespace Blue
 
 		virtual void BeginPlay();
 		virtual void Tick(float deltaTime);
-		virtual void Draw();
+		virtual void Draw(bool isShadowDraw = false);
 
 		void Destroy();
 

@@ -82,9 +82,8 @@ float CalculateShadowFactor(Texture2D shadowMap, SamplerState samplerState, int 
     // Shadow.
     float currentDepth = lightClipPosition.z / lightClipPosition.w;
     float2 uv = lightClipPosition.xy / lightClipPosition.w;
-    uv.x = (uv.x * 0.5f) + 0.5f;
-    //uv.y = (-uv.y * 0.5f) + 0.5f;
-    uv.y = (-uv.y * 0.5f) + 0.5f;
+    uv.y = -uv.y;
+    uv = uv * 0.5f + 0.5f;
     
     currentDepth -= shadowBias;
     float shadowFactor = 0.0f;
@@ -144,6 +143,5 @@ float CalculateShadowFactor(Texture2D shadowMap, SamplerState samplerState, int 
     //    shadowFactor = clamp(shadowFactor, shadowBrightness, 1.0f);
     //}
     
-    //return shadowFactor;
-    return shadowDepth;
+    return shadowFactor;
 }

@@ -14,7 +14,7 @@ namespace Blue
 		~StaticMeshComponent();
 
 		// 그리기 함수.
-		virtual void Draw() override;
+		virtual void Draw(bool isShadowDraw) override;
 
 		// 메시 설정 함수.
 		void SetMesh(std::shared_ptr<class Mesh> newMesh);

@@ -29,7 +29,7 @@ namespace Blue
 		~CameraComponent() = default;
 		
 		virtual void Tick(float deltaTime) override;
-		virtual void Draw() override;
+		virtual void Draw(bool isShadowDraw) override;
 
 	private:
 		// 카메라 속성.

@@ -10,7 +10,7 @@ namespace Blue
 
 		virtual void BeginPlay();
 		virtual void Tick(float deltaTime);
-		virtual void Draw();
+		virtual void Draw(bool isShadowDraw);
 
 		class Actor* GetOwner() const;
 		void SetOwner(class Actor* newOwner);

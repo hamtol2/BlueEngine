@@ -157,4 +157,15 @@ namespace Blue
 		context.VSSetShader(vertexShader, nullptr, 0);
 		context.PSSetShader(pixelShader, nullptr, 0);
 	}
+
+	void Shader::Unbind()
+	{
+		static ID3D11DeviceContext& context = Engine::Get().Context();
+		
+		static ID3D11VertexShader* nullVS = nullptr;
+		static ID3D11PixelShader* nullPS = nullptr;
+
+		context.VSSetShader(nullVS, nullptr, 0);
+		context.PSSetShader(nullPS, nullptr, 0);
+	}
 }

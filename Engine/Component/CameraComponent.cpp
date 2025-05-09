@@ -56,9 +56,9 @@ namespace Blue
 		
 	}
 
-	void CameraComponent::Draw()
+	void CameraComponent::Draw(bool isShadowDraw)
 	{
-		Component::Draw();
+		Component::Draw(isShadowDraw);
 
 		// 뷰행렬 업데이트 및 바인딩.
 		data.viewMatrix

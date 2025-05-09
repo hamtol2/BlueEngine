@@ -26,12 +26,12 @@ namespace Blue
 
 		virtual void BeginPlay() override;
 		virtual void Tick(float deltaTime) override;
-		virtual void Draw() override;
+		virtual void Draw(bool isShadowDraw) override;
 
 	private:
 		LightData data;
-		float lightWidth = 50.0f;
-		float lightHeight = 50.0f;
+		float lightWidth = 5.0f;
+		float lightHeight = 5.0f;
 		ID3D11Buffer* dataBuffer = nullptr;
 	};
 }

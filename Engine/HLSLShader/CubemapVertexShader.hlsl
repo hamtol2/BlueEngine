@@ -7,6 +7,7 @@ struct VertexInput
     float3 tangent : TANGENT;
     float3 bitangent : BITANGENT;
 };
+
 // ConstantBuffer.
 cbuffer Transform : register(b0)
 {

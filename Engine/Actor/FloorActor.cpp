@@ -39,6 +39,6 @@ namespace Blue
 		// 트랜스폼 설정.
 		transform.position.y = -1.0f;
 		transform.rotation.x = 90.0f;
-		transform.scale = Vector3::One * 20.0f;
+		transform.scale = Vector3::One * 5.0f;
 	}
 }

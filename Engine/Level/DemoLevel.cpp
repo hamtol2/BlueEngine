@@ -36,7 +36,7 @@ namespace Blue
 
 		// 라이트 액서 생성.
 		std::shared_ptr<LightActor> light = std::make_shared<LightActor>();
-		light->transform.position = Vector3(1.0f, 1.0f, -1.0f) * 10.0f;
+		light->transform.position = Vector3(1.0f, 1.0f, -1.0f) * 5.0f;
 
 		// 군인 액터 생성.
 		std::shared_ptr<SoldierActor> soldier = std::make_shared<SoldierActor>();
@@ -56,11 +56,11 @@ namespace Blue
 
 		// 액터를 레벨에 추가.
 		AddActor(sphere);
-		AddActor(quad);
+		//AddActor(quad);
 		AddActor(floor);
 		AddActor(soldier);
 		AddActor(james);
-		//AddActor(skybox);
+		AddActor(skybox);
 		AddActor(cameraActor);
 		AddActor(light);
 	}

@@ -14,7 +14,7 @@ namespace Blue
 	{
 	}
 
-	void StaticMeshComponent::Draw()
+	void StaticMeshComponent::Draw(bool isShadowDraw)
 	{
 		//Component::Draw();
 
@@ -38,8 +38,12 @@ namespace Blue
 				// 서브 메시 바인딩.
 				subMesh.lock()->Bind();
 
-				// 셰이더 바인딩.
-				shaders[ix].lock()->Bind();
+				// 섀도우를 그리지 않을 때에만 컴포넌트 셰이더 바이딩.
+				if (!isShadowDraw)
+				{
+					// 셰이더 바인딩.
+					shaders[ix].lock()->Bind();
+				}
 
 				// DrawCall.
 				static ID3D11DeviceContext& context = Engine::Get().Context();
