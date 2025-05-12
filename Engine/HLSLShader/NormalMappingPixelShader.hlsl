@@ -53,13 +53,13 @@ float4 main(PixelInput input) : SV_TARGET
     // Dot (Lambert cosine law) - diffuse.
     float nDotl = CalcLambert(worldNormal, lightDir);
     
-    float shadowFactor = nDotl > 0 ? CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.005f, 0.2f, input.lightClipPosition) : 1;
+    float shadowFactor = nDotl > 0 ? CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.0000125f, 0.2f, input.lightClipPosition) : 1;
     
     //float4 ambient = texColor * float4(0.2f, 0.2f, 0.2f, 1);
     //float4 ambient = texColor * float4(CalcAmbient(worldNormal), 1);
     float4 ambient = texColor * float4(CalcAmbient(worldNormal), 1);
     float4 diffuse = texColor * nDotl;
-    diffuse *= shadowFactor;
+    //diffuse *= shadowFactor;
     float4 finalColor = ambient + diffuse;
     
     // Phong (specular).
@@ -70,5 +70,5 @@ float4 main(PixelInput input) : SV_TARGET
     
     finalColor += float4(0.4f, 0.6f, 0.8f, 1) * specular;
     //finalColor += texColor * specular;
-    return finalColor;
+    return finalColor *= shadowFactor;
 }

@@ -34,6 +34,8 @@ namespace Blue
 		// 전치 행렬.
 		static Matrix4 Transpose(const Matrix4& target);
 
+		static Matrix4 LookAt(const Vector3& position, const Vector3& target, const Vector3& up);
+
 		// 원근투영(Perspective).
 		static Matrix4 Perspective(
 			float fieldOfView,		// 시야각.

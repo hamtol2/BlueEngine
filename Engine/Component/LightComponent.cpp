@@ -43,21 +43,22 @@ namespace Blue
 		data.position = owner->transform.position;
 
 		// 뷰행렬 업데이트 및 바인딩.
-		data.viewMatrix
-			= Matrix4::Translation(owner->transform.position * -1.0f)
-			* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
+		//data.viewMatrix
+		//	= Matrix4::Translation(owner->transform.position * -1.0f)
+		//	* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
+		data.viewMatrix = Matrix4::LookAt(data.position, Vector3::Zero, Vector3::Up);
 
 		// 투영 행렬 설정.
-		//data.projectionMatrix = Matrix4::Perspective(
-		//	90.0f,
-		//	(float)Engine::Get().Width(),
-		//	(float)Engine::Get().Height(),
-		//	0.1f,
-		//	10000.0f
-		//);
+		data.projectionMatrix = Matrix4::Perspective(
+			90.0f,
+			(float)Engine::Get().Width() * 2.0f,
+			(float)Engine::Get().Height() * 2.0f,
+			0.1f,
+			1000.0f
+		);
 
 		// 투영 행렬 설정(직교 투영).
-		data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 1.0f, 100.0f);
+		//data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 1.0f, 100.0f);
 
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
@@ -75,29 +76,34 @@ namespace Blue
 
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		//data.position = owner->transform.position;
+		data.position = owner->transform.position;
 
 		// 뷰행렬 업데이트 및 바인딩.
-		//data.viewMatrix = Matrix4::Translation(owner->transform.position * -1.0f)
-		//	* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
+		data.viewMatrix 
+			= Matrix4::Translation(owner->transform.position * -1.0f)
+			* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
+
+		//data.viewMatrix = Matrix4::LookAt(data.position, Vector3::Zero, Vector3::Up);
 
 		// 투영 행렬 설정.
-		//data.projectionMatrix = Matrix4::Perspective(
-		//	60.0f,
-		//	(float)Engine::Get().Width(),
-		//	(float)Engine::Get().Height(),
-		//	0.1f,
-		//	10000.0f
-		//);
+		data.projectionMatrix = Matrix4::Perspective(
+			60.0f,
+			(float)Engine::Get().Width() * 2.0f,
+			(float)Engine::Get().Height() * 2.0f,
+			0.1f,
+			10000.0f
+		);
 
 		// 투영 행렬 설정(직교 투영).
-		//data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 1.0f, 10000.0f);
+		//data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 0.1f, 1000.0f);
+		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
+		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
 
 		// 데이터 업데이트.
-		//D3D11_MAPPED_SUBRESOURCE mappedResource = {};
-		//context.Map(dataBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
-		//memcpy(mappedResource.pData, &data, LightData::Stride());
-		//context.Unmap(dataBuffer, 0);
+		D3D11_MAPPED_SUBRESOURCE mappedResource = {};
+		context.Map(dataBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
+		memcpy(mappedResource.pData, &data, LightData::Stride());
+		context.Unmap(dataBuffer, 0);
 	}
 
 	void LightComponent::Draw(bool isShadowDraw)

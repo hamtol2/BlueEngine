@@ -60,7 +60,7 @@ namespace Blue
 		Texture(const std::string& name, BindType bindType = BindType::PixelShader);
 		virtual ~Texture();
 
-		void Bind(uint32 index = 0);
+		virtual void Bind(uint32 index = 0);
 
 	protected:
 

@@ -381,8 +381,11 @@ namespace Blue
 
 	void Renderer::DrawToShadowMap(std::shared_ptr<Level>& level)
 	{
-		// ¼¨µµ¿ì ¸Ê ¹ÙÀÎµù.
+		// ¼¨µµ¿ì ¸ÊÀÇ µª½º ¸Ê Clear.
 		shadowmap->Clear();
+
+		// ¼¨µµ¿ì ¸Ê ¹ÙÀÎµù.
+		shadowmap->Bind(0);
 
 		// µª½º Á¤º¸ ±×¸®±â.
 		for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
@@ -408,9 +411,6 @@ namespace Blue
 
 				// µª½º ±×¸®±â.
 				actor->Draw(true);
-
-				// ´Ù½Ã µÞ¸éÀ» ±×¸®Áö ¾Êµµ·Ï ¼³Á¤.
-				//CullOn();
 			}
 		}
 		

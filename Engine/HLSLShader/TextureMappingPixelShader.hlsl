@@ -40,11 +40,11 @@ float4 main(PixelInput input) : SV_TARGET
     float nDotl = CalcLambert(worldNormal, lightDir);
     
     // Calculate shadow.
-    float shadowFactor = nDotl > 0 ? CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.005f, 0.2f, input.lightClipPosition) : 1;
+    float shadowFactor = nDotl > 0 ? CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.00000125f, 0.2f, input.lightClipPosition) : 1;
     
     float4 ambient = texColor * float4(0.2f, 0.2f, 0.2f, 1);
     float4 diffuse = texColor * nDotl;
-    diffuse *= shadowFactor;
+    //diffuse *= shadowFactor;
     
     float4 finalColor = ambient + diffuse;
     
@@ -60,5 +60,5 @@ float4 main(PixelInput input) : SV_TARGET
     
     finalColor += float4(0.4f, 0.6f, 0.8f, 1) * specular;
     //return float4(specular, specular, specular, 1);
-    return finalColor;
+    return finalColor *= shadowFactor;
 }

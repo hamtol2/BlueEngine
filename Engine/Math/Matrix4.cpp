@@ -140,6 +140,32 @@ namespace Blue
 		return m;
 	}
 
+	Matrix4 Matrix4::LookAt(const Vector3& position, const Vector3& target, const Vector3& up)
+	{
+		Vector3 forward = (target - position).Normalized();
+		Vector3 right = Cross(up, forward).Normalized();
+		Vector3 upDir = Cross(forward, right).Normalized();
+
+		float x = Dot(right, position);
+		float y = Dot(upDir, position);
+		float z = Dot(forward, position);
+
+		//XMMatrixLookAtLH
+
+		Matrix4 m;
+		m.m00 = right.x;	m.m01 = right.y;	m.m02 = right.z;	m.m03 = -x;
+		m.m10 = upDir.x;	m.m11 = upDir.y;	m.m12 = upDir.z;	m.m13 = -y;
+		m.m20 = forward.x;	m.m21 = forward.y;	m.m22 = forward.z;	m.m23 = -z;
+		m.m30 = 0.0f;		m.m31 = 0.0f;		m.m32 = 0.0f;		m.m33 = 1.0f;
+
+		//m.m00 = right.x;	m.m01 = right.y;	m.m02 = right.z;	m.m03 = 0.0f;
+		//m.m10 = upDir.x;	m.m11 = upDir.y;	m.m12 = upDir.z;	m.m13 = 0.0f;
+		//m.m20 = forward.x;	m.m21 = forward.y;	m.m22 = forward.z;	m.m23 = 0.0f;
+		//m.m30 = -x;			m.m31 = -y;			m.m32 = -z;			m.m33 = 1.0f;
+
+		return m;
+	}
+
 	Matrix4 Matrix4::Perspective(
 		float fieldOfView, 
 		float width, 

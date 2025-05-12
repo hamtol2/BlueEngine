@@ -106,14 +106,16 @@ namespace Blue
 	{
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		context.RSSetViewports(1, &shadowmapViewport);
-		//static ID3D11RenderTargetView* nullRenderTargetView = nullptr;
-		//context.OMSetRenderTargets(1, &nullRenderTargetView, depthStencilView);
 		static float color[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-		context.OMSetRenderTargets(1, &renderTargetView, depthStencilView);
-		//context.ClearRenderTargetView(renderTargetView, color);
-		context.ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 
+		context.RSSetViewports(1, &shadowmapViewport);
+		context.OMSetRenderTargets(1, &renderTargetView, depthStencilView);
+		context.ClearRenderTargetView(renderTargetView, color);
+		context.ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
+	}
+
+	void Shadowmap::Bind(uint32 index)
+	{
 		shadowmapShader->Bind();
 	}
 

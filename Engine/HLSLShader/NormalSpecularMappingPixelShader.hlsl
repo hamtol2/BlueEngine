@@ -58,7 +58,7 @@ float4 main(PixelInput input) : SV_TARGET
     float nDotl = CalcLambert(worldNormal, lightDir);
     
     float shadowFactor = nDotl > 0 ? 
-    CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.0000125, 0.2f, input.lightClipPosition) : 1;    
+    CalculateShadowFactor(shadowMap, diffuseSampler, 0, 0.0000125f, 0.2f, input.lightClipPosition) : 1;
     
     //float4 ambient = texColor * float4(0.2f, 0.2f, 0.2f, 1);
     //float4 ambient = texColor * float4(CalcAmbient(worldNormal), 1);

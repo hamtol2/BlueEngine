@@ -16,7 +16,7 @@ namespace Blue
 
 	void StaticMeshComponent::Draw(bool isShadowDraw)
 	{
-		//Component::Draw();
+		Component::Draw(isShadowDraw);
 
 		// 서브 메시를 순회하면서 DrawCall.
 		uint32 meshCount = mesh->SubMeshCount();

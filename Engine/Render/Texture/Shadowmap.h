@@ -13,6 +13,7 @@ namespace Blue
         ~Shadowmap();
 
         void Clear();
+        virtual void Bind(uint32 index = 0) override;
         void Unbind();
 
         ID3D11ShaderResourceView* GetShaderResourceView() const { return textureData->shaderResourceView; }
