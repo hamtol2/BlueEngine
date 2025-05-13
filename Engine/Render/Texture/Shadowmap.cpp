@@ -45,6 +45,8 @@ namespace Blue
 		shaderResourceViewDesc.Texture2D.MostDetailedMip = 0;
 
 		textureData = std::make_unique<TextureData>();
+		textureData->width = width;
+		textureData->height = height;
 
 		ThrowIfFailed(
 			device.CreateShaderResourceView(shadowMapTexture, &shaderResourceViewDesc, &textureData->shaderResourceView),
@@ -64,6 +66,7 @@ namespace Blue
 		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc = {};
 		renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
+		renderTargetViewDesc.Texture2D.MipSlice = 0;
 		renderTargetViewDesc.Texture2D.MipSlice = 0;
 
 		ThrowIfFailed(
@@ -85,6 +88,22 @@ namespace Blue
 
 		// 绩档快 甘 嘉捞歹 积己.
 		shadowmapShader = std::make_unique<ShadowmapShader>();
+
+		// 基敲矾 加己 汲沥.
+		D3D11_SAMPLER_DESC sampleDesc = {};
+		sampleDesc.Filter = D3D11_FILTER_ANISOTROPIC;
+		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampleDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampleDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampleDesc.MaxLOD = FLT_MAX;
+		sampleDesc.MinLOD = -FLT_MAX;
+		sampleDesc.MaxAnisotropy = 3;
+		sampleDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+
+		// 基敲矾 积己.
+		ThrowIfFailed(
+			device.CreateSamplerState(&sampleDesc, &textureData->samplerState),
+			TEXT("Error: Failed to create sampler state."));
 	}
 
 	Shadowmap::~Shadowmap()
@@ -99,6 +118,12 @@ namespace Blue
 		{
 			depthStencilView->Release();
 			depthStencilView = nullptr;
+		}
+
+		if (renderTargetView)
+		{
+			renderTargetView->Release();
+			renderTargetView = nullptr;
 		}
 	}
 
@@ -117,6 +142,15 @@ namespace Blue
 	void Shadowmap::Bind(uint32 index)
 	{
 		shadowmapShader->Bind();
+	}
+
+	void Shadowmap::BindSamplerState()
+	{
+		if (textureData->samplerState)
+		{
+			static ID3D11DeviceContext& context = Engine::Get().Context();
+			context.PSSetSamplers(0, 1, &textureData->samplerState);
+		}
 	}
 
 	void Shadowmap::Unbind()

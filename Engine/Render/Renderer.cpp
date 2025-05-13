@@ -3,6 +3,9 @@
 
 #include "Level/Level.h"
 #include "Actor/Actor.h"
+#include "Actor/QuadActor.h"
+
+#include "Math/Transform.h"
 
 #include "Texture/RenderTexture.h"
 #include "Resource/TextureLoader.h"
@@ -233,7 +236,7 @@ namespace Blue
 		context->RSSetViewports(1, &viewport);
 
 		// Phase-1.
-		DrawToRenderTexturePass(level);
+		//DrawToRenderTexturePass(level);
 
 		// Final-Phase.
 		DrawFinalPass(level);
@@ -245,10 +248,17 @@ namespace Blue
 		context->PSSetShaderResources(3, 1, &nullSRV);
 	}
 
-	void Renderer::SetShadowmap(std::unique_ptr<class Shadowmap>&& shadowmap)
+	void Renderer::SetShadowmap(std::shared_ptr<class Shadowmap>&& shadowmap)
 	{
 		// 외부에서 생성한 섀도우 맵의 소유권을 Renderer로 이전.
+		//this->shadowmap = std::move(shadowmap);
 		this->shadowmap = std::move(shadowmap);
+
+		// 테스트를 위한 QuadActor 생성.
+		quadActor = std::make_unique<QuadActor>();
+		quadActor->transform.position.x = 2.0f;
+		quadActor->SetTexture(this->shadowmap);
+		quadActor->SetUseRenderTexture(false);
 	}
 
 	void Renderer::OnResize(uint32 width, uint32 height)
@@ -394,8 +404,12 @@ namespace Blue
 			auto actor = level->GetActor(actorIndex);
 
 			// 렌더 텍스처 사용 여부 확인.
-			auto meshComp = actor->GetComponent<StaticMeshComponent>();
-			if (meshComp && meshComp->UseRenderTexture())
+			//auto meshComp = actor->GetComponent<StaticMeshComponent>();
+			//if (meshComp && meshComp->UseRenderTexture())
+			//{
+			//	continue;
+			//}
+			if (actor->GetUseRenderTexture())
 			{
 				continue;
 			}
@@ -420,7 +434,7 @@ namespace Blue
 
 	void Renderer::DrawToRenderTexturePass(std::shared_ptr<Level>& level)
 	{
-		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix)
+		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix) 
 		{
 			// 렌더 텍스처 가져오기.
 			auto renderTexture = TextureLoader::Get().renderTextures[ix];
@@ -428,9 +442,9 @@ namespace Blue
 			float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			Clear(renderTexture->GetRenderTargetAddress(), color, renderTexture->GetDepthStencilView());
 
-			// 섀도우 맵 텍스처 바인딩.
-			ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
-			context->PSSetShaderResources(3, 1, &shadowmapSRV);
+			//// 섀도우 맵 텍스처 바인딩.
+			//ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
+			//context->PSSetShaderResources(3, 1, &shadowmapSRV);
 
 			// 그리기.
 			// 카메라 바인딩.
@@ -451,8 +465,12 @@ namespace Blue
 				auto actor = level->GetActor(actorIndex);
 
 				// 렌더 텍스처 사용 여부 확인.
-				auto meshComp = actor->GetComponent<StaticMeshComponent>();
-				if (meshComp && meshComp->UseRenderTexture())
+				//auto meshComp = actor->GetComponent<StaticMeshComponent>();
+				//if (meshComp && meshComp->UseRenderTexture())
+				//{
+				//	continue;
+				//}
+				if (actor->GetUseRenderTexture())
 				{
 					continue;
 				}
@@ -516,6 +534,14 @@ namespace Blue
 				// 다시 뒷면을 그리지 않도록 설정.
 				CullOn();
 			}
+		}
+
+		// @Test: 테스트용 QuadActor 그리기.
+		if (quadActor)
+		{
+			quadActor->Tick(1.0f / 60.0f);
+			shadowmap->BindSamplerState();
+			quadActor->Draw();
 		}
 	}
 }

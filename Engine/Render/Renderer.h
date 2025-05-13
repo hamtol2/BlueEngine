@@ -23,7 +23,7 @@ namespace Blue
 		void Draw(std::shared_ptr<class Level> level);
 
 		// ¼¨µµ¿ì¸Ê ¼³Á¤ ÇÔ¼ö.
-		void SetShadowmap(std::unique_ptr<class Shadowmap>&& shadowmap);
+		void SetShadowmap(std::shared_ptr<class Shadowmap>&& shadowmap);
 
 		// Å©±â º¯°æ ÇÔ¼ö.
 		void OnResize(uint32 width, uint32 height);
@@ -75,6 +75,8 @@ namespace Blue
 		D3D11_VIEWPORT viewport;
 
 		// ¼¨µµ¿ì ¸Ê.
-		std::unique_ptr<class Shadowmap> shadowmap;
+		std::shared_ptr<class Shadowmap> shadowmap;
+
+		std::unique_ptr<class QuadActor> quadActor;
 	};
 }

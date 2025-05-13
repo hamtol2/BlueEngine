@@ -43,7 +43,7 @@ namespace Blue
 
 		// ¼¨µµ¿ì¸Ê »ý¼º ¹× Àü´Þ.
 		//renderer->SetShadowmap(std::make_unique<Shadowmap>(width * 4, height * 4));
-		renderer->SetShadowmap(std::make_unique<Shadowmap>());
+		renderer->SetShadowmap(std::make_shared<Shadowmap>());
 	}
 
 	Engine::~Engine()

@@ -26,6 +26,10 @@ namespace Blue
 		// 컴포넌트 추가 함수.
 		void AddComponent(std::shared_ptr<class Component> newComponent);
 
+		void SetUseRenderTexture(bool newUseRenderTexture);
+
+		bool GetUseRenderTexture() const { return useRenderTexture; }
+
 		// 컴포넌트 Get 함수.
 		template<typename T>
 		std::shared_ptr<T> GetComponent()
@@ -67,5 +71,8 @@ namespace Blue
 
 		// 컴포넌트 배열.
 		std::vector<std::shared_ptr<class Component>> components;
+
+		// 렌더 텍스처 사용 여부.
+		bool useRenderTexture = false;
 	};
 }

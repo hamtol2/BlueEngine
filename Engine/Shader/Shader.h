@@ -15,8 +15,6 @@ namespace Blue
 		virtual void Bind();
 		virtual void Unbind();
 
-		virtual bool UseRenderTexture() const { return useRenderTexture; }
-
 	protected:
 		// 쉐이더 이름.
 		std::wstring name;
@@ -29,8 +27,5 @@ namespace Blue
 
 		ID3D11PixelShader* pixelShader = nullptr;
 		ID3DBlob* pixelShaderBuffer = nullptr;
-
-		// 렌더 텍스처 사용 여부.
-		bool useRenderTexture = false;
 	};
 }

@@ -29,15 +29,22 @@ namespace Blue
 		if (ShaderLoader::Get().Load<TextureMappingShader>(shader))
 		{
 			meshComponent->AddShader(shader);
+			this->shader = shader;
 		}
 
-		// 텍스처 로드 및 셰이더에 설정.
-		std::weak_ptr<RenderTexture> renderTexture;
-		TextureLoader::Get().GetNewRenderTexture(
-			renderTexture, 1280, 800
-		);
+		//// 텍스처 로드 및 셰이더에 설정.
+		//std::weak_ptr<RenderTexture> renderTexture;
+		//TextureLoader::Get().GetNewRenderTexture(
+		//	renderTexture, 1280, 800
+		//);
 
-		shader.lock()->SetTexture(renderTexture);
+		//shader.lock()->SetTexture(renderTexture);
+		//SetUseRenderTexture(true);
+	}
+
+	void QuadActor::SetTexture(const std::weak_ptr<Texture>& newTexture)
+	{
+		shader.lock()->SetTexture(newTexture);
 	}
 
 	void QuadActor::Tick(float deltaTime)

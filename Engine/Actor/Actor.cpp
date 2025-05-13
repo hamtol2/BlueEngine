@@ -79,6 +79,11 @@ namespace Blue
 		newComponent->SetOwner(this);
 	}
 
+	void Actor::SetUseRenderTexture(bool newUseRenderTexture)
+	{
+		useRenderTexture = newUseRenderTexture;
+	}
+
 	const bool Actor::IsActive() const
 	{
 		return isActive && !hasDestroyed;
