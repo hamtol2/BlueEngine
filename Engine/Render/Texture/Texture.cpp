@@ -170,7 +170,7 @@ namespace Blue
 		byte* dest = imageBuffer;
 
 		// 기존 이미지 데이터 + 알파 채널 추가.
-		for (int ix = 0; ix < pixelCount; ++ix)
+		for (uint32 ix = 0; ix < pixelCount; ++ix)
 		{
 			// 기존 이미지 데이터를 새로운 버퍼에 복사.
 			memcpy(dest, source, sizeof(byte) * 3);
