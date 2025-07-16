@@ -17,44 +17,44 @@ namespace Blue
 {
 	DemoLevel::DemoLevel()
 	{
-		// ╣╔╦П ╬ю(╥╧╨╖) ╠╦╪╨.
+		// О©╫О©╫О©╫О©╫ О©╫О©╫(О©╫О©╫О©╫О©╫) О©╫О©╫О©╫О©╫.
 
-		// ╠╦ц╪ ╬вем ╩Щ╪╨.
+		// О©╫О©╫ц╪ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		std::shared_ptr<SphereActor> sphere = std::make_shared<SphereActor>();
 		sphere->transform.position.x = -0.5f;
 		sphere->transform.scale = Vector3::One * 0.01f;
 
-		// RenderTexture╦╕ ╨╦©╘аж╠Б ю╖гя Quad ╬вем ╩Щ╪╨.
+		// RenderTextureО©╫О©╫ О©╫О©╫О©╫О©╫О©╫ж╠О©╫ О©╫О©╫О©╫О©╫ Quad О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		std::shared_ptr<QuadActor> quad = std::make_shared<QuadActor>();
 		quad->transform.position.x = 1.5f;
 
 		std::shared_ptr<FloorActor> floor = std::make_shared<FloorActor>();
 
-		// д╚╦ч╤С ╬вем ╩Щ╪╨.
+		// д╚О©╫ч╤О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		std::shared_ptr<CameraActor> cameraActor = std::make_shared<CameraActor>();
 		cameraActor->transform.position.z = -3.0f;
 
-		// ╤Сюлф╝ ╬в╪╜ ╩Щ╪╨.
+		// Л║╟К╙┘ Л∙║М└╟ Л┐²Л└╠.
 		std::shared_ptr<LightActor> light = std::make_shared<LightActor>();
-		light->transform.position = Vector3(1.0f, 1.0f, -1.0f) * 5.0f;
+		light->transform.position = Vector3(5.0f, 10.0f, -5.0f);
 
-		// ╠╨юн ╬вем ╩Щ╪╨.
+		//   .
 		std::shared_ptr<SoldierActor> soldier = std::make_shared<SoldierActor>();
 		soldier->transform.position.x = -2.0f;
 		soldier->transform.position.y = -1.0f;
 		soldier->transform.scale = Vector3::One * 0.01f;
 
-		// James ╬вем ╩Щ╪╨.
+		// James О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		std::shared_ptr<JamesActor> james = std::make_shared<JamesActor>();
 		james->transform.scale = Vector3::One * 0.01f;
 		james->transform.position.y = -1.0f;
 		james->transform.position.x = -3.5f;
 
-		// Skybox ╬вем ╩Щ╪╨.
+		// Skybox О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		std::shared_ptr<SkyboxActor> skybox = std::make_shared<SkyboxActor>("Apocalypse");
 		skybox->transform.scale = Vector3::One * 100.0f;
 
-		// ╬вем╦╕ ╥╧╨╖©║ цъ╟║.
+		// О©╫О©╫О©╫м╦О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫ъ╟О©╫.
 		AddActor(sphere);
 		//AddActor(quad);
 		AddActor(floor);

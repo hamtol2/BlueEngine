@@ -10,7 +10,7 @@ namespace Blue
 	{
 		static ID3D11Device& device = Engine::Get().Device();
 
-		// ºŒµµøÏ ∏  ≈ÿΩ∫√≥ ª˝º∫
+		// ÍπäÏù¥ Î≤ÑÌçº ÌÖçÏä§Ï≤ò ÏÉùÏÑ±
 		D3D11_TEXTURE2D_DESC texDesc = {};
 		texDesc.Width = width;
 		texDesc.Height = height;
@@ -27,7 +27,7 @@ namespace Blue
 			device.CreateTexture2D(&texDesc, nullptr, &shadowMapTexture),
 			TEXT("Failed to create shadowmap texture"));
 
-		// µ™Ω∫ Ω∫≈ŸΩ« ∫‰ ª˝º∫
+		// ÍπäÏù¥ Ïä§ÌÖêÏã§ Î∑∞ ÏÉùÏÑ±
 		D3D11_DEPTH_STENCIL_VIEW_DESC depthStencilViewDesc = {};
 		depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
@@ -37,7 +37,7 @@ namespace Blue
 			device.CreateDepthStencilView(shadowMapTexture, &depthStencilViewDesc, &depthStencilView),
 			TEXT("Failed to create depth stencil view for shadow map"));
 
-		// ºŒ¿Ã¥ı ∏Æº“Ω∫ ∫‰ ª˝º∫
+		// ÏÖ∞Ïù¥Îçî Î¶¨ÏÜåÏä§ Î∑∞ ÏÉùÏÑ±
 		D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc = {};
 		shaderResourceViewDesc.Format = DXGI_FORMAT_R24_UNORM_X8_TYPELESS;
 		shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
@@ -52,33 +52,6 @@ namespace Blue
 			device.CreateShaderResourceView(shadowMapTexture, &shaderResourceViewDesc, &textureData->shaderResourceView),
 			TEXT("Failed to create shader resource view for shadowmap"));
 
-		// ºŒµµøÏ ∏  ≈ÿΩ∫√≥ ª˝º∫.
-		texDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		texDesc.BindFlags = D3D11_BIND_RENDER_TARGET;
-
-		ID3D11Texture2D* renderTargetTexture = nullptr;
-
-		ThrowIfFailed(
-			device.CreateTexture2D(&texDesc, nullptr, &renderTargetTexture),
-			TEXT("Failed to create texture2d used render target view for shadow map."));
-
-		// ∑ª¥ı ≈∏∞Ÿ ∫‰ ª˝º∫.
-		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc = {};
-		renderTargetViewDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
-		renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
-		renderTargetViewDesc.Texture2D.MipSlice = 0;
-		renderTargetViewDesc.Texture2D.MipSlice = 0;
-
-		ThrowIfFailed(
-			device.CreateRenderTargetView(renderTargetTexture, &renderTargetViewDesc, &renderTargetView),
-			TEXT("Failed to create render target view for shadow map."));
-
-		if (renderTargetTexture)
-		{
-			renderTargetTexture->Release();
-			renderTargetTexture = nullptr;
-		}
-
 		shadowmapViewport.TopLeftX = 0.0f;
 		shadowmapViewport.TopLeftY = 0.0f;
 		shadowmapViewport.Width = static_cast<float>(width);
@@ -86,21 +59,25 @@ namespace Blue
 		shadowmapViewport.MinDepth = 0.0f;
 		shadowmapViewport.MaxDepth = 1.0f;
 
-		// º®µµøÏ ∏  ºŒ¿Ã¥ı ª˝º∫.
+		// ÏâêÎèÑÏö∞ Îßµ ÏÖ∞Ïù¥Îçî ÏÉùÏÑ±.
 		shadowmapShader = std::make_unique<ShadowmapShader>();
 
-		// ª˘«√∑Ø º”º∫ º≥¡§.
+		// ÏÉòÌîåÎü¨ ÏÜçÏÑ± ÏÑ§Ï†ï.
 		D3D11_SAMPLER_DESC sampleDesc = {};
-		sampleDesc.Filter = D3D11_FILTER_ANISOTROPIC;
-		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
-		sampleDesc.AddressV = D3D11_TEXTURE_ADDRESS_WRAP;
-		sampleDesc.AddressW = D3D11_TEXTURE_ADDRESS_WRAP;
+		sampleDesc.Filter = D3D11_FILTER_COMPARISON_MIN_MAG_LINEAR_MIP_POINT;
+		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_BORDER;
+		sampleDesc.AddressV = D3D11_TEXTURE_ADDRESS_BORDER;
+		sampleDesc.AddressW = D3D11_TEXTURE_ADDRESS_BORDER;
 		sampleDesc.MaxLOD = FLT_MAX;
 		sampleDesc.MinLOD = -FLT_MAX;
-		sampleDesc.MaxAnisotropy = 3;
-		sampleDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
+		sampleDesc.MaxAnisotropy = 1;
+		sampleDesc.ComparisonFunc = D3D11_COMPARISON_LESS_EQUAL;
+		sampleDesc.BorderColor[0] = 1.0f;
+		sampleDesc.BorderColor[1] = 1.0f;
+		sampleDesc.BorderColor[2] = 1.0f;
+		sampleDesc.BorderColor[3] = 1.0f;
 
-		// ª˘«√∑Ø ª˝º∫.
+		// ÏÉòÌîåÎü¨ ÏÉùÏÑ±.
 		ThrowIfFailed(
 			device.CreateSamplerState(&sampleDesc, &textureData->samplerState),
 			TEXT("Error: Failed to create sampler state."));
@@ -131,11 +108,8 @@ namespace Blue
 	{
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		static float color[] = { 0.0f, 0.0f, 0.0f, 1.0f };
-
 		context.RSSetViewports(1, &shadowmapViewport);
-		context.OMSetRenderTargets(1, &renderTargetView, depthStencilView);
-		context.ClearRenderTargetView(renderTargetView, color);
+		context.OMSetRenderTargets(0, nullptr, depthStencilView);
 		context.ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH, 1.0f, 0);
 	}
 

@@ -25,11 +25,10 @@ namespace Blue
         uint32 height = 0;
 
         ID3D11Texture2D* shadowMapTexture = nullptr;
-        ID3D11RenderTargetView* renderTargetView = nullptr;
         ID3D11DepthStencilView* depthStencilView = nullptr;
         D3D11_VIEWPORT shadowmapViewport;
 
-        // ¼¨µµ¿ì ¸Ê ¼ÎÀÌ´õ.
+        // ì‰ë„ìš° ë§µ ì…°ì´ë”.
         std::unique_ptr<class ShadowmapShader> shadowmapShader;
     };
 }

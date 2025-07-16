@@ -15,35 +15,34 @@
 
 namespace Blue
 {
-	// ╫л╠шеФ ╟╢ц╪ ╪Ёа╓.
+	// О©╫л╠О©╫О©╫О©╫ О©╫О©╫ц╪ О©╫О©╫О©╫О©╫.
 	Engine* Engine::instance = nullptr;
 
 	Engine::Engine(uint32 width, uint32 height, const std::wstring& title, HINSTANCE hInstance)
 	{
-		// ╫л╠шеФ ╟╢ц╪ ╟╙ ╪Ёа╓.
+		// О©╫л╠О©╫О©╫О©╫ О©╫О©╫ц╪ О©╫О©╫ О©╫О©╫О©╫О©╫.
 		instance = this;
 
-		// ют╥б ╟Э╦╝юз ╟╢ц╪ ╩Щ╪╨.
+		// О©╫т╥О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫ц╪ О©╫О©╫О©╫О©╫.
 		inputController = std::make_unique<InputController>();
 
-		// ц╒ ╟╢ц╪ ╩Щ╪╨.
+		// ц╒ О©╫О©╫ц╪ О©╫О©╫О©╫О©╫.
 		window = std::make_shared<Window>(width, height, title, hInstance, WindowProc);
 
-		// ╪нюл╢У ╥н╢У ╟╢ц╪ ╩Щ╪╨.
+		// О©╫О©╫О©╫л╢О©╫ О©╫н╢О©╫ О©╫О©╫ц╪ О©╫О©╫О©╫О©╫.
 		shaderLoader = std::make_unique<ShaderLoader>();
 
-		// еь╫╨цЁ ╥н╢У ╟╢ц╪ ╩Щ╪╨.
+		// О©╫ь╫О©╫цЁ О©╫н╢О©╫ О©╫О©╫ц╪ О©╫О©╫О©╫О©╫.
 		textureLoader = std::make_unique<TextureLoader>();
 
-		// ╦П╣╗ ╥н╢У ╟╢ц╪ ╩Щ╪╨.
+		// О©╫О©╫ О©╫н╢О©╫ О©╫О©╫ц╪ О©╫О©╫О©╫О©╫.
 		modelLoader = std::make_unique<ModelLoader>();
 
-		// ╥╩╢У╥╞ ╩Щ╪╨.
+		// К═▄К█■К÷╛ Л┐²Л└╠.
 		renderer = std::make_shared<Renderer>(width, height, window->Handle());
 
-		// ╪╗╣╣©Л╦й ╩Щ╪╨ ╧в юЭ╢ч.
-		//renderer->SetShadowmap(std::make_unique<Shadowmap>(width * 4, height * 4));
-		renderer->SetShadowmap(std::make_shared<Shadowmap>());
+		// Л┴░К▐└Л ╟ К╖╣ Л┐²Л└╠ К╟▐ Л└╓Л═∙.
+		renderer->SetShadowmap(std::make_shared<Shadowmap>(4096, 4096));
 	}
 
 	Engine::~Engine()
@@ -52,71 +51,71 @@ namespace Blue
 
 	void Engine::Run()
 	{
-		// е╦юл╦с (ф╫/╣╗е╦е╦юс).
+		// е╦О©╫л╦О©╫ (ф╫/О©╫О©╫е╦е╦О©╫О©╫).
 		LARGE_INTEGER currentTime;
 		LARGE_INTEGER previousTime;
 		LARGE_INTEGER frequency;
 
-		// го╣Е©Ч╬Н е╦юл╦сюг гь╩С╣╣ ╟╙(╠Баь ╢эю╖).
+		// О©╫о╣О©╫О©╫О©╫О©╫ е╦О©╫л╦О©╫О©╫О©╫ О©╫ь╩О©╫ О©╫О©╫(О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫).
 		QueryPerformanceFrequency(&frequency);
 
-		// гЖюГ ╫ц╟ё.
+		// О©╫О©╫О©╫О©╫ О©╫ц╟О©╫.
 		QueryPerformanceCounter(&currentTime);
 		previousTime = currentTime;
 
-		// га╥╧юс ╟Х╩Й©║ ╩Г©Кгр ╨╞╪Ж.
+		// О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫Й©║ О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		float targetFrameRate = 120.0f;
-		// ╟Ма╓ га╥╧юс ╪с╣╣╦╕ ╩Г©Кго╠Б ю╖гя ╨╞╪Ж.
+		// О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫с╣О©╫О©╫О©╫ О©╫О©╫О©╫О©╫о╠О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		float oneFrameTime = 1.0f / targetFrameRate;
 
-		// ╦ч╫цаЖ цЁ╦╝ ╥Гга.
+		// О©╫ч╫О©╫О©╫О©╫ цЁО©╫О©╫ О©╫О©╫О©╫О©╫.
 		MSG msg = {};
 		while (msg.message != WM_QUIT)
 		{
-			// ©ёаЬ а╬╥А цЁ╦╝.
+			// О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ цЁО©╫О©╫.
 			if (isQuit)
 			{
 				break;
 			}
 
-			// ц╒©║ ╦ч╫цаЖ╟║ ╣И╬Н©ц╤╖ ╫ггЮ.
+			// ц╒О©╫О©╫ О©╫ч╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫ц╤О©╫ О©╫О©╫О©╫О©╫.
 			if (PeekMessage(&msg, nullptr, 0, 0, PM_REMOVE))
 			{
-				// ╦ч╫цаЖ ╧Ь©╙.
+				// О©╫ч╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 				TranslateMessage(&msg);
 
-				// ╦ч╫цаЖ юЭ╢ч.
+				// О©╫ч╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 				DispatchMessage(&msg);
 			}
 
-			// ц╒©║ ╦ч╫цаЖ╟║ ╬Ью╩ ╤╖ ╢ы╦╔ юш╬В цЁ╦╝.
+			// ц╒О©╫О©╫ О©╫ч╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫ О©╫ы╦О©╫ О©╫ш╬О©╫ цЁО©╫О©╫.
 			else
 			{
-				// гЖюГ ╫ц╟ё ╟║а╝©ю╠Б.
+				// О©╫О©╫О©╫О©╫ О©╫ц╟О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫.
 				QueryPerformanceCounter(&currentTime);
 
-				// га╥╧юс ╫ц╟ё ╟Х╩Й.
+				// О©╫О©╫О©╫О©╫О©╫О©╫ О©╫ц╟О©╫ О©╫О©╫О©╫.
 				float deltaTime = (float)(currentTime.QuadPart - previousTime.QuadPart)
 					/ (float)frequency.QuadPart;
 
-				// га╥╧юс а╕гя.
+				// О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 				if (deltaTime >= oneFrameTime)
 				{
-					// цБ╥б.
+					// О©╫О©╫О©╫.
 					//std::cout << "DeltaTime: " << deltaTime 
 					//	<< " | OneFrameTime: " << oneFrameTime 
 					//	<< " | FPS: " << (int)ceil(1.0f / deltaTime) << "\n";
 
-					// ╧╝юз©╜ ╩Щ╪╨.
+					// О©╫О©╫О©╫з©О©╫ О©╫О©╫О©╫О©╫.
 					wchar_t stat[512] = { };
 					swprintf_s(stat, 512, TEXT("[%s] - [DeltaTime: %f] [FPS: %d]"),
 						window->Title().c_str(), deltaTime, (int)ceil(1.0f / deltaTime));
 
-					// ц╒ а╕╦Я©║ цБ╥б.
+					// ц╒ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫.
 					SetWindowText(window->Handle(), stat);
 
-					// ©ёаЬ ╥Гга.
-					// ╥╧╨╖ цЁ╦╝.
+					// О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
+					// О©╫О©╫О©╫О©╫ цЁО©╫О©╫.
 					if (mainLevel)
 					{
 						mainLevel->BeginPlay();
@@ -124,10 +123,10 @@ namespace Blue
 						renderer->Draw(mainLevel);
 					}
 
-					// га╥╧юс ╫ц╟ё ╬В╣╔юлф╝.
+					// О©╫О©╫О©╫О©╫О©╫О©╫ О©╫ц╟О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ф╝.
 					previousTime = currentTime;
 
-					// ют╥б цй╠Бх╜.
+					// О©╫т╥О©╫ О©╫й╠О©╫х╜.
 					inputController->ResetInputs();
 				}
 			}
@@ -136,24 +135,24 @@ namespace Blue
 
 	void Engine::SetLevel(std::shared_ptr<Level> newLevel)
 	{
-		// ╦чюн ╥╧╨╖ ╪Ёа╓.
+		// О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		mainLevel = newLevel;
 	}
 
 	LRESULT Engine::WindowProc(HWND handle, UINT message, WPARAM wparam, LPARAM lparam)
 	{
-		// ют╥б ╟Э╦╝юз╟║ аь╨Я ╬х╣фю╦╦И а╬╥А.
+		// О©╫т╥О©╫ О©╫О©╫О©╫О©╫О©╫з╟О©╫ О©╫ь╨О©╫ О©╫х╣О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 		if (!InputController::IsValid())
 		{
 			return DefWindowProc(handle, message, wparam, lparam);
 		}
 
-		// ╦ч╫цаЖ цЁ╦╝.
+		// О©╫ч╫О©╫О©╫О©╫ цЁО©╫О©╫.
 		switch (message)
 		{
-			// ц╒юл ╩Ха╕╣г╦И ╫ггЮ╣й.
+			// ц╒О©╫О©╫ О©╫О©╫О©╫О©╫О©╫г╦О©╫ О©╫О©╫О©╫О©╫О©╫.
 		case WM_DESTROY:
-			// юл╤╖ га╥н╠в╥╔ а╬╥А ╦ч╫цаЖ╦╕ ╧ъгЮ.
+			// О©╫л╤О©╫ О©╫О©╫О©╫н╠в╥О©╫ О©╫О©╫О©╫О©╫ О©╫ч╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 			//PostQuitMessage(0);
 			Engine::Get().Quit();
 			break;
@@ -196,7 +195,7 @@ namespace Blue
 
 		case WM_MOUSEMOVE:
 		{
-			// гЖюГ ╦╤©Л╫╨ фВюнем ю╖д║ ╟╙ ╟║а╝©ю╠Б.
+			// О©╫О©╫О©╫О©╫ О©╫О©╫О©╫Л╫╨ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫д║ О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫.
 			int xPosition = LOWORD(lparam);
 			int yPosition = HIWORD(lparam);
 
@@ -214,7 +213,7 @@ namespace Blue
 			uint32 width = static_cast<uint32>(LOWORD(lparam));
 			uint32 height = static_cast<uint32>(HIWORD(lparam));
 
-			// ╟║╥н / ╪╪╥н е╘╠Б ╟╙ юЭ╢ч.
+			// О©╫О©╫О©╫О©╫ / О©╫О©╫О©╫О©╫ е╘О©╫О©╫ О©╫О©╫ О©╫О©╫О©╫О©╫.
 			Engine::Get().OnResize(width, height);
 		}
 		break;
@@ -224,16 +223,16 @@ namespace Blue
 		case WM_KEYDOWN:
 		case WM_KEYUP:
 		{
-			// MSDN ╧╝╪╜╦╕ х╝юнгь ╨╦╦И, 30╧Ьб╟ ╨Яф╝╢б KeyUp ╩Себ╦╕ Ё╙е╦Ё╫╢ы╟М Ё╙©х.
+			// MSDN О©╫О©╫О©╫О©╫О©╫О©╫ х╝О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫, 30О©╫О©╫б╟ О©╫О©╫ф╝О©╫О©╫ KeyUp О©╫О©╫О©╫б╦О©╫ О©╫О©╫е╦О©╫О©╫О©╫ы╟О©╫ О©╫О©╫О©╫О©╫.
 			bool isKeyUp = ((lparam & (static_cast<long long>(1) << 30)) != 0);
 
-			// MSDN ╧╝╪╜╦╕ х╝юнгь ╨╦╦И, 31╧Ьб╟ ╨Яф╝╢б KeyDown ╩Себ╦╕ Ё╙е╦Ё╫╢ы╟М Ё╙©х.
+			// MSDN О©╫О©╫О©╫О©╫О©╫О©╫ х╝О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫, 31О©╫О©╫б╟ О©╫О©╫ф╝О©╫О©╫ KeyDown О©╫О©╫О©╫б╦О©╫ О©╫О©╫е╦О©╫О©╫О©╫ы╟О©╫ О©╫О©╫О©╫О©╫.
 			bool isKeyDown = ((lparam & (static_cast<long long>(1) << 31)) == 0);
 
-			// ©ёаЬ©║ е╟ ют╥б ╣╔юлем юЭ╢ч.
+			// О©╫О©╫О©╫О©╫О©╫О©╫ е╟ О©╫т╥О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫.
 			if (isKeyUp != isKeyDown)
 			{
-				// ╟║╩С е╟ ╟╙.
+				// О©╫О©╫О©╫О©╫ е╟ О©╫О©╫.
 				uint32 vkCode = static_cast<uint32>(wparam);
 				InputController::Get().SetKeyUpDown(vkCode, isKeyUp, isKeyDown);
 			}
@@ -241,7 +240,7 @@ namespace Blue
 
 		}
 
-		// ╠Б╨╩ ╦ч╫цаЖ цЁ╦╝.
+		// О©╫Б╨╩ О©╫ч╫О©╫О©╫О©╫ цЁО©╫О©╫.
 		return DefWindowProc(handle, message, wparam, lparam);
 	}
 
@@ -252,7 +251,7 @@ namespace Blue
 
 	void Engine::OnResize(uint32 width, uint32 height)
 	{
-		// ©╧©эцЁ╦╝.
+		// О©╫О©╫О©╫О©╫цЁО©╫О©╫.
 		if (!window)
 		{
 			return;
@@ -263,17 +262,17 @@ namespace Blue
 			return;
 		}
 
-		// ю╘╣╣©Л е╛╥║╫╨юг е╘╠Б а╤а╓.
+		// О©╫О©╫О©╫О©╫О©╫О©╫ е╛О©╫О©╫О©╫О©╫О©╫О©╫ е╘О©╫О©╫ О©╫О©╫О©╫О©╫.
 		window->SetWidthHeight(width, height);
 
-		// юЭц╪ ц╒ е╘╠Б©║╪╜ ╫га╕╥н ╠в╥ааЖ╢б ©╣©╙юг е╘╠Б(ClientRect)╦╕ ╠╦го╠Б.
+		// О©╫О©╫ц╪ ц╒ е╘О©╫Б©║О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ О©╫в╥О©╫О©╫О©╫О©╫О©╫ О©╫О©╫О©╫О©╫О©╫О©╫ е╘О©╫О©╫(ClientRect)О©╫О©╫ О©╫О©╫О©╫о╠О©╫.
 		RECT rect;
 		GetClientRect(window->Handle(), &rect);
 
 		uint32 w = (uint32)(rect.right - rect.left);
 		uint32 h = (uint32)(rect.bottom - rect.top);
 
-		// ╥╩╢У╥╞юг е╘╠Б а╤а╓ гт╪Ж хёцБ.
+		// О©╫О©╫О©╫О©╫О©╫О©╫О©╫О©╫ е╘О©╫О©╫ О©╫О©╫О©╫О©╫ О©╫т╪О©╫ хёО©╫О©╫.
 		renderer->OnResize(w, h);
 	}
 

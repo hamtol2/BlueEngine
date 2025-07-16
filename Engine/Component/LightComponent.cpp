@@ -10,7 +10,7 @@ namespace Blue
 	{
 		static ID3D11Device& device = Engine::Get().Device();
 
-		// »ó¼ö ¹öÆÛ »ı¼º.
+		// ë²„í¼ ìƒì„± ì„¤ì •.
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = LightData::Stride();
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
@@ -42,28 +42,16 @@ namespace Blue
 
 		data.position = owner->transform.position;
 
-		// ºäÇà·Ä ¾÷µ¥ÀÌÆ® ¹× ¹ÙÀÎµù.
-		//data.viewMatrix
-		//	= Matrix4::Translation(owner->transform.position * -1.0f)
-		//	* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
+		// ì¡°ëª… ë·° ë§¤íŠ¸ë¦­ìŠ¤ ì„¤ì •.
 		data.viewMatrix = Matrix4::LookAt(data.position, Vector3::Zero, Vector3::Up);
 
-		// Åõ¿µ Çà·Ä ¼³Á¤.
-		data.projectionMatrix = Matrix4::Perspective(
-			90.0f,
-			(float)Engine::Get().Width() * 2.0f,
-			(float)Engine::Get().Height() * 2.0f,
-			0.1f,
-			1000.0f
-		);
-
-		// Åõ¿µ Çà·Ä ¼³Á¤(Á÷±³ Åõ¿µ).
-		//data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 1.0f, 100.0f);
+		// ì‰ë„ìš° ë§µìš© ì§êµ íˆ¬ì˜ ì„¤ì •.
+		data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 0.1f, 1000.0f);
 
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
 
-		// µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ®.
+		// ë²„í¼ ì—…ë°ì´íŠ¸.
 		D3D11_MAPPED_SUBRESOURCE mappedResource = {};
 		context.Map(dataBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 		memcpy(mappedResource.pData, &data, LightData::Stride());
@@ -78,28 +66,16 @@ namespace Blue
 
 		data.position = owner->transform.position;
 
-		// ºäÇà·Ä ¾÷µ¥ÀÌÆ® ¹× ¹ÙÀÎµù.
-		data.viewMatrix 
-			= Matrix4::Translation(owner->transform.position * -1.0f)
-			* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
+		// ì¡°ëª… ë·° ë§¤íŠ¸ë¦­ìŠ¤ ì„¤ì • - ì¡°ëª… ìœ„ì¹˜ì—ì„œ ì›ì ì„ ë°”ë¼ë³´ë„ë¡.
+		data.viewMatrix = Matrix4::LookAt(data.position, Vector3(0.0f, 0.0f, 0.0f), Vector3::Up);
 
-		//data.viewMatrix = Matrix4::LookAt(data.position, Vector3::Zero, Vector3::Up);
+		// ì‰ë„ìš° ë§µìš© ì§êµ íˆ¬ì˜ ì„¤ì •.
+		data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 0.1f, 1000.0f);
 
-		// Åõ¿µ Çà·Ä ¼³Á¤.
-		data.projectionMatrix = Matrix4::Perspective(
-			60.0f,
-			(float)Engine::Get().Width() * 2.0f,
-			(float)Engine::Get().Height() * 2.0f,
-			0.1f,
-			10000.0f
-		);
-
-		// Åõ¿µ Çà·Ä ¼³Á¤(Á÷±³ Åõ¿µ).
-		//data.projectionMatrix = Matrix4::Orthographic(lightWidth, lightHeight, 0.1f, 1000.0f);
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
 
-		// µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ®.
+		// ë²„í¼ ì—…ë°ì´íŠ¸.
 		D3D11_MAPPED_SUBRESOURCE mappedResource = {};
 		context.Map(dataBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &mappedResource);
 		memcpy(mappedResource.pData, &data, LightData::Stride());
@@ -112,7 +88,7 @@ namespace Blue
 
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		// ¶óÀÌÆ® µ¥ÀÌÅÍ »ó¼ö ¹öÆÛ ¹ÙÀÎµù.
+		// ë¼ì´íŠ¸ ë°ì´í„°ë¥¼ ì…°ì´ë”ì— ë°”ì¸ë”©.
 		context.VSSetConstantBuffers(2, 1, &dataBuffer);
 		context.PSSetConstantBuffers(2, 1, &dataBuffer);
 	}
