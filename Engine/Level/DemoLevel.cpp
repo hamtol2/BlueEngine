@@ -60,7 +60,7 @@ namespace Blue
 		AddActor(floor);
 		AddActor(soldier);
 		AddActor(james);
-		//AddActor(skybox);
+		AddActor(skybox);
 		AddActor(cameraActor);
 		AddActor(light);
 	}

@@ -33,6 +33,7 @@ using namespace Blue;
 *   - Ambient(Static/GI) / Diffuse (Lambert .../Roughness) / Specular (Highlight, Phong/Blinn-Phong / Metalic).
 * - Normal Mapping.
 * - Render Target (Draw to texture).
+* 
 * - Shadow Mapping (Shadow Map).
 * - Environment Mapping (Sky Sphere(Box)).
 * - Study (Tone Mapping).

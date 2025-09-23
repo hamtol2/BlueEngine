@@ -97,11 +97,11 @@ namespace Blue
 			depthStencilView = nullptr;
 		}
 
-		if (renderTargetView)
-		{
-			renderTargetView->Release();
-			renderTargetView = nullptr;
-		}
+		//if (renderTargetView)
+		//{
+		//	renderTargetView->Release();
+		//	renderTargetView = nullptr;
+		//}
 	}
 
 	void Shadowmap::Clear()

@@ -13,6 +13,8 @@
 
 #include "Texture/Shadowmap.h"
 
+#define TEST 1
+
 namespace Blue
 {
 	Renderer::Renderer(uint32 width, uint32 height, HWND window)
@@ -236,7 +238,7 @@ namespace Blue
 		context->RSSetViewports(1, &viewport);
 
 		// Phase-1.
-		//DrawToRenderTexturePass(level);
+		DrawToRenderTexturePass(level);
 
 		// Final-Phase.
 		DrawFinalPass(level);
@@ -537,6 +539,7 @@ namespace Blue
 		}
 
 		// @Test: 테스트용 QuadActor 그리기.
+#if TEST
 		if (quadActor)
 		{
 			quadActor->Tick(1.0f / 60.0f);
@@ -544,4 +547,5 @@ namespace Blue
 			quadActor->Draw();
 		}
 	}
+#endif
 }
