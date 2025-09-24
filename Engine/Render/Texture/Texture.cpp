@@ -1,4 +1,4 @@
-#include "Texture.h"
+ï»¿#include "Texture.h"
 #include "Core/Engine.h"
 #include "Core/Common.h"
 #include <iostream>
@@ -24,16 +24,16 @@ namespace Blue
 
 	void Texture::Bind(uint32 index)
 	{
-		// ¿¹¿Ü Ã³¸®.
+		// ì˜ˆì™¸ ì²˜ë¦¬.
 		if (!textureData)
 		{
 			return;
 		}
 
-		// ÄÁÅØ½ºÆ® ¾ò±â.
+		// ì»¨í…ìŠ¤íŠ¸ ì–»ê¸°.
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		// ¹ÙÀÎµù.
+		// ë°”ì¸ë”©.
 		if (bindType == BindType::VertexShader)
 		{
 			context.VSSetShaderResources(index, 1, &textureData->shaderResourceView);
@@ -48,15 +48,15 @@ namespace Blue
 
 	void Texture::LoadTexture(const std::string& name)
 	{
-		// ÀÌ¹ÌÁö ·Îµå.
-		// °æ·Î ¼³Á¤.
+		// ì´ë¯¸ì§€ ë¡œë“œ.
+		// ê²½ë¡œ ì„¤ì •.
 		char path[256] = {};
 		sprintf_s(path, 256, "../Assets/Textures/%s", name.c_str());
 
-		// °´Ã¼ »ı¼º.
+		// ê°ì²´ ìƒì„±.
 		textureData = std::make_unique<TextureData>();
 
-		// ÀÌ¹ÌÁö ÆÄÀÏ ·Îµå.
+		// ì´ë¯¸ì§€ íŒŒì¼ ë¡œë“œ.
 		textureData->data = stbi_load(
 			path,
 			&textureData->width,
@@ -65,14 +65,14 @@ namespace Blue
 			0
 		);
 
-		// ÅØ½ºÃ³ Ã¤³Î ¼ö È®ÀÎ (4Ã¤³Î¸¸ Áö¿ø).
+		// í…ìŠ¤ì²˜ ì±„ë„ ìˆ˜ í™•ì¸ (4ì±„ë„ë§Œ ì§€ì›).
 		if (textureData->channelCount == 3)
 		{
-			// 3Ã¤³Î ÀÌ¹ÌÁö¸¦ 4Ã¤³Î·Î º¯È¯.
+			// 3ì±„ë„ ì´ë¯¸ì§€ë¥¼ 4ì±„ë„ë¡œ ë³€í™˜.
 			ConvertRGBToRGBA(textureData);
 		}
 
-		// ¿¹¿ÜÃ³¸®.
+		// ì˜ˆì™¸ì²˜ë¦¬.
 		if (!textureData->data)
 		{
 			std::cout << "Error: Failed to load texture file: " << name << " \n";
@@ -80,10 +80,10 @@ namespace Blue
 			return;
 		}
 
-		// DX ¸®¼Ò½º »ı¼º.
+		// DX ë¦¬ì†ŒìŠ¤ ìƒì„±.
 		CreateSRVAndSampler();
 
-		// DX ¸®¼Ò½º »ı¼ºÈÄ ¿ø½Ã ÀÌ¹ÌÁö µ¥ÀÌÅÍ´Â ÇØÁ¦.
+		// DX ë¦¬ì†ŒìŠ¤ ìƒì„±í›„ ì›ì‹œ ì´ë¯¸ì§€ ë°ì´í„°ëŠ” í•´ì œ.
 		if (textureData->data)
 		{
 			free(textureData->data);
@@ -93,11 +93,11 @@ namespace Blue
 
 	void Texture::CreateSRVAndSampler()
 	{
-		// DX ¸®¼Ò½º »ı¼º.
-		// ÀåÄ¡.
+		// DX ë¦¬ì†ŒìŠ¤ ìƒì„±.
+		// ì¥ì¹˜.
 		static ID3D11Device& device = Engine::Get().Device();
 
-		// ·ÎµåÇÑ ÀÌ¹ÌÁö ÆÄÀÏ µ¥ÀÌÅÍ¸¦ ±â¹İÀ¸·Î ÅØ½ºÃ³ ¸®¼Ò½º »ı¼º.
+		// ë¡œë“œí•œ ì´ë¯¸ì§€ íŒŒì¼ ë°ì´í„°ë¥¼ ê¸°ë°˜ìœ¼ë¡œ í…ìŠ¤ì²˜ ë¦¬ì†ŒìŠ¤ ìƒì„±.
 		D3D11_TEXTURE2D_DESC textureDesc = {};
 		textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		textureDesc.ArraySize = 1;
@@ -117,19 +117,19 @@ namespace Blue
 			device.CreateTexture2D(&textureDesc, &data, &texture),
 			TEXT("Error: Failed to create texture2d."));
 
-		// ¼ÎÀÌ´õ ¸®¼Ò½º ºä »ı¼º(¼ÎÀÌ´õ¿¡ ¹ÙÀÎµùÇÒ ¸®¼Ò½º).
+		// ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ë·° ìƒì„±(ì…°ì´ë”ì— ë°”ì¸ë”©í•  ë¦¬ì†ŒìŠ¤).
 		ThrowIfFailed(
 			device.CreateShaderResourceView(texture, nullptr, &textureData->shaderResourceView),
 			TEXT("Error: Failed to create shaderResourceView."));
 
-		// ´Ù ¾´ ¸®¼Ò½º ÇØÁ¦.
+		// ë‹¤ ì“´ ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		if (texture)
 		{
 			texture->Release();
 			texture = nullptr;
 		}
 
-		// »ùÇÃ·¯ ¼Ó¼º ¼³Á¤.
+		// ìƒ˜í”ŒëŸ¬ ì†ì„± ì„¤ì •.
 		D3D11_SAMPLER_DESC sampleDesc = {};
 		sampleDesc.Filter = D3D11_FILTER_ANISOTROPIC;
 		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -140,7 +140,7 @@ namespace Blue
 		sampleDesc.MaxAnisotropy = 3;
 		sampleDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 
-		// »ùÇÃ·¯ »ı¼º.
+		// ìƒ˜í”ŒëŸ¬ ìƒì„±.
 		ThrowIfFailed(
 			device.CreateSamplerState(&sampleDesc, &textureData->samplerState),
 			TEXT("Error: Failed to create sampler state."));
@@ -148,31 +148,31 @@ namespace Blue
 
 	void Texture::ConvertRGBToRGBA(std::unique_ptr<TextureData>& textureData)
 	{
-		// ¸ñÇ¥ Ã¤³Î ¼ö(4°³);
+		// ëª©í‘œ ì±„ë„ ìˆ˜(4ê°œ);
 		uint32 targetChannelCount = 4;
 		
-		// ÇÈ¼¿ ¼ö.
+		// í”½ì…€ ìˆ˜.
 		uint32 pixelCount = textureData->width * textureData->height;
 
-		// ÀÌ¹ÌÁö ¹öÆÛ Å©±â = ÇÈ¼¿ ¼ö x Ã¤³Î ¼ö.
+		// ì´ë¯¸ì§€ ë²„í¼ í¬ê¸° = í”½ì…€ ìˆ˜ x ì±„ë„ ìˆ˜.
 		uint32 size = pixelCount * targetChannelCount;
 
-		// »õ·Î¿î ÀÌ¹ÌÁö ¹öÆÛ »ı¼º.
+		// ìƒˆë¡œìš´ ì´ë¯¸ì§€ ë²„í¼ ìƒì„±.
 		byte* imageBuffer = new byte[size];
 		
-		// ¸ğµç µ¥ÀÌÅÍ¸¦ 0xffffffff·Î ¼³Á¤.
+		// ëª¨ë“  ë°ì´í„°ë¥¼ 0xffffffffë¡œ ì„¤ì •.
 		memset(imageBuffer, 255, size);
 
-		// ¿øº» ÀÌ¹ÌÁö µ¥ÀÌÅÍ Æ÷ÀÎÅÍ.
+		// ì›ë³¸ ì´ë¯¸ì§€ ë°ì´í„° í¬ì¸í„°.
 		byte* source = (byte*)(textureData->data);
 
-		// »õ·Î¿î ÀÌ¹ÌÁö µ¥ÀÌÅÍ¸¦ »ı¼ºÇÒ ¹öÆÛ Æ÷ÀÎÅÍ.
+		// ìƒˆë¡œìš´ ì´ë¯¸ì§€ ë°ì´í„°ë¥¼ ìƒì„±í•  ë²„í¼ í¬ì¸í„°.
 		byte* dest = imageBuffer;
 
-		// ±âÁ¸ ÀÌ¹ÌÁö µ¥ÀÌÅÍ + ¾ËÆÄ Ã¤³Î Ãß°¡.
+		// ê¸°ì¡´ ì´ë¯¸ì§€ ë°ì´í„° + ì•ŒíŒŒ ì±„ë„ ì¶”ê°€.
 		for (uint32 ix = 0; ix < pixelCount; ++ix)
 		{
-			// ±âÁ¸ ÀÌ¹ÌÁö µ¥ÀÌÅÍ¸¦ »õ·Î¿î ¹öÆÛ¿¡ º¹»ç.
+			// ê¸°ì¡´ ì´ë¯¸ì§€ ë°ì´í„°ë¥¼ ìƒˆë¡œìš´ ë²„í¼ì— ë³µì‚¬.
 			memcpy(dest, source, sizeof(byte) * 3);
 			
 			//dest[0] = source[0];
@@ -180,19 +180,19 @@ namespace Blue
 			//dest[2] = source[2];
 			//dest[3] = 255;
 			
-			// ´ÙÀ½ À§Ä¡·Î ¸Ş¸ğ¸® ÀÌµ¿.
+			// ë‹¤ìŒ ìœ„ì¹˜ë¡œ ë©”ëª¨ë¦¬ ì´ë™.
 			source += 3;
 			dest += 4;
 		}
 
-		// ±âÁ¸¿¡ ·ÎµåÇÑ ÀÌ¹ÌÁö ÇØÁ¦.
+		// ê¸°ì¡´ì— ë¡œë“œí•œ ì´ë¯¸ì§€ í•´ì œ.
 		if (textureData->data)
 		{
 			free(textureData->data);
 			textureData->data = nullptr;
 		}
 
-		// »õ·Î »ı¼ºÇÑ ÀÌ¹ÌÁö µ¥ÀÌÅÍ ¼³Á¤.
+		// ìƒˆë¡œ ìƒì„±í•œ ì´ë¯¸ì§€ ë°ì´í„° ì„¤ì •.
 		textureData->data = imageBuffer;
 		textureData->channelCount = 4;
 	}

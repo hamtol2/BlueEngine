@@ -1,4 +1,4 @@
-#include "NormalSpecularMappingShader.h"
+ï»¿#include "NormalSpecularMappingShader.h"
 #include "Render/Texture/Texture.h"
 
 namespace Blue
@@ -12,16 +12,16 @@ namespace Blue
 	{
 		Shader::Bind();
 
-		// ÅØ½ºÃ³ ¹ÙÀÎµù.
+		// í…ìŠ¤ì²˜ ë°”ì¸ë”©.
 		for (const auto& textureRef : textures)
 		{
-			// ¾àÂüÁ¶ ÇÏ°í ÀÖ´Â ¿øº» ÅØ½ºÃ³°¡ À¯È¿ÇÑÁö È®ÀÎ.
+			// ì•½ì°¸ì¡° í•˜ê³  ìˆëŠ” ì›ë³¸ í…ìŠ¤ì²˜ê°€ ìœ íš¨í•œì§€ í™•ì¸.
 			std::shared_ptr<Texture> texture = textureRef.second.lock();
 
-			// À¯È¿ÇÏ¸é ¹ÙÀÎµù ÁøÇà.
+			// ìœ íš¨í•˜ë©´ ë°”ì¸ë”© ì§„í–‰.
 			if (texture)
 			{
-				// ÀÎµ¦½º¸¦ ÁöÁ¤ÇØ ¹ÙÀÎµù.
+				// ì¸ë±ìŠ¤ë¥¼ ì§€ì •í•´ ë°”ì¸ë”©.
 				texture->Bind(static_cast<uint32>(textureRef.first));
 			}
 		}
@@ -29,7 +29,7 @@ namespace Blue
 
 	void NormalSpecularMappingShader::SetTexture(ETextureBindType bindType, const std::weak_ptr<class Texture>& newTexture)
 	{
-		// ¸Ê¿¡ Ãß°¡.
+		// ë§µì— ì¶”ê°€.
 		textures.insert(std::make_pair(bindType, newTexture));
 	}
 }

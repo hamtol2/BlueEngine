@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Shader.h"
 #include <memory>
@@ -13,11 +13,11 @@ namespace Blue
 
 		virtual void Bind() override;
 
-		// ÅØ½ºÃ³ ¼³Á¤ ÇÔ¼ö.
+		// í…ìŠ¤ì²˜ ì„¤ì • í•¨ìˆ˜.
 		void SetTexture(const std::weak_ptr<class Texture>& newTexture);
 
 	private:
-		// ÅØ½ºÃ³ ¸®¼Ò½º.
+		// í…ìŠ¤ì²˜ ë¦¬ì†ŒìŠ¤.
 		//std::unique_ptr<class Texture> texture;
 		std::weak_ptr<class Texture> texture;
 	};

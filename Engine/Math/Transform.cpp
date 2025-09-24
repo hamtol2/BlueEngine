@@ -1,4 +1,4 @@
-#include "Transform.h"
+ï»¿#include "Transform.h"
 #include "Core/Engine.h"
 #include "Core/Common.h"
 
@@ -6,28 +6,28 @@ namespace Blue
 {
 	Transform::Transform()
 	{
-		// Æ®·£½ºÆû Çà·Ä °è»ê(SRT).
+		// íŠ¸ëœìŠ¤í¼ í–‰ë ¬ ê³„ì‚°(SRT).
 		transformMatrix =
 			Matrix4::Scale(scale)
 			* Matrix4::Rotation(rotation)
 			* Matrix4::Translation(position);
 
-		// ÀüÄ¡ Çà·Ä (CPU¿Í GPU°¡ Çà·ÄÀ» ´Ù·ç´Â ¹æ½ÄÀÌ ´Ş¶ó¼­).
-		// Çà±âÁØ Çà·ÄÀ» ¿­±âÁØ Çà·Ä·Î º¯È¯ÇÏ±â À§ÇØ ÀüÄ¡Çà·Ä Ã³¸®.
+		// ì „ì¹˜ í–‰ë ¬ (CPUì™€ GPUê°€ í–‰ë ¬ì„ ë‹¤ë£¨ëŠ” ë°©ì‹ì´ ë‹¬ë¼ì„œ).
+		// í–‰ê¸°ì¤€ í–‰ë ¬ì„ ì—´ê¸°ì¤€ í–‰ë ¬ë¡œ ë³€í™˜í•˜ê¸° ìœ„í•´ ì „ì¹˜í–‰ë ¬ ì²˜ë¦¬.
 		transformMatrix = Matrix4::Transpose(transformMatrix);
 
-		// »ó¼ö ¹öÆÛ.
+		// ìƒìˆ˜ ë²„í¼.
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = Matrix4::Stride();
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		// ¹öÆÛ¿¡ ´ãÀ» µ¥ÀÌÅÍ ¼³Á¤.
+		// ë²„í¼ì— ë‹´ì„ ë°ì´í„° ì„¤ì •.
 		D3D11_SUBRESOURCE_DATA bufferData = {};
 		bufferData.pSysMem = &transformMatrix;
 
-		// ¹öÆÛ »ı¼º.
+		// ë²„í¼ ìƒì„±.
 		ID3D11Device& device = Engine::Get().Device();
 		ThrowIfFailed(
 			device.CreateBuffer(&bufferDesc, &bufferData, &constantBuffer),
@@ -36,7 +36,7 @@ namespace Blue
 
 	Transform::~Transform()
 	{
-		// ¸®¼Ò½º ÇØÁ¦.
+		// ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		if (constantBuffer)
 		{
 			constantBuffer->Release();
@@ -46,15 +46,15 @@ namespace Blue
 
 	void Transform::Tick()
 	{
-		// µ¥ÀÌÅÍ ¾÷µ¥ÀÌÆ®.
-		// Æ®·£½ºÆû Çà·Ä °è»ê(SRT).
+		// ë°ì´í„° ì—…ë°ì´íŠ¸.
+		// íŠ¸ëœìŠ¤í¼ í–‰ë ¬ ê³„ì‚°(SRT).
 		transformMatrix =
 			Matrix4::Scale(scale)
 			* Matrix4::Rotation(rotation)
 			* Matrix4::Translation(position);
 
-		// ÀüÄ¡ Çà·Ä (CPU¿Í GPU°¡ Çà·ÄÀ» ´Ù·ç´Â ¹æ½ÄÀÌ ´Ş¶ó¼­).
-		// Çà±âÁØ Çà·ÄÀ» ¿­±âÁØ Çà·Ä·Î º¯È¯ÇÏ±â À§ÇØ ÀüÄ¡Çà·Ä Ã³¸®.
+		// ì „ì¹˜ í–‰ë ¬ (CPUì™€ GPUê°€ í–‰ë ¬ì„ ë‹¤ë£¨ëŠ” ë°©ì‹ì´ ë‹¬ë¼ì„œ).
+		// í–‰ê¸°ì¤€ í–‰ë ¬ì„ ì—´ê¸°ì¤€ í–‰ë ¬ë¡œ ë³€í™˜í•˜ê¸° ìœ„í•´ ì „ì¹˜í–‰ë ¬ ì²˜ë¦¬.
 		transformMatrix = Matrix4::Transpose(transformMatrix);
 	}
 
@@ -62,34 +62,34 @@ namespace Blue
 	{
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		// ¹öÆÛ ¾÷µ¥ÀÌÆ®.
+		// ë²„í¼ ì—…ë°ì´íŠ¸.
 		D3D11_MAPPED_SUBRESOURCE resource = {};
 		context.Map(constantBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
 		memcpy(resource.pData, &transformMatrix, sizeof(Matrix4));
 		context.Unmap(constantBuffer, 0);
 
-		// ¹öÆÛ ¹ÙÀÎµù.
+		// ë²„í¼ ë°”ì¸ë”©.
 		context.VSSetConstantBuffers(0, 1, &constantBuffer);
 	}
 
 	Vector3 Transform::Right()
 	{
-		// ·ÎÄÃ ±âÁØ ¿À¸¥ÂÊ ¹æÇâ º¤ÅÍ ±¸ÇÏ±â.
-		// ¿ùµå ±âÁØ ¿À¸¥ÂÊ ¹æÇâ º¤ÅÍ¸¦ ·ÎÄÃÀÇ ¹æÇâ¸¸Å­ È¸Àü Àû¿ë.
+		// ë¡œì»¬ ê¸°ì¤€ ì˜¤ë¥¸ìª½ ë°©í–¥ ë²¡í„° êµ¬í•˜ê¸°.
+		// ì›”ë“œ ê¸°ì¤€ ì˜¤ë¥¸ìª½ ë°©í–¥ ë²¡í„°ë¥¼ ë¡œì»¬ì˜ ë°©í–¥ë§Œí¼ íšŒì „ ì ìš©.
 		return Vector3::Right * Matrix4::Rotation(rotation);
 	}
 	
 	Vector3 Transform::Up()
 	{
-		// ·ÎÄÃ ±âÁØ À§¹æÇâ º¤ÅÍ ±¸ÇÏ±â.
-		// ¿ùµå ±âÁØ À§¹æÇâ º¤ÅÍ¸¦ ·ÎÄÃÀÇ ¹æÇâ¸¸Å­ È¸Àü Àû¿ë.
+		// ë¡œì»¬ ê¸°ì¤€ ìœ„ë°©í–¥ ë²¡í„° êµ¬í•˜ê¸°.
+		// ì›”ë“œ ê¸°ì¤€ ìœ„ë°©í–¥ ë²¡í„°ë¥¼ ë¡œì»¬ì˜ ë°©í–¥ë§Œí¼ íšŒì „ ì ìš©.
 		return Vector3::Up * Matrix4::Rotation(rotation);
 	}
 	
 	Vector3 Transform::Forward()
 	{
-		// ·ÎÄÃ ±âÁØ ¾Õ¹æÇâ º¤ÅÍ ±¸ÇÏ±â.
-		// ¿ùµå ±âÁØ ¾Õ¹æÇâ º¤ÅÍ¸¦ ·ÎÄÃÀÇ ¹æÇâ¸¸Å­ È¸Àü Àû¿ë.
+		// ë¡œì»¬ ê¸°ì¤€ ì•ë°©í–¥ ë²¡í„° êµ¬í•˜ê¸°.
+		// ì›”ë“œ ê¸°ì¤€ ì•ë°©í–¥ ë²¡í„°ë¥¼ ë¡œì»¬ì˜ ë°©í–¥ë§Œí¼ íšŒì „ ì ìš©.
 		return Vector3::Forward * Matrix4::Rotation(rotation);
 	}
 }

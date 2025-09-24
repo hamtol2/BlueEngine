@@ -1,4 +1,4 @@
-#include "QuadActor.h"
+ï»¿#include "QuadActor.h"
 
 #include "Component/StaticMeshComponent.h"
 #include "Render/QuadMesh.h"
@@ -16,14 +16,14 @@ namespace Blue
 {
 	QuadActor::QuadActor()
 	{
-		// ½ºÅÂÆ½ ¸Ş½Ã ÄÄÆ÷³ÍÆ® »ı¼º.
+		// ìŠ¤íƒœí‹± ë©”ì‹œ ì»´í¬ë„ŒíŠ¸ ìƒì„±.
 		std::shared_ptr<StaticMeshComponent> meshComponent
 			= std::make_shared<StaticMeshComponent>();
 
-		// ¾×ÅÍ¿¡ ÄÄÆ÷³ÍÆ® Ãß°¡.
+		// ì•¡í„°ì— ì»´í¬ë„ŒíŠ¸ ì¶”ê°€.
 		AddComponent(meshComponent);
 
-		// ¸®¼Ò½º ·Îµå ¹× ÄÄÆ÷³ÍÆ® ¼³Á¤. "T_White.png"
+		// ë¦¬ì†ŒìŠ¤ ë¡œë“œ ë° ì»´í¬ë„ŒíŠ¸ ì„¤ì •. "T_White.png"
 		meshComponent->SetMesh(std::make_shared<QuadMesh>());
 		std::weak_ptr<TextureMappingShader> shader;
 		if (ShaderLoader::Get().Load<TextureMappingShader>(shader))
@@ -32,7 +32,7 @@ namespace Blue
 			this->shader = shader;
 		}
 
-		//// ÅØ½ºÃ³ ·Îµå ¹× ¼ÎÀÌ´õ¿¡ ¼³Á¤.
+		//// í…ìŠ¤ì²˜ ë¡œë“œ ë° ì…°ì´ë”ì— ì„¤ì •.
 		//std::weak_ptr<RenderTexture> renderTexture;
 		//TextureLoader::Get().GetNewRenderTexture(
 		//	renderTexture, 1280, 800
@@ -53,7 +53,7 @@ namespace Blue
 
 		static const float rotationSpeed = 10.0f;
 
-		// È¸Àü.
+		// íšŒì „.
 		//transform.rotation.y += deltaTime * rotationSpeed;
 	}
 }

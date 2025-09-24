@@ -1,4 +1,4 @@
-#include "TextureLoader.h"
+ï»¿#include "TextureLoader.h"
 #include "Render/Texture/Texture.h"
 #include "Render/Texture/RenderTexture.h"
 #include "Render/Texture/CubemapTexture.h"
@@ -29,19 +29,19 @@ namespace Blue
 	void TextureLoader::GetNewRenderTexture(
 		std::weak_ptr<RenderTexture>& outTexture, uint32 width, uint32 height)
 	{
-		// »õ·Î¿î ÅØ½ºÃ³ »ı¼º.
+		// ìƒˆë¡œìš´ í…ìŠ¤ì²˜ ìƒì„±.
 		std::shared_ptr<RenderTexture> newTexture = std::make_shared<RenderTexture>(width, height);
 
-		// ¹è¿­¿¡ ÀúÀå.
+		// ë°°ì—´ì— ì €ì¥.
 		renderTextures.emplace_back(newTexture);
 
-		// ¿äÃ»ÇÑ º¯¼ö¿¡ ÇÒ´ç(¼³Á¤).
+		// ìš”ì²­í•œ ë³€ìˆ˜ì— í• ë‹¹(ì„¤ì •).
 		outTexture = newTexture;
 	}
 
 	void TextureLoader::LoadCubemap(const std::string& path, std::weak_ptr<CubemapTexture>& outTexture)
 	{
-		// »õ·Î¿î ÅØ½ºÃ³ »ı¼º.
+		// ìƒˆë¡œìš´ í…ìŠ¤ì²˜ ìƒì„±.
 		auto find = cubemapTextures.find(path);
 		if (find != cubemapTextures.end())
 		{

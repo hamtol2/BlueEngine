@@ -1,4 +1,4 @@
-#include "SoldierBodyShader.h"
+﻿#include "SoldierBodyShader.h"
 #include "Render/Texture/Texture.h"
 #include "Resource/TextureLoader.h"
 

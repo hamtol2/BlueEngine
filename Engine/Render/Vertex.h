@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Math/Vector3.h"
 #include "Math/Vector2.h"
@@ -24,22 +24,22 @@ namespace Blue
 
 	public:
 
-		// Á¤Á¡ÀÇ À§Ä¡.
+		// ì •ì ì˜ ìœ„ì¹˜.
 		Vector3 position;
 		
-		// Á¤Á¡ÀÇ »ö»ó.
+		// ì •ì ì˜ ìƒ‰ìƒ.
 		Vector3 color;
 
-		// Á¤Á¡ ±âÁØ ÅØ½ºÃ³ ÁÂÇ¥.
+		// ì •ì  ê¸°ì¤€ í…ìŠ¤ì²˜ ì¢Œí‘œ.
 		Vector2 texCoord;
 
-		// ³ë¸Ö (¹ı¼±, Normal) º¤ÅÍ.
+		// ë…¸ë©€ (ë²•ì„ , Normal) ë²¡í„°.
 		Vector3 normal;
 
-		// ÅºÁ¨Æ® (tangent) º¤ÅÍ.
+		// íƒ„ì  íŠ¸ (tangent) ë²¡í„°.
 		Vector3 tangent;
 
-		// ¹ÙÀÌÅºÁ¨Æ® (bitangent) º¤ÅÍ.
+		// ë°”ì´íƒ„ì  íŠ¸ (bitangent) ë²¡í„°.
 		Vector3 bitangent;
 	};
 }

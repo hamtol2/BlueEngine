@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Component.h"
 #include <memory>
@@ -6,26 +6,26 @@
 
 namespace Blue
 {
-	// ¸ğµ¨¸µ µ¥ÀÌÅÍ¿Í ¼ÎÀÌ´õ¸¦ È°¿ëÇØ ±×¸®´Â ÄÄÆ÷³ÍÆ®.
+	// ëª¨ë¸ë§ ë°ì´í„°ì™€ ì…°ì´ë”ë¥¼ í™œìš©í•´ ê·¸ë¦¬ëŠ” ì»´í¬ë„ŒíŠ¸.
 	class StaticMeshComponent : public Component
 	{
 	public:
 		StaticMeshComponent();
 		~StaticMeshComponent();
 
-		// ±×¸®±â ÇÔ¼ö.
+		// ê·¸ë¦¬ê¸° í•¨ìˆ˜.
 		virtual void Draw(bool isShadowDraw) override;
 
-		// ¸Ş½Ã ¼³Á¤ ÇÔ¼ö.
+		// ë©”ì‹œ ì„¤ì • í•¨ìˆ˜.
 		void SetMesh(std::shared_ptr<class Mesh> newMesh);
 
-		// ¼ÎÀÌ´õ ¼³Á¤ ÇÔ¼ö.
+		// ì…°ì´ë” ì„¤ì • í•¨ìˆ˜.
 		void AddShader(std::weak_ptr<class Shader> newShader);
 
 	private:
-		// ¸Ş½Ã(¸ğµ¨¸µ) µ¥ÀÌÅÍ.
+		// ë©”ì‹œ(ëª¨ë¸ë§) ë°ì´í„°.
 		std::shared_ptr<class Mesh> mesh;
-		// ¼ÎÀÌ´õ (¼­ºê ¸Ş½Ã ¼ö ¸¸Å­ ÇÊ¿ä).
+		// ì…°ì´ë” (ì„œë¸Œ ë©”ì‹œ ìˆ˜ ë§Œí¼ í•„ìš”).
 		std::vector<std::weak_ptr<class Shader>> shaders;
 	};
 }

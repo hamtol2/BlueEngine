@@ -1,4 +1,4 @@
-#include "CubemapTexture.h"
+ï»¿#include "CubemapTexture.h"
 #include "Core/Common.h"
 #include "Core/Engine.h"
 
@@ -58,7 +58,7 @@ namespace Blue
 
 		CreateSRVAndSampler();
 
-		// ¿ø½Ã ÀÌ¹ÌÁö ¸®¼Ò½º ÇØÁ¦.
+		// ì›ì‹œ ì´ë¯¸ì§€ ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		for (int ix = 0; ix < 6; ++ix)
 		{
 			free(images[ix]);
@@ -70,7 +70,7 @@ namespace Blue
 	{
 		static ID3D11Device& device = Engine::Get().Device();
 
-		// ·ÎµåÇÑ ÀÌ¹ÌÁö ÆÄÀÏ µ¥ÀÌÅÍ¸¦ ±â¹İÀ¸·Î ÅØ½ºÃ³ ¸®¼Ò½º »ı¼º.
+		// ë¡œë“œí•œ ì´ë¯¸ì§€ íŒŒì¼ ë°ì´í„°ë¥¼ ê¸°ë°˜ìœ¼ë¡œ í…ìŠ¤ì²˜ ë¦¬ì†ŒìŠ¤ ìƒì„±.
 		D3D11_TEXTURE2D_DESC textureDesc = {};
 		textureDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
 		textureDesc.ArraySize = 6;
@@ -95,25 +95,25 @@ namespace Blue
 			device.CreateTexture2D(&textureDesc, datas, &texture),
 			TEXT("Error: Failed to create texture2d."));
 
-		// ¼ÎÀÌ´õ ¸®¼Ò½º ºä ¼Ó¼º ¼³Á¤.
+		// ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ë·° ì†ì„± ì„¤ì •.
 		D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc = {};
 		shaderResourceViewDesc.Format = textureDesc.Format;
 		shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURECUBE;
 		shaderResourceViewDesc.TextureCube.MipLevels = 1;
 
-		// ¼ÎÀÌ´õ ¸®¼Ò½º ºä »ı¼º(¼ÎÀÌ´õ¿¡ ¹ÙÀÎµùÇÒ ¸®¼Ò½º).
+		// ì…°ì´ë” ë¦¬ì†ŒìŠ¤ ë·° ìƒì„±(ì…°ì´ë”ì— ë°”ì¸ë”©í•  ë¦¬ì†ŒìŠ¤).
 		ThrowIfFailed(
 			device.CreateShaderResourceView(texture, &shaderResourceViewDesc, &textureData->shaderResourceView),
 			TEXT("Error: Failed to create shaderResourceView."));
 
-		// ´Ù ¾´ ¸®¼Ò½º ÇØÁ¦.
+		// ë‹¤ ì“´ ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		if (texture)
 		{
 			texture->Release();
 			texture = nullptr;
 		}
 
-		// »ùÇÃ·¯ ¼Ó¼º ¼³Á¤.
+		// ìƒ˜í”ŒëŸ¬ ì†ì„± ì„¤ì •.
 		D3D11_SAMPLER_DESC sampleDesc = {};
 		sampleDesc.Filter = D3D11_FILTER_ANISOTROPIC;
 		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_WRAP;
@@ -124,7 +124,7 @@ namespace Blue
 		sampleDesc.MaxAnisotropy = 3;
 		sampleDesc.ComparisonFunc = D3D11_COMPARISON_ALWAYS;
 
-		// »ùÇÃ·¯ »ı¼º.
+		// ìƒ˜í”ŒëŸ¬ ìƒì„±.
 		ThrowIfFailed(
 			device.CreateSamplerState(&sampleDesc, &textureData->samplerState),
 			TEXT("Error: Failed to create sampler state."));

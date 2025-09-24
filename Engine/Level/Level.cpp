@@ -1,4 +1,4 @@
-#include "Level.h"
+ï»¿#include "Level.h"
 #include "Actor/Actor.h"
 #include "Component/CameraComponent.h"
 #include "Component/LightComponent.h"
@@ -53,8 +53,8 @@ namespace Blue
 	{
 		for (auto component : newActor->components)
 		{
-			// »õ·Î Ãß°¡ÇÏ´Â ¾×ÅÍ°¡ Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ®¸¦ °¡Á³´ÂÁö È®ÀÎ.
-			// °¡Á³´Ù¸é, ¸ŞÀÎ Ä«¸Ş¶ó·Î ¼³Á¤.
+			// ìƒˆë¡œ ì¶”ê°€í•˜ëŠ” ì•¡í„°ê°€ ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì¡ŒëŠ”ì§€ í™•ì¸.
+			// ê°€ì¡Œë‹¤ë©´, ë©”ì¸ ì¹´ë©”ë¼ë¡œ ì„¤ì •.
 			std::shared_ptr<CameraComponent> cameraComp = std::dynamic_pointer_cast<CameraComponent>(component);
 			if (cameraComp)
 			{
@@ -62,7 +62,7 @@ namespace Blue
 				return;
 			}
 
-			// »õ·Î Ãß°¡ÇÏ´Â ¾×ÅÍ°¡ ¶óÀÌÆ® ÄÄÆ÷³ÍÆ®¸¦ °¡Á³´Ù¸é, ¶óÀÌÆ® ¾×ÅÍ·Î ¼³Á¤.
+			// ìƒˆë¡œ ì¶”ê°€í•˜ëŠ” ì•¡í„°ê°€ ë¼ì´íŠ¸ ì»´í¬ë„ŒíŠ¸ë¥¼ ê°€ì¡Œë‹¤ë©´, ë¼ì´íŠ¸ ì•¡í„°ë¡œ ì„¤ì •.
 			std::shared_ptr<LightComponent> lightComp = std::dynamic_pointer_cast<LightComponent>(component);
 			if (lightComp)
 			{
@@ -76,7 +76,7 @@ namespace Blue
 
 	std::shared_ptr<Actor> Level::GetActor(int index) const
 	{
-		// ¿¹¿Ü Ã³¸®.
+		// ì˜ˆì™¸ ì²˜ë¦¬.
 		if (index < 0 || index >= (int)actors.size())
 		{
 			return nullptr;

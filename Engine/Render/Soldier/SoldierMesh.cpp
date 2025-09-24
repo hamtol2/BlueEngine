@@ -1,11 +1,11 @@
-#include "SoldierMesh.h"
+ï»¿#include "SoldierMesh.h"
 #include "Resource/ModelLoader.h"
 
 namespace Blue
 {
 	SoldierMesh::SoldierMesh()
 	{
-		// ¸ğµ¨ ·Îµå.
+		// ëª¨ë¸ ë¡œë“œ.
 		std::vector<std::weak_ptr<MeshData>> meshList;
 		if (ModelLoader::Get().Load("Soldier.fbx", meshList))
 		{

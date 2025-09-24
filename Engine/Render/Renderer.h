@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Core/Type.h"
 
@@ -8,73 +8,73 @@
 
 namespace Blue
 {
-	// ±×·¡ÇÈÄ«µå¿¡¼­ Ã³¸®ÇÏ´Â ÀÏ/¸®¼Ò½º¸¦ °ü¸®ÇÏ´Â Å¬·¡½º.
+	// ê·¸ë˜í”½ì¹´ë“œì—ì„œ ì²˜ë¦¬í•˜ëŠ” ì¼/ë¦¬ì†ŒìŠ¤ë¥¼ ê´€ë¦¬í•˜ëŠ” í´ë˜ìŠ¤.
 	// RHI - Render Hardware Interface.
 	class Renderer
 	{
-		// ¿£Áø Å¬·¡½º friend ¼±¾ğ.
+		// ì—”ì§„ í´ë˜ìŠ¤ friend ì„ ì–¸.
 		friend class Engine;
 
 	public:
 		Renderer(uint32 width, uint32 height, HWND window);
 		~Renderer();
 
-		// ±×¸®±â ÇÔ¼ö.
+		// ê·¸ë¦¬ê¸° í•¨ìˆ˜.
 		void Draw(std::shared_ptr<class Level> level);
 
-		// ¼¨µµ¿ì¸Ê ¼³Á¤ ÇÔ¼ö.
+		// ì„€ë„ìš°ë§µ ì„¤ì • í•¨ìˆ˜.
 		void SetShadowmap(std::shared_ptr<class Shadowmap>&& shadowmap);
 
-		// Å©±â º¯°æ ÇÔ¼ö.
+		// í¬ê¸° ë³€ê²½ í•¨ìˆ˜.
 		void OnResize(uint32 width, uint32 height);
 
-		// ¸Ş½ÃÀÇ µŞ¸éÀ» ¾È±×¸®µµ·Ï ¼³Á¤ÇÏ´Â ÇÔ¼ö.
+		// ë©”ì‹œì˜ ë’·ë©´ì„ ì•ˆê·¸ë¦¬ë„ë¡ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜.
 		void CullOn();
 
-		// ¸Ş½ÃÀÇ µŞ¸éÀ» ±×¸®µµ·Ï ¼³Á¤ÇÏ´Â ÇÔ¼ö.
+		// ë©”ì‹œì˜ ë’·ë©´ì„ ê·¸ë¦¬ë„ë¡ ì„¤ì •í•˜ëŠ” í•¨ìˆ˜.
 		void CullOff();
 
 	private:
-		// ¼ÎÀÌ´õ¿¡ ¹ÙÀÎµùµÈ RTV ¹× SRV¸¦ ÇØÁ¦ÇÏ´Â ÇÔ¼ö.
+		// ì…°ì´ë”ì— ë°”ì¸ë”©ëœ RTV ë° SRVë¥¼ í•´ì œí•˜ëŠ” í•¨ìˆ˜.
 		void EmptyRTVsAndSRVs();
 
-		// RenderTargetView/DepthStencilView¸¦ ClearÇÒ ¶§ »ç¿ëÇÏ´Â ÇÔ¼ö.
+		// RenderTargetView/DepthStencilViewë¥¼ Clearí•  ë•Œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜.
 		void Clear(ID3D11RenderTargetView** renderTargetView, float* clearColor, ID3D11DepthStencilView* depthStencilView);
 
 		// Shadowmap Pass.
 		void DrawToShadowMap(std::shared_ptr<Level>& level);
 
-		// RenderTexture¿¡ DrawÇÏ´Â Pass.
+		// RenderTextureì— Drawí•˜ëŠ” Pass.
 		void DrawToRenderTexturePass(std::shared_ptr<Level>& level);
 
-		// ÃÖÁ¾ RenderTarget¿¡ DrawÇÏ´Â Pass.
+		// ìµœì¢… RenderTargetì— Drawí•˜ëŠ” Pass.
 		void DrawFinalPass(std::shared_ptr<Level>& level);
 
 	private:
 
-		// Å©±â º¯°æ ¿©ºÎ È®ÀÎ º¯¼ö.
+		// í¬ê¸° ë³€ê²½ ì—¬ë¶€ í™•ì¸ ë³€ìˆ˜.
 		bool isResizing = false;
 
-		// ¸®¼Ò½º.
-		// ÀåÄ¡·ù.
+		// ë¦¬ì†ŒìŠ¤.
+		// ì¥ì¹˜ë¥˜.
 		ID3D11Device* device = nullptr;
 		ID3D11DeviceContext* context = nullptr;
 		IDXGISwapChain* swapChain = nullptr;
 
-		// ¹öÆÛ.
+		// ë²„í¼.
 		ID3D11RenderTargetView* renderTargetView = nullptr;
 
-		// µª½º ¹öÆÛ.
+		// ëìŠ¤ ë²„í¼.
 		ID3D11DepthStencilView* depthStencilView = nullptr;
 
-		// ·¡½ºÅÍ¶óÀÌÀú ½ºÅ×ÀÌÆ®.
+		// ë˜ìŠ¤í„°ë¼ì´ì € ìŠ¤í…Œì´íŠ¸.
 		ID3D11RasterizerState* cullFrontState = nullptr;
 		ID3D11RasterizerState* cullOnRSState = nullptr;
 
-		// ºäÆ÷Æ®.
+		// ë·°í¬íŠ¸.
 		D3D11_VIEWPORT viewport;
 
-		// ¼¨µµ¿ì ¸Ê.
+		// ì„€ë„ìš° ë§µ.
 		std::shared_ptr<class Shadowmap> shadowmap;
 
 		std::unique_ptr<class QuadActor> quadActor;

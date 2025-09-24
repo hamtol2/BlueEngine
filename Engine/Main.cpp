@@ -1,4 +1,4 @@
-#include "Core/Engine.h"
+ï»¿#include "Core/Engine.h"
 #include "Level/DemoLevel.h"
 #include <iostream>
 
@@ -8,14 +8,14 @@ using namespace Blue;
 #include <stdlib.h>
 #include <crtdbg.h>
 
-// Ã¢ ¸ğµå·Î ÇÒ ¶§ ¸ŞÀÎ ÇÔ¼ö(Entry Point).
+// ì°½ ëª¨ë“œë¡œ í•  ë•Œ ë©”ì¸ í•¨ìˆ˜(Entry Point).
 //int WINAPI WinMain(
 //    _In_ HINSTANCE hInstance,
 //    _In_opt_ HINSTANCE hPrevInstance,
 //    _In_ LPSTR lpCmdLine,
 //    _In_ int nShowCmd)
 //{
-//    // ¿£Áø »ı¼º ¹× ½ÇÇà.
+//    // ì—”ì§„ ìƒì„± ë° ì‹¤í–‰.
 //    Engine engine(1280, 800, TEXT("Engine Demo"), hInstance);
 //    engine.Run();
 //
@@ -46,10 +46,10 @@ using namespace Blue;
 */
 
 /*
-* IA(ÀÔ·Â Á¤¸®) -> VS ...(Option) -> RS/º¸°£±â -> PS -> OM(Ãâ·Â Á¶¸³).
-* - VS (Á¤Á¡ º¯È¯ Object->World->View->Projection).
-* - PS (Á¶¸í Ã³¸®) - PBR / µğÇ»Áî / ½ºÆäÅ§·¯.
-* - ¿£Áø °³¹ßÀÚ (·»´õ·¯(Renderer) - °³¹ßÀÚ).
+* IA(ì…ë ¥ ì •ë¦¬) -> VS ...(Option) -> RS/ë³´ê°„ê¸° -> PS -> OM(ì¶œë ¥ ì¡°ë¦½).
+* - VS (ì •ì  ë³€í™˜ Object->World->View->Projection).
+* - PS (ì¡°ëª… ì²˜ë¦¬) - PBR / ë””í“¨ì¦ˆ / ìŠ¤í˜í˜ëŸ¬.
+* - ì—”ì§„ ê°œë°œì (ë Œë”ëŸ¬(Renderer) - ê°œë°œì).
 */
 
 int main()

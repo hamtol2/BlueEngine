@@ -1,4 +1,4 @@
-ï»¿#include "RenderTexture.h"
+#include "RenderTexture.h"
 #include "Core/Engine.h"
 #include "Core/Common.h"
 
@@ -9,20 +9,20 @@ namespace Blue
 		// RTV / SRV / DSV.
 		static ID3D11Device& device = Engine::Get().Device();
 
-		// ë„ˆë¹„/ë†’ì´ ê°’ ì¡°ì •.
+		// ³Êºñ/³ôÀÌ °ª Á¶Á¤.
 		width = width == 0 ? Engine::Get().Width() : width;
 		height = height == 0 ? Engine::Get().Height() : height;
 
-		// textureData ìƒì„±.
+		// textureData »ı¼º.
 		textureData = std::make_unique<TextureData>();
 		textureData->width = width;
 		textureData->height = height;
 
-		// RTV ìƒì„±.
-		// ë‹¨ê³„1 -> RTV ìƒì„±ì— ì‚¬ìš©í•  í…ìŠ¤ì²˜ ìƒì„±.
-		// ë‹¨ê³„2 -> ìƒì„±ëœ í…ìŠ¤ì²˜ì™€ ì˜µì…˜ì„ ì¶”ê°€í•´ RTV ìƒì„±.
+		// RTV »ı¼º.
+		// ´Ü°è1 -> RTV »ı¼º¿¡ »ç¿ëÇÒ ÅØ½ºÃ³ »ı¼º.
+		// ´Ü°è2 -> »ı¼ºµÈ ÅØ½ºÃ³¿Í ¿É¼ÇÀ» Ãß°¡ÇØ RTV »ı¼º.
 
-		// ë‹¨ê³„1.
+		// ´Ü°è1.
 		ID3D11Texture2D* renderTargetResource = nullptr;
 		D3D11_TEXTURE2D_DESC textureDesc = {};
 		textureDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
@@ -35,12 +35,12 @@ namespace Blue
 		textureDesc.BindFlags =
 			D3D11_BIND_RENDER_TARGET | D3D11_BIND_SHADER_RESOURCE;
 
-		// ìƒì„±.
+		// »ı¼º.
 		ThrowIfFailed(
 			device.CreateTexture2D(&textureDesc, nullptr, &renderTargetResource),
 			TEXT("Failed to create texture2D for render texture."));
 
-		// ë Œë” íƒ€ê²Ÿ ë·° ìƒì„±.
+		// ·»´õ Å¸°Ù ºä »ı¼º.
 		D3D11_RENDER_TARGET_VIEW_DESC renderTargetViewDesc = { };
 		renderTargetViewDesc.Format = DXGI_FORMAT_R32G32B32A32_FLOAT;
 		renderTargetViewDesc.ViewDimension = D3D11_RTV_DIMENSION_TEXTURE2D;
@@ -51,7 +51,7 @@ namespace Blue
 			&renderTargetView
 		), TEXT("Failed to create render target view for render texture."));
 
-		// SRV ìƒì„±.
+		// SRV »ı¼º.
 		D3D11_SHADER_RESOURCE_VIEW_DESC shaderResourceViewDesc = {};
 		shaderResourceViewDesc.Format = textureDesc.Format;
 		shaderResourceViewDesc.ViewDimension = D3D11_SRV_DIMENSION_TEXTURE2D;
@@ -63,11 +63,11 @@ namespace Blue
 			&textureData->shaderResourceView
 		), TEXT("Failed to create shader resource view for render texture."));
 
-		// ë¦¬ì†ŒìŠ¤ í•´ì œ.
+		// ¸®¼Ò½º ÇØÁ¦.
 		renderTargetResource->Release();
 		renderTargetResource = nullptr;
 
-		// ìƒ˜í”ŒëŸ¬ ìŠ¤í…Œì´íŠ¸ ìƒì„±.
+		// »ùÇÃ·¯ ½ºÅ×ÀÌÆ® »ı¼º.
 		D3D11_SAMPLER_DESC sampleDesc = {};
 		sampleDesc.Filter = D3D11_FILTER_ANISOTROPIC;
 		sampleDesc.AddressU = D3D11_TEXTURE_ADDRESS_CLAMP;
@@ -82,7 +82,7 @@ namespace Blue
 			device.CreateSamplerState(&sampleDesc, &textureData->samplerState),
 			TEXT("Failed to create sampler state for render texture"));
 
-		// ëìŠ¤ ìŠ¤í…ì‹¤ ë·° ìƒì„±.
+		// µª½º ½ºÅÙ½Ç ºä »ı¼º.
 		ID3D11Texture2D* depthStencilBuffer = nullptr;
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 		depthStencilDesc.Width = width;
@@ -94,7 +94,7 @@ namespace Blue
 		depthStencilDesc.SampleDesc.Quality = 0;
 		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
-		// 2ì°¨ì› ë¦¬ì†ŒìŠ¤ ìƒì„±.
+		// 2Â÷¿ø ¸®¼Ò½º »ı¼º.
 		ThrowIfFailed(
 			device.CreateTexture2D(&depthStencilDesc, nullptr, &depthStencilBuffer),
 			TEXT("Failed to create depth stencil buffer"));
@@ -103,7 +103,7 @@ namespace Blue
 		depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 
-		// ë·° ìƒì„±.
+		// ºä »ı¼º.
 		ThrowIfFailed(
 			device.CreateDepthStencilView(
 				depthStencilBuffer,
@@ -111,7 +111,7 @@ namespace Blue
 				&depthStencilView),
 			TEXT("Failed to create depth stencil view."));
 
-		// ì‚¬ìš©í•œ ë¦¬ì†ŒìŠ¤ í•´ì œ.
+		// »ç¿ëÇÑ ¸®¼Ò½º ÇØÁ¦.
 		depthStencilBuffer->Release();
 		depthStencilBuffer = nullptr;
 	}

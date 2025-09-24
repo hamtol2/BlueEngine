@@ -1,11 +1,11 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include "../Core/Type.h"
 
 namespace Blue
 {
-	// 3Â÷¿ø º¤ÅÍ Å¬·¡½º.
+	// 3ì°¨ì› ë²¡í„° í´ë˜ìŠ¤.
 	class Vector3
 	{
 	public:
@@ -25,7 +25,7 @@ namespace Blue
 
 		static uint32 Stride() { return sizeof(Vector3); }
 
-		// ¿¬»êÀÚ ¿À¹ö·Îµù.
+		// ì—°ì‚°ì ì˜¤ë²„ë¡œë”©.
 		Vector3& operator+=(const Vector3& other);
 		Vector3& operator-=(const Vector3& other);
 		Vector3& operator*=(float scale);
@@ -44,26 +44,26 @@ namespace Blue
 
 		friend Vector3 operator/(const Vector3& vector, float scale);
 
-		// (x, y) ¹®ÀÚ¿­ »ı¼º ÇÔ¼ö.
+		// (x, y) ë¬¸ìì—´ ìƒì„± í•¨ìˆ˜.
 		std::wstring ToString();
 
-		// ±æÀÌ ±¸ÇÏ±â.
+		// ê¸¸ì´ êµ¬í•˜ê¸°.
 		float Length();
 		
-		// ³»Àû(Dot Product/Inner Product).
+		// ë‚´ì (Dot Product/Inner Product).
 		friend float Dot(const Vector3& left, const Vector3& right);
 		
-		// ¿ÜÀû(Cross Product/Outer Product).
+		// ì™¸ì (Cross Product/Outer Product).
 		friend Vector3 Cross(const Vector3& left, const Vector3& right);
 		
 		Vector3 Normalized();
 		bool Equals(const Vector3& other);
 
-		// ¼±Çü º¸°£(Lerp - Linear Interpolation).
+		// ì„ í˜• ë³´ê°„(Lerp - Linear Interpolation).
 		// (1-t)*from + t*to;
 		friend Vector3 Lerp(const Vector3& from, const Vector3& to, float t);
 
-		// ±âº» °ª.
+		// ê¸°ë³¸ ê°’.
 		static const Vector3 Zero;
 		static const Vector3 One;
 		static const Vector3 Right;

@@ -1,4 +1,4 @@
-#include "Vector3.h"
+Ôªø#include "Vector3.h"
 #include <cassert>
 #include <cmath>
 
@@ -124,7 +124,7 @@ namespace Blue
 
 	Vector3 Lerp(const Vector3& from, const Vector3& to, float t)
 	{
-		// t ∞°µŒ±‚.
+		// t Í∞ÄÎëêÍ∏∞.
 		//t = t < 0.0f ? 0.0f : t < 1.0f ? 1.0f : t;
 		if (t < 0.0f)
 		{

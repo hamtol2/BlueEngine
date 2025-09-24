@@ -1,15 +1,15 @@
-#pragma once
+ï»¿#pragma once
 
 #include <Windows.h>
 #include <comdef.h>
 
-// ¿À·ù ¸Ş½ÃÁö Ãâ·Â ¸ÅÅ©·Î ÇÔ¼ö.
+// ì˜¤ë¥˜ ë©”ì‹œì§€ ì¶œë ¥ ë§¤í¬ë¡œ í•¨ìˆ˜.
 #define ShowErrorMessage(message, reason)				\
 wchar_t buffer[256] = {};								\
 swprintf_s(buffer, 256, TEXT("[File: %s]\n[Line: %d]\n[Function: %s]\n[Message: %s]\n[Reason: %s]"), TEXT(__FILE__), __LINE__, TEXT(__FUNCTION__), message, reason );	\
 MessageBox(nullptr, buffer, TEXT("Error"), MB_OK);
 
-// D3D È£Ãâ ½ÇÆĞ È®ÀÎ ¸ÅÅ©·Î ÇÔ¼ö.
+// D3D í˜¸ì¶œ ì‹¤íŒ¨ í™•ì¸ ë§¤í¬ë¡œ í•¨ìˆ˜.
 #define ThrowIfFailed(result, message)					\
 if (FAILED(result))										\
 {														\

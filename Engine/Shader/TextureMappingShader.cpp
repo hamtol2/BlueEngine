@@ -1,4 +1,4 @@
-#include "TextureMappingShader.h"
+ï»¿#include "TextureMappingShader.h"
 #include "Render/Texture/Texture.h"
 #include "Resource/TextureLoader.h"
 #include "Render/Texture/RenderTexture.h"
@@ -13,7 +13,7 @@ namespace Blue
 	TextureMappingShader::TextureMappingShader(const std::string& textureName)
 		: Shader(L"TextureMapping")
 	{
-		// ÅØ½ºÃ³ »ı¼º.
+		// í…ìŠ¤ì²˜ ìƒì„±.
 		//texture = std::make_unique<Texture>(textureName);
 		TextureLoader::Get().Load(textureName, texture);
 	}
@@ -30,7 +30,7 @@ namespace Blue
 
 	void TextureMappingShader::SetTexture(const std::weak_ptr<class Texture>& newTexture)
 	{
-		// ³»ºÎ ÅØ½ºÃ³ °ª ¼³Á¤.
+		// ë‚´ë¶€ í…ìŠ¤ì²˜ ê°’ ì„¤ì •.
 		texture = newTexture;
 	}
 }

@@ -1,13 +1,13 @@
-#include "InputController.h"
+ï»¿#include "InputController.h"
 
 namespace Blue
 {
-	// static º¯¼ö Á¤ÀÇ.
+	// static ë³€ìˆ˜ ì •ì˜.
 	InputController* InputController::instance = nullptr;
 
 	InputController::InputController()
 	{
-		// ½Ì±ÛÅæ º¯¼ö ¼³Á¤.
+		// ì‹±ê¸€í†¤ ë³€ìˆ˜ ì„¤ì •.
 		instance = this;
 	}
 

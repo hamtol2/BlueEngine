@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Mesh.h"
 
 namespace Blue
 {
-	// »ï°¢Çü ¸Ş½Ã Å¬·¡½º.
+	// ì‚¼ê°í˜• ë©”ì‹œ í´ë˜ìŠ¤.
 	class QuadMesh : public Mesh
 	{
 	public:

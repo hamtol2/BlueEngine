@@ -1,4 +1,4 @@
-#include "JamesShoesShader.h"
+﻿#include "JamesShoesShader.h"
 #include "Render/Texture/Texture.h"
 #include "Resource/TextureLoader.h"
 

@@ -1,4 +1,4 @@
-#include "CameraComponent.h"
+ï»¿#include "CameraComponent.h"
 
 #include "Core/Engine.h"
 #include "Core/Common.h"
@@ -12,15 +12,15 @@ namespace Blue
 {
 	CameraComponent::CameraComponent()
 	{
-		// ºäÇà·Ä ¾÷µ¥ÀÌÆ® ¹× ¹ÙÀÎµù.
+		// ë·°í–‰ë ¬ ì—…ë°ì´íŠ¸ ë° ë°”ì¸ë”©.
 		//data.viewMatrix
 		//	= Matrix4::Translation(owner->transform.position * -1.0f)
 		//	* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
 
-		// Çà·Ä ÀüÄ¡.
+		// í–‰ë ¬ ì „ì¹˜.
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 		
-		// Åõ¿µ Çà·Ä ¼³Á¤.
+		// íˆ¬ì˜ í–‰ë ¬ ì„¤ì •.
 		data.projectionMatrix = Matrix4::Perspective(
 			60.0f,
 			(float)Engine::Get().Width(),
@@ -31,18 +31,18 @@ namespace Blue
 
 		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
 
-		// µ¥ÀÌÅÍ ´ã¾Æ¼­ ¹öÆÛ »ı¼º.
+		// ë°ì´í„° ë‹´ì•„ì„œ ë²„í¼ ìƒì„±.
 		D3D11_BUFFER_DESC bufferDesc = {};
 		bufferDesc.ByteWidth = sizeof(CameraBuffer);
 		bufferDesc.Usage = D3D11_USAGE_DYNAMIC;
 		bufferDesc.BindFlags = D3D11_BIND_CONSTANT_BUFFER;
 		bufferDesc.CPUAccessFlags = D3D11_CPU_ACCESS_WRITE;
 
-		// ¹öÆÛ µ¥ÀÌÅÍ.
+		// ë²„í¼ ë°ì´í„°.
 		D3D11_SUBRESOURCE_DATA bufferData = {};
 		bufferData.pSysMem = &data;
 
-		// ¹öÆÛ »ı¼º.
+		// ë²„í¼ ìƒì„±.
 		ID3D11Device& device = Engine::Get().Device();
 		ThrowIfFailed(
 			device.CreateBuffer(&bufferDesc, &bufferData, &cameraBuffer),
@@ -60,12 +60,12 @@ namespace Blue
 	{
 		Component::Draw(isShadowDraw);
 
-		// ºäÇà·Ä ¾÷µ¥ÀÌÆ® ¹× ¹ÙÀÎµù.
+		// ë·°í–‰ë ¬ ì—…ë°ì´íŠ¸ ë° ë°”ì¸ë”©.
 		data.viewMatrix
 			= Matrix4::Translation(owner->transform.position * -1.0f)
 			* Matrix4::Transpose(Matrix4::Rotation(owner->transform.rotation));
 
-		// Åõ¿µ Çà·Ä ¼³Á¤.
+		// íˆ¬ì˜ í–‰ë ¬ ì„¤ì •.
 		data.projectionMatrix = Matrix4::Perspective(
 			60.0f,
 			(float)Engine::Get().Width(),
@@ -74,23 +74,23 @@ namespace Blue
 			10000.0f
 		);
 
-		// Ä«¸Ş¶ó À§Ä¡ ¼³Á¤.
+		// ì¹´ë©”ë¼ ìœ„ì¹˜ ì„¤ì •.
 		data.cameraPosition = owner->transform.position;
 
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		// ÀüÄ¡ Çà·Ä (CPU¿Í GPU°¡ Çà·ÄÀ» ´Ù·ç´Â ¹æ½ÄÀÌ ´Ş¶ó¼­).
-		// Çà±âÁØ Çà·ÄÀ» ¿­±âÁØ Çà·Ä·Î º¯È¯ÇÏ±â À§ÇØ ÀüÄ¡Çà·Ä Ã³¸®.
+		// ì „ì¹˜ í–‰ë ¬ (CPUì™€ GPUê°€ í–‰ë ¬ì„ ë‹¤ë£¨ëŠ” ë°©ì‹ì´ ë‹¬ë¼ì„œ).
+		// í–‰ê¸°ì¤€ í–‰ë ¬ì„ ì—´ê¸°ì¤€ í–‰ë ¬ë¡œ ë³€í™˜í•˜ê¸° ìœ„í•´ ì „ì¹˜í–‰ë ¬ ì²˜ë¦¬.
 		data.viewMatrix = Matrix4::Transpose(data.viewMatrix);
 		data.projectionMatrix = Matrix4::Transpose(data.projectionMatrix);
 
-		// ¹öÆÛ ¾÷µ¥ÀÌÆ®.
+		// ë²„í¼ ì—…ë°ì´íŠ¸.
 		D3D11_MAPPED_SUBRESOURCE resource = {};
 		context.Map(cameraBuffer, 0, D3D11_MAP_WRITE_DISCARD, 0, &resource);
 		memcpy(resource.pData, &data, sizeof(CameraBuffer));
 		context.Unmap(cameraBuffer, 0);
 
-		// ¹öÆÛ ¹ÙÀÎµù.
+		// ë²„í¼ ë°”ì¸ë”©.
 		context.VSSetConstantBuffers(1, 1, &cameraBuffer);
 	}
 }

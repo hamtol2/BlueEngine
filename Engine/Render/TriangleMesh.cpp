@@ -1,4 +1,4 @@
-#include "TriangleMesh.h"
+Ôªø#include "TriangleMesh.h"
 #include "Vertex.h"
 #include "Shader/DefaultShader.h"
 #include "Resource/ShaderLoader.h"
@@ -7,7 +7,7 @@ namespace Blue
 {
 	TriangleMesh::TriangleMesh()
 	{
-		// ¡§¡° πËø≠.
+		// Ï†ïÏ†ê Î∞∞Ïó¥.
 		std::vector<Vertex> vertices =
 		{
 			Vertex(Vector3(0.0f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector2(0.5f, 0.0f), Vector3(0.0f, 0.0f, -1.0f)),
@@ -15,7 +15,7 @@ namespace Blue
 			Vertex(Vector3(-0.5f, -0.5f, 0.5f), Vector3(0.0f, 0.0f, 1.0f), Vector2(0.0f, 1.0f),Vector3(0.0f, 0.0f, -1.0f)),
 		};
 
-		// ¿Œµ¶Ω∫ πËø≠.
+		// Ïù∏Îç±Ïä§ Î∞∞Ïó¥.
 		std::vector<uint32> indices = { 0, 1, 2 };
 		meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
 		//shaders.emplace_back(std::make_shared<Shader>());

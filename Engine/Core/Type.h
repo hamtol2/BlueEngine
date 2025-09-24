@@ -1,6 +1,6 @@
-#pragma once
+ï»¿#pragma once
 
-// ¿£Áø¿¡¼­ »ç¿ëÇÒ Å¸ÀÔ ÀçÁ¤ÀÇ.
+// ì—”ì§„ì—ì„œ ì‚¬ìš©í•  íƒ€ì… ì¬ì •ì˜.
 namespace Blue
 {
 	using byte = unsigned char;

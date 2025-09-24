@@ -1,19 +1,19 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Math/Vector2.h"
 
-// ÀÔ·Â Ã³¸®¸¦ ´ã´çÇÏ´Â Å¬·¡½º.
+// ì…ë ¥ ì²˜ë¦¬ë¥¼ ë‹´ë‹¹í•˜ëŠ” í´ë˜ìŠ¤.
 namespace Blue
 {
-	// Å°ÀÔ·Â Ã³¸®¸¦ À§ÇÑ ±¸Á¶Ã¼.
+	// í‚¤ì…ë ¥ ì²˜ë¦¬ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´.
 	struct KeyInputData
 	{
-		// ÀÔ·Â °ü·Ã º¯¼ö.
+		// ì…ë ¥ ê´€ë ¨ ë³€ìˆ˜.
 		bool isKeyDown = false;
 		bool isKeyUp = false;
 		bool isKey = false;
 
-		// Å° °ª ¼³Á¤ ÇÔ¼ö.
+		// í‚¤ ê°’ ì„¤ì • í•¨ìˆ˜.
 		void SetKeyUpDown(bool isKeyUp, bool isKeyDown)
 		{
 			this->isKeyUp = isKeyUp;
@@ -23,15 +23,15 @@ namespace Blue
 		}
 	};
 	
-	// ¸¶¿ì½º ÀÔ·Â Ã³¸®¸¦ À§ÇÑ ±¸Á¶Ã¼.
+	// ë§ˆìš°ìŠ¤ ì…ë ¥ ì²˜ë¦¬ë¥¼ ìœ„í•œ êµ¬ì¡°ì²´.
 	struct MouseInputData
 	{
-		// ÀÔ·Â °ü·Ã º¯¼ö.
+		// ì…ë ¥ ê´€ë ¨ ë³€ìˆ˜.
 		bool isButtonDown = false;
 		bool isButtonUp = false;
 		bool isButton = false;
 
-		// Å° °ª ¼³Á¤ ÇÔ¼ö.
+		// í‚¤ ê°’ ì„¤ì • í•¨ìˆ˜.
 		void SetButtonUpDown(bool isButtonUp, bool isButtonDown)
 		{
 			this->isButtonUp = isButtonUp;
@@ -41,7 +41,7 @@ namespace Blue
 		}
 	};
 
-	// ÀÔ·Â °ü¸®ÀÚ Å¬·¡½º.
+	// ì…ë ¥ ê´€ë¦¬ì í´ë˜ìŠ¤.
 	class InputController
 	{
 	public:
@@ -49,46 +49,46 @@ namespace Blue
 		InputController();
 		~InputController();
 
-		// ÆíÀÇ ÇÔ¼ö.
-		// keyCode -> ¹öÆ° °ª (¿¹: 'A').
+		// í¸ì˜ í•¨ìˆ˜.
+		// keyCode -> ë²„íŠ¼ ê°’ (ì˜ˆ: 'A').
 		bool IsKeyDown(unsigned int keyCode);
 		bool IsKeyUp(unsigned int keyCode);
 		bool IsKey(unsigned int keyCode);
 
-		// ¸¶¿ì½º ÀÔ·Â °ü·Ã ÇÔ¼ö.
+		// ë§ˆìš°ìŠ¤ ì…ë ¥ ê´€ë ¨ í•¨ìˆ˜.
 		bool IsButtonDown(unsigned int button);
 		bool IsButtonUp(unsigned int button);
 		bool IsButton(unsigned int button);
 
-		// ÀÔ·Â Á¤¸® ÇÔ¼ö.
+		// ì…ë ¥ ì •ë¦¬ í•¨ìˆ˜.
 		void ResetInputs();
 
 		Vector2 GetMousePosition();
-		float GetMouseDeltaX();		// ÀÌÀü ÇÁ·¹ÀÓ ´ëºñ ÀÌµ¿ÇÑ °Å¸®(X).
-		float GetMouseDeltaY();		// ÀÌÀü ÇÁ·¹ÀÓ ´ëºñ ÀÌµ¿ÇÑ °Å¸®(Y).
+		float GetMouseDeltaX();		// ì´ì „ í”„ë ˆì„ ëŒ€ë¹„ ì´ë™í•œ ê±°ë¦¬(X).
+		float GetMouseDeltaY();		// ì´ì „ í”„ë ˆì„ ëŒ€ë¹„ ì´ë™í•œ ê±°ë¦¬(Y).
 
-		// ¼³Á¤ ÇÔ¼ö.
+		// ì„¤ì • í•¨ìˆ˜.
 		void SetKeyUpDown(unsigned int keyCode, bool isKeyUp, bool isKeyDown);
 		void SetButtonUpDown(unsigned int button, bool isButtonUp, bool isButtonDown);
 		void SetMousePosition(int x, int y);
 
-		// ½Ì±ÛÅæ Á¢±Ù ÇÔ¼ö.
+		// ì‹±ê¸€í†¤ ì ‘ê·¼ í•¨ìˆ˜.
 		static InputController& Get();
 
-		// »ı¼º ¿©ºÎ(À¯È¿¼º ÆÇ´Ü).
+		// ìƒì„± ì—¬ë¶€(ìœ íš¨ì„± íŒë‹¨).
 		static bool IsValid();
 
 	private:
 
-		// Å°/¹öÆ° ÀÔ·Â °ü·Ã º¯¼ö.
+		// í‚¤/ë²„íŠ¼ ì…ë ¥ ê´€ë ¨ ë³€ìˆ˜.
 		KeyInputData keyInputData[256];
 		MouseInputData mouseInputData[3];
 
-		// ¸¶¿ì½º À§Ä¡ º¯¼ö.
+		// ë§ˆìš°ìŠ¤ ìœ„ì¹˜ ë³€ìˆ˜.
 		Vector2 mousePosition = Vector2::Zero;
 		Vector2 mousePreviousPosition = Vector2::Zero;
 
-		// ½Ì±ÛÅæ(Singleton) ±¸ÇöÀ» À§ÇÑ º¯¼ö.
+		// ì‹±ê¸€í†¤(Singleton) êµ¬í˜„ì„ ìœ„í•œ ë³€ìˆ˜.
 		static InputController* instance;
 	};
 }

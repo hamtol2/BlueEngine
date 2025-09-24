@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <Windows.h>
 #include <string>
@@ -6,7 +6,7 @@
 
 namespace Blue
 {
-	// À©µµ¿ì Å¬·¡½º.
+	// ìœˆë„ìš° í´ë˜ìŠ¤.
 	class Window
 	{
 	public:

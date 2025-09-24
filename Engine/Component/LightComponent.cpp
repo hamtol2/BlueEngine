@@ -1,4 +1,4 @@
-#include "LightComponent.h"
+﻿#include "LightComponent.h"
 #include "Actor/Actor.h"
 #include "Math/Transform.h"
 #include "Core/Common.h"

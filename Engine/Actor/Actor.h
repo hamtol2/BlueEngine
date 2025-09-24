@@ -1,13 +1,13 @@
-#pragma once
+ï»¿#pragma once
 
 #include <string>
 #include <vector>
 #include <memory>
-#include "Math/Transform.h" // ¼³°è ½Ã °í·ÁÇÒ »çÇ×.
+#include "Math/Transform.h" // ì„¤ê³„ ì‹œ ê³ ë ¤í•  ì‚¬í•­.
 
 namespace Blue
 {
-	// ¼³°è ½Ã °í·Á»çÇ×(DDD).
+	// ì„¤ê³„ ì‹œ ê³ ë ¤ì‚¬í•­(DDD).
 	class Actor
 	{
 		friend class Renderer;
@@ -23,14 +23,14 @@ namespace Blue
 
 		void Destroy();
 
-		// ÄÄÆ÷³ÍÆ® Ãß°¡ ÇÔ¼ö.
+		// ì»´í¬ë„ŒíŠ¸ ì¶”ê°€ í•¨ìˆ˜.
 		void AddComponent(std::shared_ptr<class Component> newComponent);
 
 		void SetUseRenderTexture(bool newUseRenderTexture);
 
 		bool GetUseRenderTexture() const { return useRenderTexture; }
 
-		// ÄÄÆ÷³ÍÆ® Get ÇÔ¼ö.
+		// ì»´í¬ë„ŒíŠ¸ Get í•¨ìˆ˜.
 		template<typename T>
 		std::shared_ptr<T> GetComponent()
 		{
@@ -53,26 +53,26 @@ namespace Blue
 		const bool IsSkyBox() const { return isSkyBox; }
 
 	public:
-		// ¾×ÅÍÀÇ TRS Á¤º¸¸¦ °ü¸®ÇÏ´Â Æ®·£½ºÆû.
+		// ì•¡í„°ì˜ TRS ì •ë³´ë¥¼ ê´€ë¦¬í•˜ëŠ” íŠ¸ëœìŠ¤í¼.
 		Transform transform;
 
 	protected:
-		// ¾×ÅÍÀÇ ÀÌ¸§ (ÀÏ¹İÀûÀ¸·Î´Â Hash·Î º¯È¯ÇØ¼­ »ç¿ë).
+		// ì•¡í„°ì˜ ì´ë¦„ (ì¼ë°˜ì ìœ¼ë¡œëŠ” Hashë¡œ ë³€í™˜í•´ì„œ ì‚¬ìš©).
 		std::wstring name = TEXT("Actor");
-		// ¾×ÅÍÀÇ ÃÊ±âÈ­ ¿©ºÎ.
+		// ì•¡í„°ì˜ ì´ˆê¸°í™” ì—¬ë¶€.
 		bool hasInitialized = false;
-		// ¾×ÅÍÀÇ È°¼ºÈ­ ¿©ºÎ.
+		// ì•¡í„°ì˜ í™œì„±í™” ì—¬ë¶€.
 		bool isActive = true;
-		// »èÁ¦ ¿©ºÎ.
+		// ì‚­ì œ ì—¬ë¶€.
 		bool hasDestroyed = false;
 
-		// ½ºÄ«ÀÌ¹Ú½º ¾×ÅÍ ¿©ºÎ.
+		// ìŠ¤ì¹´ì´ë°•ìŠ¤ ì•¡í„° ì—¬ë¶€.
 		bool isSkyBox = false;
 
-		// ÄÄÆ÷³ÍÆ® ¹è¿­.
+		// ì»´í¬ë„ŒíŠ¸ ë°°ì—´.
 		std::vector<std::shared_ptr<class Component>> components;
 
-		// ·»´õ ÅØ½ºÃ³ »ç¿ë ¿©ºÎ.
+		// ë Œë” í…ìŠ¤ì²˜ ì‚¬ìš© ì—¬ë¶€.
 		bool useRenderTexture = false;
 	};
 }

@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Texture.h"
 #include <vector>
@@ -14,10 +14,10 @@ namespace Blue
 
 	protected:
 
-		// ÅØ½ºÃ³¸¦ ·ÎµåÇÒ ¶§ »ç¿ëÇÏ´Â ÇÔ¼ö.
+		// í…ìŠ¤ì²˜ë¥¼ ë¡œë“œí•  ë•Œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜.
 		virtual void LoadTexture(const std::string& name) override;
 
-		// ·ÎµåÇÑ ¿ø½Ã ÅØ½ºÃ³ µ¥ÀÌÅÍ¸¦ »ç¿ëÇØ DX ÅØ½ºÃ³ ¸®¼Ò½º¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö.
+		// ë¡œë“œí•œ ì›ì‹œ í…ìŠ¤ì²˜ ë°ì´í„°ë¥¼ ì‚¬ìš©í•´ DX í…ìŠ¤ì²˜ ë¦¬ì†ŒìŠ¤ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜.
 		virtual void CreateSRVAndSampler() override;
 
 	private:

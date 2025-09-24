@@ -1,4 +1,4 @@
-#include "FloorActor.h"
+ï»¿#include "FloorActor.h"
 
 #include "Component/StaticMeshComponent.h"
 #include "Shader/FloorShader.h"
@@ -15,13 +15,13 @@ namespace Blue
 {
 	FloorActor::FloorActor()
 	{
-		// ½ºÅÂÆ½ ¸Ş½Ã ÄÄÆ÷³ÍÆ® »ı¼º.
+		// ìŠ¤íƒœí‹± ë©”ì‹œ ì»´í¬ë„ŒíŠ¸ ìƒì„±.
 		std::shared_ptr<StaticMeshComponent> meshComponent = std::make_shared<StaticMeshComponent>();
 
-		// ¾×ÅÍ¿¡ ÄÄÆ÷³ÍÆ® Ãß°¡.
+		// ì•¡í„°ì— ì»´í¬ë„ŒíŠ¸ ì¶”ê°€.
 		AddComponent(meshComponent);
 
-		// ¸®¼Ò½º ·Îµå ¹× ÄÄÆ÷³ÍÆ® ¼³Á¤.
+		// ë¦¬ì†ŒìŠ¤ ë¡œë“œ ë° ì»´í¬ë„ŒíŠ¸ ì„¤ì •.
 		meshComponent->SetMesh(std::make_shared<QuadMesh>());
 
 		std::weak_ptr<FloorShader> shader;
@@ -30,13 +30,13 @@ namespace Blue
 			meshComponent->AddShader(shader);
 		}
 
-		// ÅØ½ºÃ³ ·Îµå ¹× ¼ÎÀÌ´õ¿¡ ¼³Á¤.
+		// í…ìŠ¤ì²˜ ë¡œë“œ ë° ì…°ì´ë”ì— ì„¤ì •.
 		std::weak_ptr<Texture> texture;
 		TextureLoader::Get().Load("T_White.png", texture);
 
 		shader.lock()->SetTexture(texture);
 
-		// Æ®·£½ºÆû ¼³Á¤.
+		// íŠ¸ëœìŠ¤í¼ ì„¤ì •.
 		transform.position.y = -1.0f;
 		transform.rotation.x = 90.0f;
 		transform.scale = Vector3::One * 5.0f;

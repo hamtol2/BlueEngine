@@ -1,11 +1,11 @@
-#include "CubeMesh.h"
+ï»¿#include "CubeMesh.h"
 #include "Resource/ModelLoader.h"
 
 namespace Blue
 {
 	CubeMesh::CubeMesh()
 	{
-		// ¸ğµ¨ ·Îµå.
+		// ëª¨ë¸ ë¡œë“œ.
 		std::vector<std::weak_ptr<MeshData>> meshList;
 		if (ModelLoader::Get().Load("cube.obj", meshList))
 		{

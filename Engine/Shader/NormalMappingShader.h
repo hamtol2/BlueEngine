@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Shader.h"
 #include "Core/Type.h"
@@ -10,7 +10,7 @@ namespace Blue
 	class NormalMappingShader : public Shader
 	{
 	public:
-		// µğÇ»Áî/³ë¸Ö¸Ê ÅØ½ºÃ³ ¹ÙÀÎµù Å¸ÀÔ ¿­°ÅÇü.
+		// ë””í“¨ì¦ˆ/ë…¸ë©€ë§µ í…ìŠ¤ì²˜ ë°”ì¸ë”© íƒ€ì… ì—´ê±°í˜•.
 		enum class ETextureBindType : uint32
 		{
 			Diffuse = 0,
@@ -22,14 +22,14 @@ namespace Blue
 
 		virtual void Bind() override;
 
-		// ÅØ½ºÃ³ ¼³Á¤ ÇÔ¼ö.
+		// í…ìŠ¤ì²˜ ì„¤ì • í•¨ìˆ˜.
 		void SetTexture(
 			ETextureBindType bindType,
 			const std::weak_ptr<class Texture>& newTexture
 		);
 
 	protected:
-		// ÅØ½ºÃ³ µÎÀå.
+		// í…ìŠ¤ì²˜ ë‘ì¥.
 		std::unordered_map<ETextureBindType, std::weak_ptr<class Texture>> textures;
 	};
 }

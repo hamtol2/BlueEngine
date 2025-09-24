@@ -1,4 +1,4 @@
-#include "Actor.h"
+ï»¿#include "Actor.h"
 #include "Component/Component.h"
 
 namespace Blue
@@ -13,16 +13,16 @@ namespace Blue
 	
 	void Actor::BeginPlay()
 	{
-		// ¿¹¿Ü Ã³¸®.
+		// ì˜ˆì™¸ ì²˜ë¦¬.
 		if (hasInitialized)
 		{
 			return;
 		}
 
-		// ÃÊ±âÈ­ ¼³Á¤.
+		// ì´ˆê¸°í™” ì„¤ì •.
 		hasInitialized = true;
 
-		// ÄÄÆ÷³ÍÆ® ÇÔ¼ö È£Ãâ.
+		// ì»´í¬ë„ŒíŠ¸ í•¨ìˆ˜ í˜¸ì¶œ.
 		for (const auto& component : components)
 		{
 			component->BeginPlay();
@@ -31,16 +31,16 @@ namespace Blue
 	
 	void Actor::Tick(float deltaTime)
 	{
-		// ¿¹¿Ü Ã³¸®.
+		// ì˜ˆì™¸ ì²˜ë¦¬.
 		if (!IsActive())
 		{
 			return;
 		}
 
-		// Æ®·£½ºÆû ¾÷µ¥ÀÌÆ®.
+		// íŠ¸ëžœìŠ¤í¼ ì—…ë°ì´íŠ¸.
 		transform.Tick();
 
-		// ÄÄÆ÷³ÍÆ® ÇÔ¼ö È£Ãâ.
+		// ì»´í¬ë„ŒíŠ¸ í•¨ìˆ˜ í˜¸ì¶œ.
 		for (const auto& component : components)
 		{
 			component->Tick(deltaTime);
@@ -49,16 +49,16 @@ namespace Blue
 	
 	void Actor::Draw(bool isShadowDraw)
 	{
-		// ¿¹¿Ü Ã³¸®.
+		// ì˜ˆì™¸ ì²˜ë¦¬.
 		if (!IsActive())
 		{
 			return;
 		}
 
-		// Æ®·£½ºÆû ¹ÙÀÎµù (¼ÎÀÌ´õ¿¡ µ¥ÀÌÅÍ Àü´Þ).
+		// íŠ¸ëžœìŠ¤í¼ ë°”ì¸ë”© (ì…°ì´ë”ì— ë°ì´í„° ì „ë‹¬).
 		transform.Bind();
 
-		// ÄÄÆ÷³ÍÆ® ÇÔ¼ö È£Ãâ.
+		// ì»´í¬ë„ŒíŠ¸ í•¨ìˆ˜ í˜¸ì¶œ.
 		for (const auto& component : components)
 		{
 			component->Draw(isShadowDraw);
@@ -72,10 +72,10 @@ namespace Blue
 	
 	void Actor::AddComponent(std::shared_ptr<Component> newComponent)
 	{
-		// ÄÄÆ÷³ÍÆ® ¹è¿­¿¡ »õ·Î¿î ÄÄÆ÷³ÍÆ® Ãß°¡.
+		// ì»´í¬ë„ŒíŠ¸ ë°°ì—´ì— ìƒˆë¡œìš´ ì»´í¬ë„ŒíŠ¸ ì¶”ê°€.
 		components.emplace_back(newComponent);
 
-		// ÄÄÆ÷³ÍÆ®ÀÇ ¼ÒÀ¯ ¼³Á¤.
+		// ì»´í¬ë„ŒíŠ¸ì˜ ì†Œìœ  ì„¤ì •.
 		newComponent->SetOwner(this);
 	}
 

@@ -1,4 +1,4 @@
-#include "QuadMesh.h"
+ï»¿#include "QuadMesh.h"
 #include "Vertex.h"
 #include "Shader/Shader.h"
 #include "Shader/TextureMappingShader.h"
@@ -13,7 +13,7 @@ namespace Blue
 {
 	QuadMesh::QuadMesh()
 	{
-		// ¸ğµ¨ ·Îµå.
+		// ëª¨ë¸ ë¡œë“œ.
 		std::vector<std::weak_ptr<MeshData>> meshList;
 		if (ModelLoader::Get().Load("quad.obj", meshList))
 		{
@@ -26,11 +26,11 @@ namespace Blue
 
 	void QuadMesh::Update(float deltaTime)
 	{
-		// È¸Àü Ã³¸®.
+		// íšŒì „ ì²˜ë¦¬.
 		//static float angle = 0.0f;
 		//angle += 90.0f * deltaTime;
 
-		// È¸Àü Àû¿ë.
+		// íšŒì „ ì ìš©.
 		//transform.rotation.z = angle;
 
 		//Rotate(angle);
@@ -38,7 +38,7 @@ namespace Blue
 
 	void QuadMesh::Rotate(float angle)
 	{
-		//// Á¤Á¡ ¹è¿­.
+		//// ì •ì  ë°°ì—´.
 		//std::vector<Vertex> vertices =
 		//{
 		//	Vertex(Vector3(-0.5f, 0.5f, 0.5f), Vector3(1.0f, 0.0f, 0.0f), Vector2(0.0f, 0.0f)),
@@ -55,14 +55,14 @@ namespace Blue
 		//	result.assign(vertices.begin(), vertices.end());
 		//}
 		//
-		//// È¸Àü.
+		//// íšŒì „.
 		//Matrix4 rotation = Matrix4::RotationZ(angle);
 		//result[0].position = vertices[0].position * rotation;
 		//result[1].position = vertices[1].position * rotation;
 		//result[2].position = vertices[2].position * rotation;
 		//result[3].position = vertices[3].position * rotation;
 		//
-		//// ¸Ş½ÃÀÇ Á¤Á¡ ¹öÆÛ ¾÷µ¥ÀÌÆ®.
+		//// ë©”ì‹œì˜ ì •ì  ë²„í¼ ì—…ë°ì´íŠ¸.
 		//meshes[0].lock()->UpdateVertexBuffer(result);
 	}
 }

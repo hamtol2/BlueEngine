@@ -1,4 +1,4 @@
-#include "SkyboxActor.h"
+ï»¿#include "SkyboxActor.h"
 #include "Core/Common.h"
 
 #include "Component/StaticMeshComponent.h"
@@ -18,16 +18,16 @@ namespace Blue
 
 	SkyboxActor::SkyboxActor(const std::string& path)
 	{
-		// ½ºÄ«ÀÌ ¹Ú½º·Î ¼³Á¤.
+		// ìŠ¤ì¹´ì´ ë°•ìŠ¤ë¡œ ì„¤ì •.
 		isSkyBox = true;
 
-		// ½ºÅÂÆ½ ¸Ş½Ã ÄÄÆ÷³ÍÆ® »ı¼º.
+		// ìŠ¤íƒœí‹± ë©”ì‹œ ì»´í¬ë„ŒíŠ¸ ìƒì„±.
 		std::shared_ptr<StaticMeshComponent> meshComponent = std::make_shared<StaticMeshComponent>();
 
-		// ¾×ÅÍ¿¡ ÄÄÆ÷³ÍÆ® Ãß°¡.
+		// ì•¡í„°ì— ì»´í¬ë„ŒíŠ¸ ì¶”ê°€.
 		AddComponent(meshComponent);
 
-		// ¸®¼Ò½º ·Îµå ¹× ÄÄÆ÷³ÍÆ® ¼³Á¤.
+		// ë¦¬ì†ŒìŠ¤ ë¡œë“œ ë° ì»´í¬ë„ŒíŠ¸ ì„¤ì •.
 		meshComponent->SetMesh(std::make_shared<CubeMesh>());
 
 		std::weak_ptr<SkyCubemapShader> cubemapShader;

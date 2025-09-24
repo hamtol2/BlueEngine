@@ -1,4 +1,4 @@
-#include "ModelLoader.h"
+ï»¿#include "ModelLoader.h"
 #include "Core/Common.h"
 #include <vector>
 #include "Math/Vector2.h"
@@ -17,7 +17,7 @@ namespace Blue
 
 	bool ModelLoader::Load(const std::string& name, std::vector<std::weak_ptr<MeshData>>& outData, float baseScale)
 	{
-		// ÀÌ¹Ì °¡Áö°í ÀÖ´ÂÁö È®ÀÎ.
+		// ì´ë¯¸ ê°€ì§€ê³  ìˆëŠ”ì§€ í™•ì¸.
 		auto result = meshes.find(name);
 		if (result != meshes.end())
 		{
@@ -29,7 +29,7 @@ namespace Blue
 			return true;
 		}
 
-		// È®ÀåÀÚ È®ÀÎ.
+		// í™•ì¥ì í™•ì¸.
 		char nameBuffer[128] = {};
 		strcpy_s(nameBuffer, 128, name.c_str());
 		char* extension = nullptr;
@@ -40,7 +40,7 @@ namespace Blue
 			return false;
 		}
 
-		// È®ÀåÀÚ¿¡ µû¸¥ ¸ğµ¨¸µ ·Îµå Ã³¸®.
+		// í™•ì¥ìì— ë”°ë¥¸ ëª¨ë¸ë§ ë¡œë“œ ì²˜ë¦¬.
 		if (strcmp(extension, "obj") == 0)
 		{
 			std::vector<std::shared_ptr<MeshData>> newMesh;
@@ -74,7 +74,7 @@ namespace Blue
 
 	bool ModelLoader::LoadOBJ(const std::string& name, std::vector<std::shared_ptr<MeshData>>& outData)
 	{
-		// ÆÄÀÏ·Îµå.
+		// íŒŒì¼ë¡œë“œ.
 		char path[512] = {};
 		sprintf_s(path, 512, "../Assets/Meshes/%s", name.c_str());
 
@@ -91,21 +91,21 @@ namespace Blue
 		std::vector<Vector3> normals;
 		std::vector<Vertex> vertices;
 
-		// ÆÄ½Ì(Parcing, ÇØ¼®).
+		// íŒŒì‹±(Parcing, í•´ì„).
 		char line[512] = {};
 		while (!feof(file))
 		{
-			// ÇÑ ÁÙ¾¿ ÀĞ±â.
+			// í•œ ì¤„ì”© ì½ê¸°.
 			if (!fgets(line, 512, file))
 			{
 				break;
 			}
 
-			// Çì´õ ÀĞ±â.
+			// í—¤ë” ì½ê¸°.
 			char header[3] = {};
 			sscanf_s(line, "%s", header, 3);
 
-			// °¢ Å¸ÀÔ º°·Î µ¥ÀÌÅÍ ÀúÀå.
+			// ê° íƒ€ì… ë³„ë¡œ ë°ì´í„° ì €ì¥.
 			if (strcmp(header, "v") == 0)
 			{
 				Vector3 position;
@@ -139,10 +139,10 @@ namespace Blue
 			}
 		}
 
-		// ÆÄÀÏ ´İ±â.
+		// íŒŒì¼ ë‹«ê¸°.
 		fclose(file);
 
-		// ÀÎµ¦½º ¹è¿­.
+		// ì¸ë±ìŠ¤ ë°°ì—´.
 		std::vector<uint32> indices;
 		indices.reserve(vertices.size());
 
@@ -151,26 +151,26 @@ namespace Blue
 			indices.emplace_back(ix);
 		}
 
-		// ÅºÁ¨Æ® / ¹ÙÀÌÅºÁ¨Æ®(¹ÙÀÌ³ë¸Ö) °è»ê.
+		// íƒ„ì  íŠ¸ / ë°”ì´íƒ„ì  íŠ¸(ë°”ì´ë…¸ë©€) ê³„ì‚°.
 		for (uint32 ix = 0; ix < (uint32)vertices.size(); ix += 3)
 		{
-			// ¸éÀ» ÀÌ·ç´Â 3°³ÀÇ Á¤Á¡ °¡Á®¿À±â.
+			// ë©´ì„ ì´ë£¨ëŠ” 3ê°œì˜ ì •ì  ê°€ì ¸ì˜¤ê¸°.
 			Vertex& v0 = vertices[ix + 0];
 			Vertex& v1 = vertices[ix + 1];
 			Vertex& v2 = vertices[ix + 2];
 
-			// °£¼± ±¸ÇÏ±â.
+			// ê°„ì„  êµ¬í•˜ê¸°.
 			Vector3 edge1 = v1.position - v0.position;
 			Vector3 edge2 = v2.position - v0.position;
 
-			// UV Â÷ÀÌ ±¸ÇÏ±â.
+			// UV ì°¨ì´ êµ¬í•˜ê¸°.
 			Vector2 deltaUV1 = v1.texCoord - v0.texCoord;
 			Vector2 deltaUV2 = v2.texCoord - v0.texCoord;
 
-			// ½ºÄÉÀÏ ±¸ÇÏ±â.
+			// ìŠ¤ì¼€ì¼ êµ¬í•˜ê¸°.
 			float determinant = 1.0f / (deltaUV1.x * deltaUV2.y - deltaUV2.x * deltaUV1.y);
 
-			// ÅºÁ¨Æ®.
+			// íƒ„ì  íŠ¸.
 			Vector3 tangent = (edge1 * deltaUV2.y - edge2 * deltaUV1.y) * determinant;
 			Vector3 bitangent = (edge2 * deltaUV1.x - edge1 * deltaUV2.x) * determinant;
 
@@ -183,17 +183,17 @@ namespace Blue
 			v2.bitangent += bitangent;
 		}
 
-		// ¾Õ¿¡¼­ ±¸ÇÑ ÅºÁ¨Æ®/¹ÙÀÌ ÅºÁ¨Æ®/³ë¸ÖÀÇ Á÷±³¼º º¸ÀåÇÏµµ·Ï °è»ê.
-		// ±×¶÷-½´¹ÌÆ® ¾Ë°í¸®Áò & ¿ÜÀû.
+		// ì•ì—ì„œ êµ¬í•œ íƒ„ì  íŠ¸/ë°”ì´ íƒ„ì  íŠ¸/ë…¸ë©€ì˜ ì§êµì„± ë³´ì¥í•˜ë„ë¡ ê³„ì‚°.
+		// ê·¸ëŒ-ìŠˆë¯¸íŠ¸ ì•Œê³ ë¦¬ì¦˜ & ì™¸ì .
 		for (auto& vertex : vertices)
 		{
-			// Á¤»ç¿µ -> Á÷±³ ¹æÇâº¤ÅÍ ±¸ÇÏ±â.
+			// ì •ì‚¬ì˜ -> ì§êµ ë°©í–¥ë²¡í„° êµ¬í•˜ê¸°.
 			vertex.tangent = (vertex.tangent - vertex.normal * Dot(vertex.normal, vertex.tangent)).Normalized();
 			vertex.tangent = vertex.tangent.Normalized();
 			vertex.bitangent = Cross(vertex.normal, vertex.tangent);
 		}
 
-		// ¸Ş½Ã µ¥ÀÌÅÍ »ı¼º ¹× ¸®¼Ò½º µî·Ï.
+		// ë©”ì‹œ ë°ì´í„° ìƒì„± ë° ë¦¬ì†ŒìŠ¤ ë“±ë¡.
 		std::vector<std::shared_ptr<MeshData>> newMeshes{ std::make_shared<MeshData>(vertices, indices) };
 		meshes.insert(std::make_pair(name, newMeshes));
 		outData = newMeshes;
@@ -202,11 +202,11 @@ namespace Blue
 
 	bool ModelLoader::LoadFBX(const std::string& name, std::vector<std::shared_ptr<MeshData>>& outData, float baseScale)
 	{
-		// ÆÄÀÏ·Îµå.
+		// íŒŒì¼ë¡œë“œ.
 		char path[512] = {};
 		sprintf_s(path, 512, "../Assets/Meshes/%s", name.c_str());
 
-		// fbx scene ÀÓÆ÷Æ®.
+		// fbx scene ì„í¬íŠ¸.
 		const aiScene* fbxScene = aiImportFile(
 			path,
 			aiProcess_Triangulate |
@@ -214,29 +214,29 @@ namespace Blue
 			aiProcess_ConvertToLeftHanded
 		);
 
-		// ¾À ÀÓÆ÷Æ®¿¡ ½ÇÆĞÇÏ°Å³ª ¾À¿¡ ¸Ş½Ã°¡ ¾ø´Â °æ¿ì ½ÇÆĞ Ã³¸®.
+		// ì”¬ ì„í¬íŠ¸ì— ì‹¤íŒ¨í•˜ê±°ë‚˜ ì”¬ì— ë©”ì‹œê°€ ì—†ëŠ” ê²½ìš° ì‹¤íŒ¨ ì²˜ë¦¬.
 		if (!fbxScene || !fbxScene->HasMeshes())
 		{
 			return false;
 		}
 
-		// ¼­ºê ¸Ş½Ã¸¦ ¼øÈ¸ÇÏ¸é¼­ ¸Ş½Ã Ã³¸®.
+		// ì„œë¸Œ ë©”ì‹œë¥¼ ìˆœíšŒí•˜ë©´ì„œ ë©”ì‹œ ì²˜ë¦¬.
 		std::vector<std::shared_ptr<MeshData>> meshes;
 		for (uint32 ix = 0; ix < fbxScene->mNumMeshes; ++ix)
 		{
 			ProcessMesh(fbxScene->mMeshes[ix], baseScale, meshes);
 		}
 
-		// ÇØ½Ã Å×ÀÌºí¿¡ ¸Ş½Ã ÀúÀå.
+		// í•´ì‹œ í…Œì´ë¸”ì— ë©”ì‹œ ì €ì¥.
 		this->meshes.insert(std::make_pair(name, meshes));
 
-		// Ãâ·Â.
+		// ì¶œë ¥.
 		outData = meshes;
 
-		// fbx import ÇØÁ¦.
+		// fbx import í•´ì œ.
 		aiReleaseImport(fbxScene);
 
-		// ¼º°ø ¹İÈ¯.
+		// ì„±ê³µ ë°˜í™˜.
 		return true;
 	}
 
@@ -245,19 +245,19 @@ namespace Blue
 		float baseScale,
 		std::vector<std::shared_ptr<MeshData>>& meshes)
 	{
-		// ¸Ş½Ã Ã³¸®.
-		// Á¤Á¡ Ã³¸®.
+		// ë©”ì‹œ ì²˜ë¦¬.
+		// ì •ì  ì²˜ë¦¬.
 		std::vector<Vertex> vertices;
 		vertices.reserve((size_t)mesh->mNumVertices);
 		for (uint32 ix = 0; ix < mesh->mNumVertices; ++ix)
 		{
-			// À§Ä¡ ¼³Á¤.
+			// ìœ„ì¹˜ ì„¤ì •.
 			Vector3 position(mesh->mVertices[ix].x, mesh->mVertices[ix].y, mesh->mVertices[ix].z);
 
-			// ±âº»À¸·Î ¼³Á¤µÈ ½ºÄÉÀÏ Àû¿ë (FBXÀÇ °æ¿ì ³Ê¹« Å©°Ô Àû¿ëµÇ´Â °æ¿ì°¡ ÀÖÀ½).
+			// ê¸°ë³¸ìœ¼ë¡œ ì„¤ì •ëœ ìŠ¤ì¼€ì¼ ì ìš© (FBXì˜ ê²½ìš° ë„ˆë¬´ í¬ê²Œ ì ìš©ë˜ëŠ” ê²½ìš°ê°€ ìˆìŒ).
 			//position *= baseScale;
 
-			// UV ¼³Á¤.
+			// UV ì„¤ì •.
 			Vector2 texCoord;
 			if (mesh->HasTextureCoords(0))
 			{
@@ -265,7 +265,7 @@ namespace Blue
 				texCoord.y = mesh->mTextureCoords[0][ix].y;
 			}
 
-			// ³ë¸Ö ¼³Á¤.
+			// ë…¸ë©€ ì„¤ì •.
 			Vector3 normal;
 			if (mesh->HasNormals())
 			{
@@ -274,7 +274,7 @@ namespace Blue
 				normal.z = mesh->mNormals[ix].z;
 			}
 
-			// ÅºÁ¨Æ®/¹ÙÀÌÅºÁ¨Æ® ¼³Á¤.
+			// íƒ„ì  íŠ¸/ë°”ì´íƒ„ì  íŠ¸ ì„¤ì •.
 			Vector3 tangent;
 			Vector3 bitangent;
 			if (mesh->HasTangentsAndBitangents())
@@ -288,30 +288,30 @@ namespace Blue
 				bitangent.z = mesh->mBitangents[ix].z;
 			}
 
-			// Á¤Á¡ »ı¼º.
+			// ì •ì  ìƒì„±.
 			Vertex vertex(position, Vector3::One, texCoord, normal);
 			vertex.tangent = tangent;
 			vertex.bitangent = bitangent;
 
-			// Á¤Á¡ ¹è¿­¿¡ Ãß°¡.
+			// ì •ì  ë°°ì—´ì— ì¶”ê°€.
 			vertices.emplace_back(vertex);
 		}
 
-		// ÀÎµ¦½º »ı¼º.
+		// ì¸ë±ìŠ¤ ìƒì„±.
 		std::vector<uint32> indices;
 		indices.reserve(mesh->mNumFaces * 3);
 		for (uint32 ix = 0; ix < mesh->mNumFaces; ++ix)
 		{
-			// ¸é(Face) °¡Á®¿À±â.
+			// ë©´(Face) ê°€ì ¸ì˜¤ê¸°.
 			const aiFace& face = mesh->mFaces[ix];
 
-			// ÀÎµ¦½º ¼³Á¤.
+			// ì¸ë±ìŠ¤ ì„¤ì •.
 			indices.emplace_back(face.mIndices[0]);
 			indices.emplace_back(face.mIndices[1]);
 			indices.emplace_back(face.mIndices[2]);
 		}
 
-		// MeshData »ı¼º ¹× ¹è¿­¿¡ Ãß°¡.
+		// MeshData ìƒì„± ë° ë°°ì—´ì— ì¶”ê°€.
 		meshes.emplace_back(std::make_shared<MeshData>(vertices, indices));
 	}
 }

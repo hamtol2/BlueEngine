@@ -1,4 +1,4 @@
-#include "Renderer.h"
+ï»¿#include "Renderer.h"
 #include "Core/Common.h"
 
 #include "Level/Level.h"
@@ -19,14 +19,14 @@ namespace Blue
 {
 	Renderer::Renderer(uint32 width, uint32 height, HWND window)
 	{
-		// ÀåÄ¡ »ı¼º¿¡ »ç¿ëÇÏ´Â ¿É¼Ç.
+		// ì¥ì¹˜ ìƒì„±ì— ì‚¬ìš©í•˜ëŠ” ì˜µì…˜.
 		uint32 flag = 0u;
 
 #if _DEBUG
 		flag |= D3D11_CREATE_DEVICE_DEBUG;
 #endif
 
-		// »ı¼ºÇÒ ¶óÀÌºê·¯¸® ¹öÀü.
+		// ìƒì„±í•  ë¼ì´ë¸ŒëŸ¬ë¦¬ ë²„ì „.
 		D3D_FEATURE_LEVEL featureLevels[] =
 		{
 			D3D_FEATURE_LEVEL_11_1,
@@ -35,7 +35,7 @@ namespace Blue
 
 		D3D_FEATURE_LEVEL outFeatureLevel;
 
-		// ÀåÄ¡ »ı¼º.
+		// ì¥ì¹˜ ìƒì„±.
 		ThrowIfFailed(D3D11CreateDevice(
 			nullptr,
 			D3D_DRIVER_TYPE_HARDWARE,
@@ -49,20 +49,20 @@ namespace Blue
 			&context
 		), TEXT("Failed to create devices."));
 
-		// IDXGIFactory ¸®¼Ò½º »ı¼º.
+		// IDXGIFactory ë¦¬ì†ŒìŠ¤ ìƒì„±.
 		IDXGIFactory* factory = nullptr;
 		//CreateDXGIFactory(__uuidof(factory), reinterpret_cast<void**>(&factory));
 		ThrowIfFailed(CreateDXGIFactory(IID_PPV_ARGS(&factory)),
 			TEXT("Failed to create dxgifactory."));
 
-		// ½º¿Ò Ã¼ÀÎ Á¤º¸ ±¸Á¶Ã¼.
+		// ìŠ¤ì™‘ ì²´ì¸ ì •ë³´ êµ¬ì¡°ì²´.
 		DXGI_SWAP_CHAIN_DESC swapChainDesc = { };
-		swapChainDesc.Windowed = true;		// Ã¢ ¸ğµå?.
+		swapChainDesc.Windowed = true;		// ì°½ ëª¨ë“œ?.
 		swapChainDesc.OutputWindow = window;
 		swapChainDesc.BufferUsage = DXGI_USAGE_RENDER_TARGET_OUTPUT;
-		swapChainDesc.BufferCount = 2;		// ¹é¹öÆÛ °³¼ö.
-		swapChainDesc.SampleDesc.Count = 1;	// ¸ÖÆ¼ »ùÇÃ¸µ °³¼ö.
-		swapChainDesc.SampleDesc.Quality = 0; // ¸ÖÆ¼ »ùÇÃ¸µ ¼öÁØ.
+		swapChainDesc.BufferCount = 2;		// ë°±ë²„í¼ ê°œìˆ˜.
+		swapChainDesc.SampleDesc.Count = 1;	// ë©€í‹° ìƒ˜í”Œë§ ê°œìˆ˜.
+		swapChainDesc.SampleDesc.Quality = 0; // ë©€í‹° ìƒ˜í”Œë§ ìˆ˜ì¤€.
 		swapChainDesc.BufferDesc.Width = width;
 		swapChainDesc.BufferDesc.Height = height;
 		swapChainDesc.BufferDesc.Format = DXGI_FORMAT_R8G8B8A8_UNORM;
@@ -70,7 +70,7 @@ namespace Blue
 
 		//D3D_FEATURE_LEVEL targetLevel;
 
-		// ÀåÄ¡ »ı¼º.
+		// ì¥ì¹˜ ìƒì„±.
 		//ThrowIfFailed(D3D11CreateDeviceAndSwapChain(
 		//	nullptr,
 		//	D3D_DRIVER_TYPE_HARDWARE,
@@ -86,14 +86,14 @@ namespace Blue
 		//	&context
 		//), TEXT("Failed to create devices"));
 
-		// SwapChain »ı¼º.
+		// SwapChain ìƒì„±.
 		ThrowIfFailed(factory->CreateSwapChain(
 			device,
 			&swapChainDesc,
 			&swapChain
 		), TEXT("Failed to create a swap chain."));
 
-		// ·»´õ Å¸°Ù ºä »ı¼º.
+		// ë Œë” íƒ€ê²Ÿ ë·° ìƒì„±.
 		ID3D11Texture2D* backbuffer = nullptr;
 		//swapChain->GetBuffer(
 		//	0,
@@ -110,11 +110,11 @@ namespace Blue
 			backbuffer, nullptr, &renderTargetView
 		), TEXT("Failed to create render target view"));
 
-		// »ç¿ëÇÑ ¸®¼Ò½º ÇØÁ¦.
+		// ì‚¬ìš©í•œ ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		backbuffer->Release();
 		backbuffer = nullptr;
 
-		// µª½º ½ºÅÙ½Ç ºä »ı¼º.
+		// ëìŠ¤ ìŠ¤í…ì‹¤ ë·° ìƒì„±.
 		ID3D11Texture2D* depthStencilBuffer = nullptr;
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 		depthStencilDesc.Width = width;
@@ -126,7 +126,7 @@ namespace Blue
 		depthStencilDesc.SampleDesc.Quality = 0;
 		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
-		// 2Â÷¿ø ¸®¼Ò½º »ı¼º.
+		// 2ì°¨ì› ë¦¬ì†ŒìŠ¤ ìƒì„±.
 		ThrowIfFailed(
 			device->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencilBuffer),
 			TEXT("Failed to create depth stencil buffer"));
@@ -135,7 +135,7 @@ namespace Blue
 		depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 
-		// ºä »ı¼º.
+		// ë·° ìƒì„±.
 		ThrowIfFailed(
 			device->CreateDepthStencilView(
 				depthStencilBuffer,
@@ -143,11 +143,11 @@ namespace Blue
 				&depthStencilView),
 			TEXT("Failed to create depth stencil view."));
 
-		// »ç¿ëÇÑ ¸®¼Ò½º ÇØÁ¦.
+		// ì‚¬ìš©í•œ ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		depthStencilBuffer->Release();
 		depthStencilBuffer = nullptr;
 
-		// ·¡½ºÅÍ¶óÀÌÀú ½ºÅ×ÀÌÆ® »ı¼º.
+		// ë˜ìŠ¤í„°ë¼ì´ì € ìŠ¤í…Œì´íŠ¸ ìƒì„±.
 		D3D11_RASTERIZER_DESC rasterizerDesc = { };
 		rasterizerDesc.FillMode = D3D11_FILL_SOLID;
 		rasterizerDesc.CullMode = D3D11_CULL_BACK;
@@ -165,7 +165,7 @@ namespace Blue
 
 		context->RSSetState(cullOnRSState);
 
-		// ºäÆ÷Æ®(È­¸é).
+		// ë·°í¬íŠ¸(í™”ë©´).
 		viewport.TopLeftX = 0.0f;
 		viewport.TopLeftY = 0.0f;
 		viewport.Width = (float)width;
@@ -173,13 +173,13 @@ namespace Blue
 		viewport.MaxDepth = 1.0f;
 		viewport.MinDepth = 0.0f;
 
-		// ºäÆ÷Æ® ¼³Á¤.
+		// ë·°í¬íŠ¸ ì„¤ì •.
 		context->RSSetViewports(1, &viewport);
 	}
 
 	Renderer::~Renderer()
 	{
-		// DX ¸®¼Ò½º ÇØÁ¦.
+		// DX ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		if (context)
 		{
 			context->Release();
@@ -225,7 +225,7 @@ namespace Blue
 	// Ctrl K / Ctrl O.
 	void Renderer::Draw(std::shared_ptr<Level> level)
 	{
-		// È­¸é Å©±â º¯°æ ÁßÀÏ ¶§´Â Á¾·á.
+		// í™”ë©´ í¬ê¸° ë³€ê²½ ì¤‘ì¼ ë•ŒëŠ” ì¢…ë£Œ.
 		if (isResizing)
 		{
 			return;
@@ -234,7 +234,7 @@ namespace Blue
 		// Shadowmap Pass.
 		DrawToShadowMap(level);
 
-		// ºäÆ÷Æ® ¼³Á¤.
+		// ë·°í¬íŠ¸ ì„¤ì •.
 		context->RSSetViewports(1, &viewport);
 
 		// Phase-1.
@@ -243,7 +243,7 @@ namespace Blue
 		// Final-Phase.
 		DrawFinalPass(level);
 
-		// ¹öÆÛ ±³È¯. (EndScene/Present).
+		// ë²„í¼ êµí™˜. (EndScene/Present).
 		swapChain->Present(1u, 0u);
 
 		static ID3D11ShaderResourceView* nullSRV = nullptr;
@@ -252,11 +252,11 @@ namespace Blue
 
 	void Renderer::SetShadowmap(std::shared_ptr<class Shadowmap>&& shadowmap)
 	{
-		// ¿ÜºÎ¿¡¼­ »ı¼ºÇÑ ¼¨µµ¿ì ¸ÊÀÇ ¼ÒÀ¯±ÇÀ» Renderer·Î ÀÌÀü.
+		// ì™¸ë¶€ì—ì„œ ìƒì„±í•œ ì„€ë„ìš° ë§µì˜ ì†Œìœ ê¶Œì„ Rendererë¡œ ì´ì „.
 		//this->shadowmap = std::move(shadowmap);
 		this->shadowmap = std::move(shadowmap);
 
-		// Å×½ºÆ®¸¦ À§ÇÑ QuadActor »ı¼º.
+		// í…ŒìŠ¤íŠ¸ë¥¼ ìœ„í•œ QuadActor ìƒì„±.
 		quadActor = std::make_unique<QuadActor>();
 		quadActor->transform.position.x = 2.0f;
 		quadActor->SetTexture(this->shadowmap);
@@ -265,7 +265,7 @@ namespace Blue
 
 	void Renderer::OnResize(uint32 width, uint32 height)
 	{
-		// Ã¢ º¯°æÀ¸·Î ÀÎÇÑ ¸®¼Ò½º Å©±â Á¶Á¤.
+		// ì°½ ë³€ê²½ìœ¼ë¡œ ì¸í•œ ë¦¬ì†ŒìŠ¤ í¬ê¸° ì¡°ì •.
 		if (!device || !context || !swapChain)
 		{
 			return;
@@ -273,31 +273,31 @@ namespace Blue
 
 		isResizing = true;
 
-		// context ºñ¿ì±â.
+		// context ë¹„ìš°ê¸°.
 		context->ClearState();
 		context->Flush();
 
-		// ·»´õÅ¸°Ù ÇØÁ¦.
+		// ë Œë”íƒ€ê²Ÿ í•´ì œ.
 		if (renderTargetView)
 		{
 			renderTargetView->Release();
 			renderTargetView = nullptr;
 		}
 
-		// µª½º ½ºÅÙ½Ç ºä ÇØÁ¦.
+		// ëìŠ¤ ìŠ¤í…ì‹¤ ë·° í•´ì œ.
 		if (depthStencilView)
 		{
 			depthStencilView->Release();
 			depthStencilView = nullptr;
 		}
 
-		// ½º¿ÒÃ¼ÀÎ ¹é¹öÆÛ Å©±â º¯°æ.
+		// ìŠ¤ì™‘ì²´ì¸ ë°±ë²„í¼ í¬ê¸° ë³€ê²½.
 		ThrowIfFailed(
 			swapChain->ResizeBuffers(0, width, height, DXGI_FORMAT_R8G8B8A8_UNORM, 0),
 			TEXT("Failed to resize swapchain buffer.")
 		);
 
-		// ·»´õÅ¸°Ù Àç»ı¼º.
+		// ë Œë”íƒ€ê²Ÿ ì¬ìƒì„±.
 		ID3D11Texture2D* backbuffer = nullptr;
 		ThrowIfFailed(
 			swapChain->GetBuffer(0, IID_PPV_ARGS(&backbuffer)),
@@ -312,7 +312,7 @@ namespace Blue
 		backbuffer->Release();
 		backbuffer = nullptr;
 
-		// µª½º ½ºÅÙ½Ç ºä »ı¼º.
+		// ëìŠ¤ ìŠ¤í…ì‹¤ ë·° ìƒì„±.
 		ID3D11Texture2D* depthStencilBuffer = nullptr;
 		D3D11_TEXTURE2D_DESC depthStencilDesc = {};
 		depthStencilDesc.Width = width;
@@ -324,7 +324,7 @@ namespace Blue
 		depthStencilDesc.SampleDesc.Quality = 0;
 		depthStencilDesc.BindFlags = D3D11_BIND_DEPTH_STENCIL;
 
-		// 2Â÷¿ø ¸®¼Ò½º »ı¼º.
+		// 2ì°¨ì› ë¦¬ì†ŒìŠ¤ ìƒì„±.
 		ThrowIfFailed(
 			device->CreateTexture2D(&depthStencilDesc, nullptr, &depthStencilBuffer),
 			TEXT("Failed to create depth stencil buffer"));
@@ -333,7 +333,7 @@ namespace Blue
 		depthStencilViewDesc.Format = DXGI_FORMAT_D24_UNORM_S8_UINT;
 		depthStencilViewDesc.ViewDimension = D3D11_DSV_DIMENSION_TEXTURE2D;
 
-		// ºä »ı¼º.
+		// ë·° ìƒì„±.
 		ThrowIfFailed(
 			device->CreateDepthStencilView(
 				depthStencilBuffer,
@@ -341,11 +341,11 @@ namespace Blue
 				&depthStencilView),
 			TEXT("Failed to create depth stencil view."));
 
-		// »ç¿ëÇÑ ¸®¼Ò½º ÇØÁ¦.
+		// ì‚¬ìš©í•œ ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		depthStencilBuffer->Release();
 		depthStencilBuffer = nullptr;
 
-		// ºäÆ÷Æ® ¾÷µ¥ÀÌÆ®.
+		// ë·°í¬íŠ¸ ì—…ë°ì´íŠ¸.
 		viewport.TopLeftX = 0.0f;
 		viewport.TopLeftY = 0.0f;
 		viewport.Width = (float)width;
@@ -353,7 +353,7 @@ namespace Blue
 		viewport.MaxDepth = 1.0f;
 		viewport.MinDepth = 0.0f;
 
-		// ºäÆ÷Æ® ¼³Á¤.
+		// ë·°í¬íŠ¸ ì„¤ì •.
 		context->RSSetViewports(1, &viewport);
 
 		isResizing = false;
@@ -380,32 +380,32 @@ namespace Blue
 
 	void Renderer::Clear(ID3D11RenderTargetView** renderTargetView, float* clearColor, ID3D11DepthStencilView* depthStencilView)
 	{
-		// RTV / SRV ºñ¿ì±â.
+		// RTV / SRV ë¹„ìš°ê¸°.
 		EmptyRTVsAndSRVs();
 
-		// ·»´õ Å¸°Ù ¼³Á¤.
+		// ë Œë” íƒ€ê²Ÿ ì„¤ì •.
 		context->OMSetRenderTargets(1, renderTargetView, depthStencilView);
 
-		// Áö¿ì±â(Clear).
+		// ì§€ìš°ê¸°(Clear).
 		context->ClearRenderTargetView(*renderTargetView, clearColor);
 		context->ClearDepthStencilView(depthStencilView, D3D11_CLEAR_DEPTH | D3D11_CLEAR_STENCIL, 1.0f, 0);
 	}
 
 	void Renderer::DrawToShadowMap(std::shared_ptr<Level>& level)
 	{
-		// ¼¨µµ¿ì ¸ÊÀÇ µª½º ¸Ê Clear.
+		// ì„€ë„ìš° ë§µì˜ ëìŠ¤ ë§µ Clear.
 		shadowmap->Clear();
 
-		// ¼¨µµ¿ì ¸Ê ¹ÙÀÎµù.
+		// ì„€ë„ìš° ë§µ ë°”ì¸ë”©.
 		shadowmap->Bind(0);
 
-		// µª½º Á¤º¸ ±×¸®±â.
+		// ëìŠ¤ ì •ë³´ ê·¸ë¦¬ê¸°.
 		for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
 		{
-			// ¾×ÅÍ °¡Á®¿À±â.
+			// ì•¡í„° ê°€ì ¸ì˜¤ê¸°.
 			auto actor = level->GetActor(actorIndex);
 
-			// ·»´õ ÅØ½ºÃ³ »ç¿ë ¿©ºÎ È®ÀÎ.
+			// ë Œë” í…ìŠ¤ì²˜ ì‚¬ìš© ì—¬ë¶€ í™•ì¸.
 			//auto meshComp = actor->GetComponent<StaticMeshComponent>();
 			//if (meshComp && meshComp->UseRenderTexture())
 			//{
@@ -419,18 +419,18 @@ namespace Blue
 			// Draw.
 			if (actor->IsActive())
 			{
-				// ½ºÄ«ÀÌ ¹Ú½º´Â °Ç³Ê¶Ù±â.
+				// ìŠ¤ì¹´ì´ ë°•ìŠ¤ëŠ” ê±´ë„ˆë›°ê¸°.
 				if (actor->IsSkyBox())
 				{
 					continue;
 				}
 
-				// µª½º ±×¸®±â.
+				// ëìŠ¤ ê·¸ë¦¬ê¸°.
 				actor->Draw(true);
 			}
 		}
 		
-		// ¼¨µµ¿ì¸Ê ¼ÎÀÌ´õ ¾ğ¹ÙÀÎµù.
+		// ì„€ë„ìš°ë§µ ì…°ì´ë” ì–¸ë°”ì¸ë”©.
 		shadowmap->Unbind();
 	}
 
@@ -438,24 +438,24 @@ namespace Blue
 	{
 		for (int ix = 0; ix < (int)TextureLoader::Get().renderTextures.size(); ++ix) 
 		{
-			// ·»´õ ÅØ½ºÃ³ °¡Á®¿À±â.
+			// ë Œë” í…ìŠ¤ì²˜ ê°€ì ¸ì˜¤ê¸°.
 			auto renderTexture = TextureLoader::Get().renderTextures[ix];
 
 			float color[] = { 0.0f, 0.0f, 0.0f, 0.0f };
 			Clear(renderTexture->GetRenderTargetAddress(), color, renderTexture->GetDepthStencilView());
 
-			//// ¼¨µµ¿ì ¸Ê ÅØ½ºÃ³ ¹ÙÀÎµù.
+			//// ì„€ë„ìš° ë§µ í…ìŠ¤ì²˜ ë°”ì¸ë”©.
 			//ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
 			//context->PSSetShaderResources(3, 1, &shadowmapSRV);
 
-			// ±×¸®±â.
-			// Ä«¸Ş¶ó ¹ÙÀÎµù.
+			// ê·¸ë¦¬ê¸°.
+			// ì¹´ë©”ë¼ ë°”ì¸ë”©.
 			if (level->GetCamera())
 			{
 				level->GetCamera()->Draw();
 			}
 
-			// ¶óÀÌÆ® ¹ÙÀÎµù.
+			// ë¼ì´íŠ¸ ë°”ì¸ë”©.
 			if (level->GetLight())
 			{
 				level->GetLight()->Draw();
@@ -463,10 +463,10 @@ namespace Blue
 
 			for (uint32 actorIndex = 0; actorIndex < level->ActorCount(); ++actorIndex)
 			{
-				// ¾×ÅÍ °¡Á®¿À±â.
+				// ì•¡í„° ê°€ì ¸ì˜¤ê¸°.
 				auto actor = level->GetActor(actorIndex);
 
-				// ·»´õ ÅØ½ºÃ³ »ç¿ë ¿©ºÎ È®ÀÎ.
+				// ë Œë” í…ìŠ¤ì²˜ ì‚¬ìš© ì—¬ë¶€ í™•ì¸.
 				//auto meshComp = actor->GetComponent<StaticMeshComponent>();
 				//if (meshComp && meshComp->UseRenderTexture())
 				//{
@@ -480,7 +480,7 @@ namespace Blue
 				// Draw.
 				if (actor->IsActive())
 				{
-					// ½ºÄ«ÀÌ ¹Ú½º´Â µŞ¸éÀ» ±×¸®µµ·Ï ¼³Á¤.
+					// ìŠ¤ì¹´ì´ ë°•ìŠ¤ëŠ” ë’·ë©´ì„ ê·¸ë¦¬ë„ë¡ ì„¤ì •.
 					if (actor->IsSkyBox())
 					{
 						CullOff();
@@ -488,7 +488,7 @@ namespace Blue
 
 					actor->Draw();
 
-					// ´Ù½Ã µŞ¸éÀ» ±×¸®Áö ¾Êµµ·Ï ¼³Á¤.
+					// ë‹¤ì‹œ ë’·ë©´ì„ ê·¸ë¦¬ì§€ ì•Šë„ë¡ ì„¤ì •.
 					CullOn();
 				}
 			}
@@ -500,18 +500,18 @@ namespace Blue
 		float color[] = { 0.6f, 0.7f, 0.8f, 1.0f };
 		Clear(&renderTargetView, color, depthStencilView);
 
-		// ¼¨µµ¿ì ¸Ê ÅØ½ºÃ³ ¹ÙÀÎµù.
+		// ì„€ë„ìš° ë§µ í…ìŠ¤ì²˜ ë°”ì¸ë”©.
 		ID3D11ShaderResourceView* shadowmapSRV = shadowmap->GetShaderResourceView();
 		context->PSSetShaderResources(3, 1, &shadowmapSRV);
 
 		// Draw.
-		// Ä«¸Ş¶ó ¹ÙÀÎµù.
+		// ì¹´ë©”ë¼ ë°”ì¸ë”©.
 		if (level->GetCamera())
 		{
 			level->GetCamera()->Draw();
 		}
 
-		// ¶óÀÌÆ® ¹ÙÀÎµù.
+		// ë¼ì´íŠ¸ ë°”ì¸ë”©.
 		if (level->GetLight())
 		{
 			level->GetLight()->Draw();
@@ -519,13 +519,13 @@ namespace Blue
 
 		for (uint32 ix = 0; ix < level->ActorCount(); ++ix)
 		{
-			// ¾×ÅÍ °¡Á®¿À±â.
+			// ì•¡í„° ê°€ì ¸ì˜¤ê¸°.
 			auto actor = level->GetActor(ix);
 
 			// Draw.
 			if (actor->IsActive())
 			{
-				// ½ºÄ«ÀÌ ¹Ú½º´Â µŞ¸éÀ» ±×¸®µµ·Ï ¼³Á¤.
+				// ìŠ¤ì¹´ì´ ë°•ìŠ¤ëŠ” ë’·ë©´ì„ ê·¸ë¦¬ë„ë¡ ì„¤ì •.
 				if (actor->IsSkyBox())
 				{
 					CullOff();
@@ -533,12 +533,12 @@ namespace Blue
 
 				actor->Draw();
 
-				// ´Ù½Ã µŞ¸éÀ» ±×¸®Áö ¾Êµµ·Ï ¼³Á¤.
+				// ë‹¤ì‹œ ë’·ë©´ì„ ê·¸ë¦¬ì§€ ì•Šë„ë¡ ì„¤ì •.
 				CullOn();
 			}
 		}
 
-		// @Test: Å×½ºÆ®¿ë QuadActor ±×¸®±â.
+		// @Test: í…ŒìŠ¤íŠ¸ìš© QuadActor ê·¸ë¦¬ê¸°.
 #if TEST
 		if (quadActor)
 		{

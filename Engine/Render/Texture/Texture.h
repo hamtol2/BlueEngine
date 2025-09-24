@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Core/Type.h"
 #include <string>
@@ -7,20 +7,20 @@
 
 namespace Blue
 {
-	// ÅØ½ºÃ³ ÆÄÀÏÀ» ÀĞ¾î¼­ ÀúÀåÇÒ ±¸Á¶Ã¼.
+	// í…ìŠ¤ì²˜ íŒŒì¼ì„ ì½ì–´ì„œ ì €ì¥í•  êµ¬ì¡°ì²´.
 	struct TextureData
 	{
 		TextureData() = default;
 		~TextureData()
 		{
-			//// ¿ø½Ã ¸®¼Ò½º ÇØÁ¦.
+			//// ì›ì‹œ ë¦¬ì†ŒìŠ¤ í•´ì œ.
 			//if (data)
 			//{
 			//	free(data);
 			//	data = nullptr;
 			//}
 
-			// DX ¸®¼Ò½º ÇØÁ¦.
+			// DX ë¦¬ì†ŒìŠ¤ í•´ì œ.
 			if (shaderResourceView)
 			{
 				shaderResourceView->Release();
@@ -34,21 +34,21 @@ namespace Blue
 			}
 		}
 
-		// ÅØ½ºÃ³ ¿ø½Ã µ¥ÀÌÅÍ.
+		// í…ìŠ¤ì²˜ ì›ì‹œ ë°ì´í„°.
 		int32 width = 0;
 		int32 height = 0;
 		int32 channelCount = 0;
 		void* data = nullptr;
 
-		// DX ¸®¼Ò½º.
+		// DX ë¦¬ì†ŒìŠ¤.
 		ID3D11ShaderResourceView* shaderResourceView = nullptr;
 		ID3D11SamplerState* samplerState = nullptr;
 	};
 
-	// ÅØ½ºÃ³ Å¬·¡½º.
+	// í…ìŠ¤ì²˜ í´ë˜ìŠ¤.
 	class Texture
 	{
-		// ¹ÙÀÎµùÇÒ ¼ÎÀÌ´õ ¿­°ÅÇü.
+		// ë°”ì¸ë”©í•  ì…°ì´ë” ì—´ê±°í˜•.
 		enum class BindType
 		{
 			VertexShader,
@@ -64,23 +64,23 @@ namespace Blue
 
 	protected:
 
-		// ÅØ½ºÃ³¸¦ ·ÎµåÇÒ ¶§ »ç¿ëÇÏ´Â ÇÔ¼ö.
+		// í…ìŠ¤ì²˜ë¥¼ ë¡œë“œí•  ë•Œ ì‚¬ìš©í•˜ëŠ” í•¨ìˆ˜.
 		virtual void LoadTexture(const std::string& name);
 
-		// ·ÎµåÇÑ ¿ø½Ã ÅØ½ºÃ³ µ¥ÀÌÅÍ¸¦ »ç¿ëÇØ DX ÅØ½ºÃ³ ¸®¼Ò½º¸¦ »ı¼ºÇÏ´Â ÇÔ¼ö.
+		// ë¡œë“œí•œ ì›ì‹œ í…ìŠ¤ì²˜ ë°ì´í„°ë¥¼ ì‚¬ìš©í•´ DX í…ìŠ¤ì²˜ ë¦¬ì†ŒìŠ¤ë¥¼ ìƒì„±í•˜ëŠ” í•¨ìˆ˜.
 		virtual void CreateSRVAndSampler();
 
-		// 3Ã¤³Î ÀÌ¹ÌÁö¸¦ 4Ã¤³Î·Î º¯È¯ÇÏ´Â ÇÔ¼ö.
+		// 3ì±„ë„ ì´ë¯¸ì§€ë¥¼ 4ì±„ë„ë¡œ ë³€í™˜í•˜ëŠ” í•¨ìˆ˜.
 		void ConvertRGBToRGBA(std::unique_ptr<TextureData>& textureData);
 
 	protected:
-		// ÀÌ¹ÌÁö ÀÌ¸§.
+		// ì´ë¯¸ì§€ ì´ë¦„.
 		std::string name;
 
-		// ¹ÙÀÎµù ¼ÎÀÌ´õ Å¸ÀÔ.
+		// ë°”ì¸ë”© ì…°ì´ë” íƒ€ì….
 		BindType bindType = BindType::PixelShader;
 
-		// ÅØ½ºÃ³ µ¥ÀÌÅÍ.
+		// í…ìŠ¤ì²˜ ë°ì´í„°.
 		std::unique_ptr<TextureData> textureData;
 	};
 }

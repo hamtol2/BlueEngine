@@ -1,4 +1,4 @@
-#include "SphereActor.h"
+ï»¿#include "SphereActor.h"
 
 #include "Component/StaticMeshComponent.h"
 #include "Render/SphereMesh.h"
@@ -14,14 +14,14 @@ namespace Blue
 {
 	SphereActor::SphereActor()
 	{
-		// ½ºÅÂÆ½ ¸Ş½Ã ÄÄÆ÷³ÍÆ® »ı¼º.
+		// ìŠ¤íƒœí‹± ë©”ì‹œ ì»´í¬ë„ŒíŠ¸ ìƒì„±.
 		std::shared_ptr<StaticMeshComponent> meshComponent
 			= std::make_shared<StaticMeshComponent>();
 
-		// ¾×ÅÍ¿¡ ÄÄÆ÷³ÍÆ® Ãß°¡.
+		// ì•¡í„°ì— ì»´í¬ë„ŒíŠ¸ ì¶”ê°€.
 		AddComponent(meshComponent);
 
-		// ¸®¼Ò½º ·Îµå ¹× ÄÄÆ÷³ÍÆ® ¼³Á¤. "T_White.png"
+		// ë¦¬ì†ŒìŠ¤ ë¡œë“œ ë° ì»´í¬ë„ŒíŠ¸ ì„¤ì •. "T_White.png"
 		meshComponent->SetMesh(std::make_shared<SphereMesh>());
 		std::weak_ptr<NormalMappingShader> shader;
 		if (ShaderLoader::Get().Load<NormalMappingShader>(shader))
@@ -29,7 +29,7 @@ namespace Blue
 			meshComponent->AddShader(shader);
 		}
 
-		// ÅØ½ºÃ³ ·Îµå ¹× ¼ÎÀÌ´õ¿¡ ¼³Á¤.
+		// í…ìŠ¤ì²˜ ë¡œë“œ ë° ì…°ì´ë”ì— ì„¤ì •.
 		std::weak_ptr<Texture> diffuseMap;
 		TextureLoader::Get().Load("5k_earth_day_map.png", diffuseMap);
 		shader.lock()->SetTexture(
@@ -53,7 +53,7 @@ namespace Blue
 
 		static const float rotationSpeed = 10.0f;
 
-		// È¸Àü.
+		// íšŒì „.
 		//transform.rotation.y += deltaTime * rotationSpeed;
 	}
 }

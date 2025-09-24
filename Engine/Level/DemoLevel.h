@@ -1,10 +1,10 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Level.h"
 
 namespace Blue
 {
-	// µ¥¸ğ ·¹º§.
+	// ë°ëª¨ ë ˆë²¨.
 	class DemoLevel : public Level
 	{
 	public:

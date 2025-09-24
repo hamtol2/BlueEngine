@@ -1,4 +1,4 @@
-#include "CameraActor.h"
+ï»¿#include "CameraActor.h"
 #include "Component/CameraComponent.h"
 #include "Core/InputController.h"
 #include "Core/Engine.h"
@@ -7,7 +7,7 @@ namespace Blue
 {
 	CameraActor::CameraActor()
 	{
-		// Ä«¸Ş¶ó ÄÄÆ÷³ÍÆ® Ãß°¡.
+		// ì¹´ë©”ë¼ ì»´í¬ë„ŒíŠ¸ ì¶”ê°€.
 		AddComponent(std::make_shared<CameraComponent>());
 	}
 
@@ -15,21 +15,21 @@ namespace Blue
 	{
 		Actor::Tick(deltaTime);
 
-		// ÀÌµ¿.
+		// ì´ë™.
 		Move(deltaTime);
 
-		// È¸Àü.
+		// íšŒì „.
 		Rotate(deltaTime);
 	}
 
 	void CameraActor::Move(float deltaTime)
 	{
-		// ÀÔ·Â °ü¸®ÀÚ Æ÷ÀÎÅÍ ÀúÀå.
+		// ì…ë ¥ ê´€ë¦¬ì í¬ì¸í„° ì €ì¥.
 		static InputController& input = InputController::Get();
 
 		if (input.IsKeyDown(VK_ESCAPE))
 		{
-			// ÆË¾÷ Ã¢ ¶ç¿ì±â.
+			// íŒì—… ì°½ ë„ìš°ê¸°.
 			if (MessageBox(nullptr,
 				TEXT("Want to Quit?"),
 				TEXT("Quit Engine"), MB_YESNO) == IDYES)
@@ -38,48 +38,48 @@ namespace Blue
 			}
 		}
 
-		// Ä«¸Ş¶ó ÀÌµ¿ ¼Ó·Â.
+		// ì¹´ë©”ë¼ ì´ë™ ì†ë ¥.
 		static const float moveSpeed = 1.0f;
 
-		// Ä«¸Ş¶ó ÀÌµ¿ Ã³¸®.
+		// ì¹´ë©”ë¼ ì´ë™ ì²˜ë¦¬.
 		if (input.IsKey('A') || input.IsKey(VK_LEFT))
 		{
-			// ¿ŞÂÊ ÀÌµ¿.
+			// ì™¼ìª½ ì´ë™.
 			//transform.position.x -= 1.0f * deltaTime;
 			transform.position -= transform.Right() * moveSpeed * deltaTime;
 		}
 
 		if (input.IsKey('D') || input.IsKey(VK_RIGHT))
 		{
-			// ¿À¸¥ÂÊ ÀÌµ¿.
+			// ì˜¤ë¥¸ìª½ ì´ë™.
 			//transform.position.x += 1.0f * deltaTime;
 			transform.position += transform.Right() * moveSpeed * deltaTime;
 		}
 
 		if (input.IsKey('W') || input.IsKey(VK_UP))
 		{
-			// À§ÂÊ ÀÌµ¿.
+			// ìœ„ìª½ ì´ë™.
 			//transform.position.z += 1.0f * deltaTime;
 			transform.position += transform.Forward() * moveSpeed * deltaTime;
 		}
 
 		if (input.IsKey('S') || input.IsKey(VK_DOWN))
 		{
-			// ¾Æ·¡ÂÊ ÀÌµ¿.
+			// ì•„ë˜ìª½ ì´ë™.
 			//transform.position.z -= 1.0f * deltaTime;
 			transform.position -= transform.Forward() * moveSpeed * deltaTime;
 		}
 
 		if (input.IsKey('Q'))
 		{
-			// À§ÂÊ ÀÌµ¿.
+			// ìœ„ìª½ ì´ë™.
 			//transform.position.y -= 1.0f * deltaTime;
 			transform.position -= transform.Up() * moveSpeed * deltaTime;
 		}
 
 		if (input.IsKey('E'))
 		{
-			// ¾Æ·¡ÂÊ ÀÌµ¿.
+			// ì•„ë˜ìª½ ì´ë™.
 			//transform.position.y += 1.0f * deltaTime;
 			transform.position += transform.Up() * moveSpeed * deltaTime;
 		}
@@ -87,20 +87,20 @@ namespace Blue
 
 	void CameraActor::Rotate(float deltaTime)
 	{
-		// ÀÔ·Â °ü¸®ÀÚ Æ÷ÀÎÅÍ ÀúÀå.
+		// ì…ë ¥ ê´€ë¦¬ì í¬ì¸í„° ì €ì¥.
 		static InputController& input = InputController::Get();
 
-		// ¸¶¿ì½º µå·¡±× È®ÀÎ.
-		// 0->¿ŞÂÊ ¹öÆ°. 1/2.
+		// ë§ˆìš°ìŠ¤ ë“œë˜ê·¸ í™•ì¸.
+		// 0->ì™¼ìª½ ë²„íŠ¼. 1/2.
 		if (input.IsButton(0))
 		{
-			// µå·¡±× °¨µµ.
+			// ë“œë˜ê·¸ ê°ë„.
 			static float sensitivity = 0.05f;
 
-			// Ä«¸Ş¶ó »óÇÏ È¸Àü.
+			// ì¹´ë©”ë¼ ìƒí•˜ íšŒì „.
 			transform.rotation.x += input.GetMouseDeltaY() * sensitivity;
 
-			// Ä«¸Ş¶ó ÁÂ¿ì È¸Àü.
+			// ì¹´ë©”ë¼ ì¢Œìš° íšŒì „.
 			transform.rotation.y += input.GetMouseDeltaX() * sensitivity;
 		}
 	}

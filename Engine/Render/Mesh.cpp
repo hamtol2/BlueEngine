@@ -1,4 +1,4 @@
-#include "Mesh.h"
+ï»¿#include "Mesh.h"
 #include "../Core/Engine.h"
 #include "../Shader/Shader.h"
 
@@ -12,7 +12,7 @@ namespace Blue
 		const std::vector<Vertex>& vertices, 
 		const std::vector<uint32>& indices)
 	{
-		// ÆÄ¶ó¹ÌÅÍ º¹»ç.
+		// íŒŒë¼ë¯¸í„° ë³µì‚¬.
 		this->vertices.assign(vertices.begin(), vertices.end());
 		stride = Vertex::Stride();
 		this->indices.assign(indices.begin(), indices.end());
@@ -21,14 +21,14 @@ namespace Blue
 		vertexbufferDesc.ByteWidth = stride * (uint32)vertices.size();
 		vertexbufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-		// Á¤Á¡ µ¥ÀÌÅÍ.
+		// ì •ì  ë°ì´í„°.
 		D3D11_SUBRESOURCE_DATA vertexData = {};
 		vertexData.pSysMem = vertices.data();
 
-		// ÀåÄ¡ ¾ò¾î¿À±â.
+		// ì¥ì¹˜ ì–»ì–´ì˜¤ê¸°.
 		ID3D11Device& device = Engine::Get().Device();
 
-		// (Á¤Á¡)¹öÆÛ »ı¼º
+		// (ì •ì )ë²„í¼ ìƒì„±
 		auto result = device.CreateBuffer(
 			&vertexbufferDesc, &vertexData, &vertexBuffer);
 
@@ -48,11 +48,11 @@ namespace Blue
 		indexbufferDesc.ByteWidth = sizeof(uint32) * (uint32)indices.size();
 		indexbufferDesc.BindFlags = D3D11_BIND_INDEX_BUFFER;
 
-		// Á¤Á¡ µ¥ÀÌÅÍ.
+		// ì •ì  ë°ì´í„°.
 		D3D11_SUBRESOURCE_DATA indexData = {};
 		indexData.pSysMem = indices.data();
 
-		// ÀÎµ¦½º ¹öÆÛ »ı¼º.
+		// ì¸ë±ìŠ¤ ë²„í¼ ìƒì„±.
 		result = device.CreateBuffer(
 			&indexbufferDesc, &indexData, &indexBuffer
 		);
@@ -72,7 +72,7 @@ namespace Blue
 
 	MeshData::~MeshData()
 	{
-		// ¸®¼Ò½º ÇØÁ¦.
+		// ë¦¬ì†ŒìŠ¤ í•´ì œ.
 		if (vertexBuffer)
 		{
 			vertexBuffer->Release();
@@ -85,10 +85,10 @@ namespace Blue
 
 	void MeshData::Bind()
 	{
-		// ÄÁÅØ½ºÆ® ¾ò¾î¿À±â.
+		// ì»¨í…ìŠ¤íŠ¸ ì–»ì–´ì˜¤ê¸°.
 		static ID3D11DeviceContext& context = Engine::Get().Context();
 
-		// Á¤Á¡/ÀÎµ¦½º ¹öÆÛ ¹ÙÀÎµù.
+		// ì •ì /ì¸ë±ìŠ¤ ë²„í¼ ë°”ì¸ë”©.
 		static uint32 offset = 0;
 		context.IASetVertexBuffers(0, 1, &vertexBuffer, &stride, &offset);
 		context.IASetIndexBuffer(indexBuffer, DXGI_FORMAT_R32_UINT, 0);
@@ -96,10 +96,10 @@ namespace Blue
 
 	void MeshData::UpdateVertexBuffer(const std::vector<Vertex>& vertices)
 	{
-		// ÆÄ¶ó¹ÌÅÍ º¹»ç.
+		// íŒŒë¼ë¯¸í„° ë³µì‚¬.
 		this->vertices.assign(vertices.begin(), vertices.end());
 		
-		// Á¤Á¡ ¹öÆÛ°¡ ÀÖÀ¸¸é, ÇØÁ¦ ÈÄ Àç»ı¼º.
+		// ì •ì  ë²„í¼ê°€ ìˆìœ¼ë©´, í•´ì œ í›„ ì¬ìƒì„±.
 		if (vertexBuffer)
 		{
 			vertexBuffer->Release();
@@ -110,14 +110,14 @@ namespace Blue
 		vertexbufferDesc.ByteWidth = stride * (uint32)vertices.size();
 		vertexbufferDesc.BindFlags = D3D11_BIND_VERTEX_BUFFER;
 
-		// Á¤Á¡ µ¥ÀÌÅÍ.
+		// ì •ì  ë°ì´í„°.
 		D3D11_SUBRESOURCE_DATA vertexData = {};
 		vertexData.pSysMem = vertices.data();
 
-		// ÀåÄ¡ ¾ò¾î¿À±â.
+		// ì¥ì¹˜ ì–»ì–´ì˜¤ê¸°.
 		ID3D11Device& device = Engine::Get().Device();
 
-		// (Á¤Á¡)¹öÆÛ »ı¼º
+		// (ì •ì )ë²„í¼ ìƒì„±
 		auto result = device.CreateBuffer(
 			&vertexbufferDesc, &vertexData, &vertexBuffer);
 
@@ -145,7 +145,7 @@ namespace Blue
 
 	std::weak_ptr<MeshData> Mesh::GetSubMesh(int index) const
 	{
-		// ¿¹¿Ü Ã³¸®.
+		// ì˜ˆì™¸ ì²˜ë¦¬.
 		if (index < 0 || index >= (int)meshes.size())
 		{
 			return std::weak_ptr<MeshData>();
@@ -156,20 +156,20 @@ namespace Blue
 
 	//void Mesh::Draw()
 	//{
-	//	// ÄÁÅØ½ºÆ® ¾ò¾î¿À±â.
+	//	// ì»¨í…ìŠ¤íŠ¸ ì–»ì–´ì˜¤ê¸°.
 	//	static ID3D11DeviceContext& context = Engine::Get().Context();
 
-	//	// Æ®·£½ºÆû ¹ÙÀÎµù.
+	//	// íŠ¸ëœìŠ¤í¼ ë°”ì¸ë”©.
 	//	transform.Bind();
 
-	//	// ·çÇÁ ¼øÈ¸ÇÏ¸é¼­ ¹ÙÀÎµù & µå·Î¿ì.
+	//	// ë£¨í”„ ìˆœíšŒí•˜ë©´ì„œ ë°”ì¸ë”© & ë“œë¡œìš°.
 	//	for (int ix = 0; ix < (int32)meshes.size(); ++ix)
 	//	{
-	//		// ¿ø·¡ ¸®¼Ò½º °¡Á®¿À±â.
+	//		// ì›ë˜ ë¦¬ì†ŒìŠ¤ ê°€ì ¸ì˜¤ê¸°.
 	//		auto mesh = meshes[ix].lock();
 	//		auto shader = shaders[ix].lock();
 
-	//		// ¸®¼Ò½º¿¡ ¹®Á¦°¡ ¾øÀ¸¸é ±×¸®±â.
+	//		// ë¦¬ì†ŒìŠ¤ì— ë¬¸ì œê°€ ì—†ìœ¼ë©´ ê·¸ë¦¬ê¸°.
 	//		if (mesh && shader)
 	//		{
 	//			mesh->Bind();

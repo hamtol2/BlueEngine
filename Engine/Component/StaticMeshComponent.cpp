@@ -1,4 +1,4 @@
-#include "StaticMeshComponent.h"
+ï»¿#include "StaticMeshComponent.h"
 #include "Render/Mesh.h"
 #include "Shader/Shader.h"
 #include "Core/Engine.h"
@@ -18,10 +18,10 @@ namespace Blue
 	{
 		Component::Draw(isShadowDraw);
 
-		// ¼­ºê ¸Þ½Ã¸¦ ¼øÈ¸ÇÏ¸é¼­ DrawCall.
+		// ì„œë¸Œ ë©”ì‹œë¥¼ ìˆœíšŒí•˜ë©´ì„œ DrawCall.
 		uint32 meshCount = mesh->SubMeshCount();
 
-		// ¿¹¿ÜÃ³¸®.
+		// ì˜ˆì™¸ì²˜ë¦¬.
 		if (meshCount != (uint32)shaders.size())
 		{
 			return;
@@ -29,19 +29,19 @@ namespace Blue
 
 		for (uint32 ix = 0; ix < meshCount; ++ix)
 		{
-			// ¼­ºê ¸Þ½Ã °¡Á®¿À±â.
+			// ì„œë¸Œ ë©”ì‹œ ê°€ì ¸ì˜¤ê¸°.
 			auto subMesh = mesh->GetSubMesh(ix);
 
-			// ¸Þ½Ã°¡ À¯È¿ÇÏ¸é Draw.
+			// ë©”ì‹œê°€ ìœ íš¨í•˜ë©´ Draw.
 			if (subMesh.lock() && shaders[ix].lock())
 			{
-				// ¼­ºê ¸Þ½Ã ¹ÙÀÎµù.
+				// ì„œë¸Œ ë©”ì‹œ ë°”ì¸ë”©.
 				subMesh.lock()->Bind();
 
-				// ¼¨µµ¿ì¸¦ ±×¸®Áö ¾ÊÀ» ¶§¿¡¸¸ ÄÄÆ÷³ÍÆ® ¼ÎÀÌ´õ ¹ÙÀÌµù.
+				// ì„€ë„ìš°ë¥¼ ê·¸ë¦¬ì§€ ì•Šì„ ë•Œì—ë§Œ ì»´í¬ë„ŒíŠ¸ ì…°ì´ë” ë°”ì´ë”©.
 				if (!isShadowDraw)
 				{
-					// ¼ÎÀÌ´õ ¹ÙÀÎµù.
+					// ì…°ì´ë” ë°”ì¸ë”©.
 					shaders[ix].lock()->Bind();
 				}
 

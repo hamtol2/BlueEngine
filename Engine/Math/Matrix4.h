@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include "Core/Type.h"
 #include "Vector3.h"
@@ -12,40 +12,40 @@ namespace Blue
 		Matrix4(const Matrix4& other);
 		~Matrix4() = default;
 
-		// ¸Ş¸ğ¸® ³Êºñ(´ÜÀ§: ¹ÙÀÌÆ®).
+		// ë©”ëª¨ë¦¬ ë„ˆë¹„(ë‹¨ìœ„: ë°”ì´íŠ¸).
 		static uint32 Stride() { return sizeof(Matrix4); }
 
-		// ÀÌµ¿ º¯È¯ Çà·Ä(T).
+		// ì´ë™ ë³€í™˜ í–‰ë ¬(T).
 		static Matrix4 Translation(const Vector3& position);
 		static Matrix4 Translation(float x, float y, float z);
 
-		// È¸Àü º¯È¯ Çà·Ä(R).
+		// íšŒì „ ë³€í™˜ í–‰ë ¬(R).
 		static Matrix4 Rotation(const Vector3& rotation);
 		static Matrix4 Rotation(float x, float y, float z);
 		static Matrix4 RotationX(float angle);
 		static Matrix4 RotationY(float angle);
 		static Matrix4 RotationZ(float angle);
 
-		// Å©±â º¯È¯ Çà·Ä(S).
+		// í¬ê¸° ë³€í™˜ í–‰ë ¬(S).
 		static Matrix4 Scale(const Vector3& scale);
 		static Matrix4 Scale(float x, float y, float z);
 		static Matrix4 Scale(float scale);
 
-		// ÀüÄ¡ Çà·Ä.
+		// ì „ì¹˜ í–‰ë ¬.
 		static Matrix4 Transpose(const Matrix4& target);
 
 		static Matrix4 LookAt(const Vector3& position, const Vector3& target, const Vector3& up);
 
-		// ¿ø±ÙÅõ¿µ(Perspective).
+		// ì›ê·¼íˆ¬ì˜(Perspective).
 		static Matrix4 Perspective(
-			float fieldOfView,		// ½Ã¾ß°¢.
-			float width,			// Á¾È¾ºñ¸¦ ±¸ÇÏ±â À§ÇÑ È­¸éÀÇ ³Êºñ.
-			float height,			// Á¾È¾ºñ¸¦ ±¸ÇÏ±â À§ÇÑ È­¸éÀÇ ³ôÀÌ.
-			float nearDistance,		// È­¸é¿¡ ±×·ÁÁú ¼ö ÀÖ´Â °¡Àå °¡±î¿î °Å¸®.
-			float farDistance		// È­¸é¿¡ ±×·ÁÁú ¼ö ÀÖ´Â °¡Àå ¸Õ °Å¸®.
+			float fieldOfView,		// ì‹œì•¼ê°.
+			float width,			// ì¢…íš¡ë¹„ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ í™”ë©´ì˜ ë„ˆë¹„.
+			float height,			// ì¢…íš¡ë¹„ë¥¼ êµ¬í•˜ê¸° ìœ„í•œ í™”ë©´ì˜ ë†’ì´.
+			float nearDistance,		// í™”ë©´ì— ê·¸ë ¤ì§ˆ ìˆ˜ ìˆëŠ” ê°€ì¥ ê°€ê¹Œìš´ ê±°ë¦¬.
+			float farDistance		// í™”ë©´ì— ê·¸ë ¤ì§ˆ ìˆ˜ ìˆëŠ” ê°€ì¥ ë¨¼ ê±°ë¦¬.
 		);
 
-		// Á÷±³Åõ¿µ(Orthographic).
+		// ì§êµíˆ¬ì˜(Orthographic).
 		static Matrix4 Orthographic(float width, float height, float nearDistance, float farDistance);
 
 		// operator overloading.
@@ -62,7 +62,7 @@ namespace Blue
 		static constexpr float radianToDegree = 180.0f / 3.141592f;
 
 	private:
-		// °ø¿ëÃ¼.
+		// ê³µìš©ì²´.
 		union
 		{
 			struct

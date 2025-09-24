@@ -1,11 +1,11 @@
-#include "SphereMesh.h"
+ï»¿#include "SphereMesh.h"
 #include "Resource/ModelLoader.h"
 
 namespace Blue
 {
 	SphereMesh::SphereMesh()
 	{
-		// ¸ğµ¨ ·Îµå.
+		// ëª¨ë¸ ë¡œë“œ.
 		std::vector<std::weak_ptr<MeshData>> meshList;
 		//if (ModelLoader::Get().Load("sphere.obj", meshList))
 		if (ModelLoader::Get().Load("sphere.fbx", meshList))

@@ -1,4 +1,4 @@
-#include "Vector2.h"
+ï»¿#include "Vector2.h"
 #include <Windows.h>
 #include <cmath>
 #include <cassert>
@@ -102,7 +102,7 @@ namespace Blue
 
 	Vector2& Vector2::operator/=(float scale)
 	{
-		// ³ª´­ °ªÀÌ 0ÀÌ ¾Æ´ÑÁö È®ÀÎÇÏ´Â °ÍÀÌ ÁÁÀ½.
+		// ë‚˜ëˆŒ ê°’ì´ 0ì´ ì•„ë‹Œì§€ í™•ì¸í•˜ëŠ” ê²ƒì´ ì¢‹ìŒ.
 		assert(scale != 0.0f);
 
 		x /= scale;

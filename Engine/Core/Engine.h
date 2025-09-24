@@ -1,4 +1,4 @@
-#pragma once
+ï»¿#pragma once
 
 #include <memory>
 #include <string>
@@ -8,7 +8,7 @@
 
 namespace Blue
 {
-	// ¿£Áø Å¬·¡½º.
+	// ì—”ì§„ í´ë˜ìŠ¤.
 	class Engine
 	{
 	public:
@@ -18,26 +18,26 @@ namespace Blue
 			HINSTANCE instance);
 		virtual ~Engine();
 
-		// ¿£Áø ½ÇÇà ÇÔ¼ö.
+		// ì—”ì§„ ì‹¤í–‰ í•¨ìˆ˜.
 		void Run();
 
-		// ¸ŞÀÎ ·¹º§ ¼³Á¤ ÇÔ¼ö.
+		// ë©”ì¸ ë ˆë²¨ ì„¤ì • í•¨ìˆ˜.
 		void SetLevel(std::shared_ptr<class Level> newLevel);
 
-		// À©µµ¿ì ¸Ş½ÃÁö Ã³¸® ·çÇÁ.
+		// ìœˆë„ìš° ë©”ì‹œì§€ ì²˜ë¦¬ ë£¨í”„.
 		static LRESULT CALLBACK WindowProc(
 			HWND handle,
 			UINT message,
 			WPARAM wparam,
 			LPARAM lparam);
 
-		// ½Ì±ÛÅæ Á¢±Ù ÇÔ¼ö.
+		// ì‹±ê¸€í†¤ ì ‘ê·¼ í•¨ìˆ˜.
 		static Engine& Get();
 
-		// È­¸é Å©±â º¯°æ ÀÌº¥Æ® ´ëÀÀ ÇÔ¼ö.
+		// í™”ë©´ í¬ê¸° ë³€ê²½ ì´ë²¤íŠ¸ ëŒ€ì‘ í•¨ìˆ˜.
 		void OnResize(uint32 width, uint32 height);
 
-		// ¿£Áø Á¾·á ÇÔ¼ö.
+		// ì—”ì§„ ì¢…ë£Œ í•¨ìˆ˜.
 		void Quit();
 
 		// Getter.
@@ -49,31 +49,31 @@ namespace Blue
 
 	protected:
 
-		// ¿£Áø Á¾·á ÇÃ·¡±×.
+		// ì—”ì§„ ì¢…ë£Œ í”Œë˜ê·¸.
 		bool isQuit = false;
 		
-		// Ã¢ °´Ã¼.
+		// ì°½ ê°ì²´.
 		std::shared_ptr<class Window> window;
 
-		// ·»´õ·¯ °´Ã¼.
+		// ë Œë”ëŸ¬ ê°ì²´.
 		std::shared_ptr<class Renderer> renderer;
 
-		// ¼ÎÀÌ´õ ·Î´õ °´Ã¼.
+		// ì…°ì´ë” ë¡œë” ê°ì²´.
 		std::unique_ptr<class ShaderLoader> shaderLoader;
 
-		// ÅØ½ºÃ³ ·Î´õ °´Ã¼.
+		// í…ìŠ¤ì²˜ ë¡œë” ê°ì²´.
 		std::unique_ptr<class TextureLoader> textureLoader;
 		
-		// ¸ğµ¨ ·Î´õ °´Ã¼.
+		// ëª¨ë¸ ë¡œë” ê°ì²´.
 		std::unique_ptr<class ModelLoader> modelLoader;
 
-		// ÀÔ·Â °ü¸®ÀÚ °´Ã¼.
+		// ì…ë ¥ ê´€ë¦¬ì ê°ì²´.
 		std::unique_ptr<class InputController> inputController;
 
-		// ¸ŞÀÎ ·¹º§.
+		// ë©”ì¸ ë ˆë²¨.
 		std::shared_ptr<class Level> mainLevel;
 
-		// ½Ì±ÛÅæ °´Ã¼.
+		// ì‹±ê¸€í†¤ ê°ì²´.
 		static Engine* instance;
 	};
 }
